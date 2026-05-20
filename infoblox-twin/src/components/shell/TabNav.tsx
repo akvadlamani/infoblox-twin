@@ -65,7 +65,7 @@ const ALL_TABS: Tab[] = [
   },
   {
     id: 'mythos',
-    label: 'Mythos',
+    label: 'Mythos Simulator',
     icon: IconFlame,
     hint: "What happens if any asset falls? Mythos is your continuous red team — runs sandbox simulations every ~18s and reports impact in dollars.",
   },
