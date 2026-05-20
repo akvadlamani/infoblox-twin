@@ -94,9 +94,12 @@ export function LoginView() {
           </div>
           <div className="eyebrow mb-2">welcome back</div>
           <h2 className="text-h1 font-medium text-text1 mb-1">Sign in</h2>
-          <p className="text-small text-text3 mb-6">
+          <p className="text-small text-text3 mb-3">
             Use <span className="font-mono text-text2">admin / admin</span> for the demo.
           </p>
+          <div className="mb-5 px-3 py-2 rounded-md bg-accent/10 border border-accent/30 text-[11px] text-accent2 leading-snug">
+            New here? Mystique will give you a <span className="font-medium">90-second guided tour</span> right after sign-in. You can also re-launch it any time from the top bar.
+          </div>
 
           <form onSubmit={submit} className="flex flex-col gap-3">
             <label className="block">

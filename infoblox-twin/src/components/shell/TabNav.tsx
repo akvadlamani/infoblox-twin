@@ -96,7 +96,7 @@ export function TabNav() {
     );
 
   return (
-    <nav className="absolute top-[56px] left-1/2 -translate-x-1/2 z-30">
+    <nav data-tour="tab-nav" className="absolute top-[56px] left-1/2 -translate-x-1/2 z-30">
       <div className="flex items-center gap-0.5 px-1 py-1 rounded-lg bg-surface/85 border border-white/8 backdrop-blur-md">
         {tabs.map((t) => {
           const Icon = t.icon;

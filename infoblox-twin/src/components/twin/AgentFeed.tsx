@@ -21,7 +21,7 @@ export function AgentFeed() {
   const pending = activities.filter((a) => a.requiresHuman && !a.humanApproved).length;
 
   return (
-    <div className="absolute top-[110px] left-5 z-20 w-[380px] max-h-[calc(100vh-160px)] overflow-y-auto pr-1 scrollbar-hide">
+    <div data-tour="agent-feed" className="absolute top-[110px] left-5 z-20 w-[380px] max-h-[calc(100vh-160px)] overflow-y-auto pr-1 scrollbar-hide">
       <div className="rounded-xl bg-surface/85 border border-white/8 backdrop-blur-md overflow-hidden">
         {/* Header — Brief writes this */}
         <div className="px-4 pt-4 pb-3">

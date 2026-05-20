@@ -248,7 +248,7 @@ export function MythosView() {
       }}
     >
       {/* Hero banner */}
-      <div className="px-5 pb-3">
+      <div className="px-5 pb-3" data-tour="mythos-hero">
         <div
           className="rounded-xl p-4 flex items-center gap-4 flex-wrap"
           style={{
@@ -313,7 +313,7 @@ export function MythosView() {
       {/* Main grid: targets | scene | impact */}
       <div className="px-5 grid grid-cols-[260px_minmax(0,1fr)_320px] gap-3 h-[calc(100%-220px)]">
         {/* Left — pick a target */}
-        <aside className="rounded-lg bg-surface/40 border border-white/5 p-3 overflow-y-auto">
+        <aside data-tour="mythos-target-list" className="rounded-lg bg-surface/40 border border-white/5 p-3 overflow-y-auto">
           <div className="flex items-center justify-between mb-2">
             <div className="eyebrow">pick a starting point</div>
           </div>
@@ -513,7 +513,7 @@ export function MythosView() {
         </div>
 
         {/* Right — impact report */}
-        <aside className="rounded-lg bg-surface/60 border border-white/8 p-4 overflow-y-auto">
+        <aside data-tour="mythos-impact" className="rounded-lg bg-surface/60 border border-white/8 p-4 overflow-y-auto">
           {sim ? (
             <ImpactReport sim={sim} assetById={assetById} />
           ) : (

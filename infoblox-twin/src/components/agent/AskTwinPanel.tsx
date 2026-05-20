@@ -100,6 +100,7 @@ export function AskTwinPanel({ open, onClose }: Props) {
 
       {/* Drawer */}
       <aside
+        data-tour="ask-panel"
         className={`fixed top-0 right-0 z-50 h-full w-full sm:w-[460px] max-w-full bg-surface border-l border-white/8 shadow-2xl flex flex-col transition-transform duration-base ${
           visible ? 'translate-x-0' : 'translate-x-full'
         }`}

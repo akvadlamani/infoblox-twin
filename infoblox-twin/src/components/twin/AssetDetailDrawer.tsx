@@ -87,7 +87,7 @@ export function AssetDetailDrawer({ asset, allAssets, edges, onClose }: Props) {
         className="absolute inset-0 bg-page/70 backdrop-blur-sm"
         onClick={onClose}
       />
-      <aside className="relative z-10 w-full max-w-[520px] h-full bg-surface border-l border-white/8 shadow-2xl flex flex-col">
+      <aside data-tour="asset-drawer" className="relative z-10 w-full max-w-[520px] h-full bg-surface border-l border-white/8 shadow-2xl flex flex-col">
         <header className="px-5 pt-4 pb-4 border-b border-white/8">
           <div className="flex items-start justify-between gap-3 mb-3">
             <div className="flex items-start gap-3 min-w-0">

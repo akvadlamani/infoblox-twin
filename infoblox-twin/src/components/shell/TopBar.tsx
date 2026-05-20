@@ -5,6 +5,7 @@ import {
   IconShieldCheck,
   IconSettings,
   IconLogout,
+  IconRoute,
 } from '@tabler/icons-react';
 import { twinClient, DATA_MODE } from '@/lib/data-clients/factory';
 import type { OrgInfo, DataSourceHealth } from '@/lib/types/twin.types';
@@ -20,6 +21,7 @@ export function TopBar() {
   const view = useAppStore((s) => s.view);
   const logout = useAppStore((s) => s.logout);
   const username = useAppStore((s) => s.username);
+  const startTour = useAppStore((s) => s.startTour);
 
   useEffect(() => {
     twinClient.getOrgInfo().then(setOrg);
@@ -77,6 +79,15 @@ export function TopBar() {
           {allHealthy ? 'All sources healthy' : 'Degraded'} · {org ? formatRelativeTime(org.lastSyncAt) : '—'}
         </span>
       </div>
+
+      <button
+        onClick={() => startTour()}
+        className="hidden md:flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-accent/10 hover:bg-accent/20 border border-accent/30 text-accent2 text-[11px] font-medium transition-colors duration-fast"
+        title="Take the guided tour"
+      >
+        <IconRoute size={12} />
+        <span>Take the tour</span>
+      </button>
 
       <PersonaSwitcher />
 

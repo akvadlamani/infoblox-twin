@@ -13,6 +13,9 @@ interface AppState {
   narratorText: string;
   continuousAEV: boolean;
   scenariosRunToday: number;
+  // Tour mode
+  tourStep: number; // -1 = inactive
+  askPanelOpen: boolean;
 
   login: (u: string, p: string) => boolean;
   logout: () => void;
@@ -25,6 +28,11 @@ interface AppState {
   setNarrator: (text: string) => void;
   setContinuousAEV: (on: boolean) => void;
   incrementScenarios: () => void;
+  startTour: () => void;
+  nextTour: () => void;
+  prevTour: () => void;
+  exitTour: () => void;
+  setAskPanelOpen: (open: boolean) => void;
 }
 
 export const useAppStore = create<AppState>((set) => ({
@@ -39,6 +47,8 @@ export const useAppStore = create<AppState>((set) => ({
   narratorText: '',
   continuousAEV: true,
   scenariosRunToday: 47,
+  tourStep: -1,
+  askPanelOpen: false,
 
   login: (u, p) => {
     if (u === 'admin' && p === 'admin') {
@@ -60,4 +70,9 @@ export const useAppStore = create<AppState>((set) => ({
   setNarrator: (text) => set({ narratorText: text }),
   setContinuousAEV: (on) => set({ continuousAEV: on }),
   incrementScenarios: () => set((s) => ({ scenariosRunToday: s.scenariosRunToday + 1 })),
+  startTour: () => set({ tourStep: 0 }),
+  nextTour: () => set((s) => ({ tourStep: s.tourStep + 1 })),
+  prevTour: () => set((s) => ({ tourStep: Math.max(0, s.tourStep - 1) })),
+  exitTour: () => set({ tourStep: -1 }),
+  setAskPanelOpen: (askPanelOpen) => set({ askPanelOpen }),
 }));

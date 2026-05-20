@@ -87,7 +87,7 @@ export function AgentsView() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3">
+        <div data-tour="agents-grid" className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3">
           {agents.map((a) => {
             const Icon = iconForAgent(a.id);
             return (

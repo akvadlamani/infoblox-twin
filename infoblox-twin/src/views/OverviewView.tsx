@@ -12,7 +12,8 @@ import { AssetDetailDrawer } from '@/components/twin/AssetDetailDrawer';
 export function OverviewView() {
   const [assets, setAssets] = useState<Asset[]>([]);
   const [edges, setEdges] = useState<Edge[]>([]);
-  const [selectedAssetId, setSelectedAssetId] = useState<string | null>(null);
+  const selectedAssetId = useAppStore((s) => s.selectedAssetId);
+  const setSelectedAssetId = useAppStore((s) => s.selectAsset);
   const autoRotate = useAppStore((s) => s.autoRotate);
   const narratorText = useAppStore((s) => s.narratorText);
   const setNarrator = useAppStore((s) => s.setNarrator);
@@ -29,7 +30,7 @@ export function OverviewView() {
   );
 
   return (
-    <div className="absolute inset-0">
+    <div className="absolute inset-0" data-tour="overview-scene">
       <SceneRoot
         autoRotate={autoRotate && !selectedAssetId}
         cameraPosition={[22, 13, 22]}
