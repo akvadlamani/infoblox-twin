@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppStore } from '@/lib/state/store';
 import { HeroLanding } from '@/components/twin/HeroLanding';
 import { TopBar } from '@/components/shell/TopBar';
 import { TabNav } from '@/components/shell/TabNav';
+import { AskTwinPanel, AskTwinLauncher } from '@/components/agent/AskTwinPanel';
 import { LoginView } from '@/views/LoginView';
 import { OverviewView } from '@/views/OverviewView';
 import { AevLabView } from '@/views/AevLabView';
@@ -19,12 +20,18 @@ export default function App() {
   const heroComplete = useAppStore((s) => s.heroComplete);
   const completeHero = useAppStore((s) => s.completeHero);
   const toggleAutoRotate = useAppStore((s) => s.toggleAutoRotate);
+  const [askOpen, setAskOpen] = useState(false);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.code === 'Space' && view === 'overview') {
         e.preventDefault();
         toggleAutoRotate();
+      }
+      // Cmd/Ctrl + . opens Ask Twin
+      if (e.key === '.' && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        setAskOpen((o) => !o);
       }
     };
     window.addEventListener('keydown', handler);
@@ -59,6 +66,8 @@ export default function App() {
           {view === 'compliance' && <ComplianceView />}
           {view === 'settings' && <SettingsView />}
         </div>
+        {!askOpen && heroComplete && <AskTwinLauncher onOpen={() => setAskOpen(true)} />}
+        <AskTwinPanel open={askOpen} onClose={() => setAskOpen(false)} />
       </div>
     </div>
   );
