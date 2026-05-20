@@ -12,9 +12,15 @@
     "trust": 0.96,
     "primaryView": "overview",
     "scope": {
-      "reads": ["all"],
-      "writes": ["none"],
-      "guards": ["No write authority. Surfaces only — humans and other agents decide."]
+      "reads": [
+        "all"
+      ],
+      "writes": [
+        "none"
+      ],
+      "guards": [
+        "No write authority. Surfaces only — humans and other agents decide."
+      ]
     },
     "voice": "Calm, observational, factual. Never speculates beyond data.",
     "status": "active",
@@ -35,9 +41,16 @@
     "trust": 0.88,
     "primaryView": "agent-iez",
     "scope": {
-      "reads": ["alerts", "graph"],
-      "writes": ["auto-close-with-audit"],
-      "guards": ["Auto-close only when confidence > 0.92 and pattern matches known benign signature. All closures are auditable and reversible for 30 days."]
+      "reads": [
+        "alerts",
+        "graph"
+      ],
+      "writes": [
+        "auto-close-with-audit"
+      ],
+      "guards": [
+        "Auto-close only when confidence > 0.92 and pattern matches known benign signature. All closures are auditable and reversible for 30 days."
+      ]
     },
     "voice": "Crisp, focused. One sentence per finding.",
     "status": "active",
@@ -58,9 +71,18 @@
     "trust": 0.91,
     "primaryView": "aev",
     "scope": {
-      "reads": ["threat-intel", "graph", "dns-telemetry", "flow-telemetry"],
-      "writes": ["create-investigation-notes"],
-      "guards": ["No defensive actions taken. Hunter informs the Action agent, which proposes the response."]
+      "reads": [
+        "threat-intel",
+        "graph",
+        "dns-telemetry",
+        "flow-telemetry"
+      ],
+      "writes": [
+        "create-investigation-notes"
+      ],
+      "guards": [
+        "No defensive actions taken. Hunter informs the Action agent, which proposes the response."
+      ]
     },
     "voice": "Curious, hypothesis-driven, willing to say 'I don't know.'",
     "status": "active",
@@ -81,9 +103,17 @@
     "trust": 0.94,
     "primaryView": "compliance",
     "scope": {
-      "reads": ["all-assets", "tags", "data-flows"],
-      "writes": ["propose-tag-changes"],
-      "guards": ["Tag changes are proposals only — auditor approval required before they land on the asset record."]
+      "reads": [
+        "all-assets",
+        "tags",
+        "data-flows"
+      ],
+      "writes": [
+        "propose-tag-changes"
+      ],
+      "guards": [
+        "Tag changes are proposals only — auditor approval required before they land on the asset record."
+      ]
     },
     "voice": "Precise, audit-friendly, references the controls framework by name.",
     "status": "active",
@@ -104,9 +134,18 @@
     "trust": 0.85,
     "primaryView": "patch-risk",
     "scope": {
-      "reads": ["cve-feeds", "graph", "patch-history", "change-calendar"],
-      "writes": ["draft-change-tickets"],
-      "guards": ["Never applies patches. Drafts the ticket; humans approve and the ServiceNow workflow runs it."]
+      "reads": [
+        "cve-feeds",
+        "graph",
+        "patch-history",
+        "change-calendar"
+      ],
+      "writes": [
+        "draft-change-tickets"
+      ],
+      "guards": [
+        "Never applies patches. Drafts the ticket; humans approve and the ServiceNow workflow runs it."
+      ]
     },
     "voice": "Engineering-pragmatic. Explains why a CVE matters here, not in general.",
     "status": "active",
@@ -127,9 +166,16 @@
     "trust": 0.97,
     "primaryView": "agent-iez",
     "scope": {
-      "reads": ["all", "proposed-actions"],
-      "writes": ["verdict-only"],
-      "guards": ["Verdict is non-binding. A human or autonomous-tier agent still owns the final call."]
+      "reads": [
+        "all",
+        "proposed-actions"
+      ],
+      "writes": [
+        "verdict-only"
+      ],
+      "guards": [
+        "Verdict is non-binding. A human or autonomous-tier agent still owns the final call."
+      ]
     },
     "voice": "Sober, conservative. Lists what could go wrong before what could go right.",
     "status": "active",
@@ -150,9 +196,18 @@
     "trust": 0.83,
     "primaryView": "agent-iez",
     "scope": {
-      "reads": ["alerts", "graph"],
-      "writes": ["quarantine-endpoint", "dns-block-domain", "acl-tighten"],
-      "guards": ["Never executes against >50 assets at once. Never blocks production domains org-wide. Org-wide and irreversible actions always escalate to a human."]
+      "reads": [
+        "alerts",
+        "graph"
+      ],
+      "writes": [
+        "quarantine-endpoint",
+        "dns-block-domain",
+        "acl-tighten"
+      ],
+      "guards": [
+        "Never executes against >50 assets at once. Never blocks production domains org-wide. Org-wide and irreversible actions always escalate to a human."
+      ]
     },
     "voice": "Decisive but explicit about what it touched and what it left alone.",
     "status": "active",
@@ -173,9 +228,17 @@
     "trust": 0.93,
     "primaryView": "aev",
     "scope": {
-      "reads": ["threat-intel", "dns-telemetry"],
-      "writes": ["registrar-abuse-report", "csp-takedown-request"],
-      "guards": ["External infrastructure only. Cannot touch any asset, domain, or service the customer owns."]
+      "reads": [
+        "threat-intel",
+        "dns-telemetry"
+      ],
+      "writes": [
+        "registrar-abuse-report",
+        "csp-takedown-request"
+      ],
+      "guards": [
+        "External infrastructure only. Cannot touch any asset, domain, or service the customer owns."
+      ]
     },
     "voice": "Legalistic when filing, plain-spoken when reporting outcomes.",
     "status": "active",
@@ -184,10 +247,10 @@
     "pendingProposals": 0
   },
   {
-    "id": "brief",
-    "name": "Brief",
-    "role": "Executive communicator",
-    "description": "Writes the overnight brief, drafts the board pack, and answers natural-language questions in the Ask Twin chat. Synthesizes across every other agent's activity into language a CRO or board member can read.",
+    "id": "mystique",
+    "name": "Mystique",
+    "role": "AI orchestrator · the front door",
+    "description": "The face of your security team. Talks to humans in plain English, routes questions to the right specialist agent, and synthesizes their answers. Writes the overnight brief, drafts the board pack, runs the Ask Mystique chat.",
     "model": "claude-sonnet-4.5",
     "iconName": "ti-sparkles",
     "color": "#60a5fa",
@@ -196,14 +259,51 @@
     "trust": 0.95,
     "primaryView": "overview",
     "scope": {
-      "reads": ["all", "agent-activity"],
-      "writes": ["synthesis-only"],
-      "guards": ["No defensive or operational actions. Brief tells the story; other agents do the work."]
+      "reads": [
+        "all",
+        "agent-activity"
+      ],
+      "writes": [
+        "synthesis-only"
+      ],
+      "guards": [
+        "No defensive or operational actions. Brief tells the story; other agents do the work."
+      ]
     },
-    "voice": "Calm executive register. Dollar-denominated where it can be.",
+    "voice": "Calm executive register. Dollar-denominated where it can be. Knows when to defer to a specialist.",
     "status": "active",
-    "recentHeadline": "Drafted today's overnight brief at 06:00",
+    "recentHeadline": "Drafted today's overnight brief — synthesized across 9 agents",
     "tasksToday": 14,
+    "pendingProposals": 0
+  },
+  {
+    "id": "mythos",
+    "name": "Mythos",
+    "role": "Continuous adversarial exposure simulator",
+    "description": "Twin's red team. Picks an asset, simulates a full compromise against the sandbox graph, and reports who would be reached, how, and what it would cost. Never touches production — only the sandbox Twin. The vulnerabilities Mythos surfaces would affect every organization with this stack.",
+    "model": "claude-sonnet-4.5",
+    "iconName": "ti-flame",
+    "color": "#1aae9f",
+    "autonomy": "autonomous",
+    "maxAutonomy": "autonomous",
+    "trust": 0.99,
+    "primaryView": "mythos",
+    "scope": {
+      "reads": [
+        "all",
+        "sandbox-twin"
+      ],
+      "writes": [
+        "sandbox-only"
+      ],
+      "guards": [
+        "Sandbox-only execution. Cannot touch any production asset, policy, or service. Findings surface only — humans and other agents decide what to do."
+      ]
+    },
+    "voice": "Calm, blunt about consequences. 'If this falls, here's what falls with it.'",
+    "status": "active",
+    "recentHeadline": "Simulated CFO-WS compromise → FIN-DB reached in 3 hops · $4.2M at risk",
+    "tasksToday": 312,
     "pendingProposals": 0
   }
 ]

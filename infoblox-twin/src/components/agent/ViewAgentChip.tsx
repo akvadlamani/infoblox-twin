@@ -9,9 +9,9 @@ import { useAppStore } from '@/lib/state/store';
 const VIEW_AGENT: Record<ViewName, { id: AgentId; status: string }[]> = {
   overview: [
     { id: 'sentinel', status: 'watching' },
-    { id: 'brief', status: 'narrating' },
+    { id: 'mystique', status: 'narrating' },
   ],
-  crq: [{ id: 'brief', status: 'computing ALE' }],
+  crq: [{ id: 'mystique', status: 'computing ALE' }],
   'attack-path': [{ id: 'hunter', status: 'tracing paths' }],
   aev: [
     { id: 'hunter', status: 'replaying' },
@@ -24,6 +24,7 @@ const VIEW_AGENT: Record<ViewName, { id: AgentId; status: string }[]> = {
     { id: 'action', status: 'awaiting approval' },
   ],
   agents: [],
+  mythos: [{ id: 'mythos', status: 'red-teaming · continuous' }],
   settings: [],
 };
 

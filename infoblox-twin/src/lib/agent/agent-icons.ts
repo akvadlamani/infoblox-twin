@@ -8,6 +8,7 @@ import {
   IconBolt,
   IconTrashX,
   IconSparkles,
+  IconFlame,
   IconUser,
 } from '@tabler/icons-react';
 import type { AgentId } from '@/lib/types/agent.types';
@@ -37,8 +38,10 @@ export function iconForAgent(id: AgentId): IconCmp {
       return IconBolt;
     case 'takedown':
       return IconTrashX;
-    case 'brief':
+    case 'mystique':
       return IconSparkles;
+    case 'mythos':
+      return IconFlame;
     default:
       return IconUser;
   }

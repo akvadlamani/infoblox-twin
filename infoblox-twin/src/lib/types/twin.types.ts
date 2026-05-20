@@ -108,7 +108,7 @@ export interface AgentAction {
   id: string;
   agentName: string;
   // Identity ref into the agent roster — UI uses this to render the badge.
-  agentId?: 'sentinel' | 'triage' | 'hunter' | 'scope' | 'pilot' | 'sandbox' | 'action' | 'takedown' | 'brief';
+  agentId?: 'sentinel' | 'triage' | 'hunter' | 'scope' | 'pilot' | 'sandbox' | 'action' | 'takedown' | 'mystique' | 'mythos';
   proposedAt: string;
   description: string;
   // Optional human-readable rationale for the proposal.
@@ -198,6 +198,7 @@ export type ViewName =
   | 'compliance'
   | 'agent-iez'
   | 'agents'
+  | 'mythos'
   | 'crq'
   | 'settings';
 

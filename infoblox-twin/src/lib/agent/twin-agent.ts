@@ -128,7 +128,7 @@ async function planFlow(question: string): Promise<AgentFlow> {
 
   // Fallback: act like the assistant searched and didn't find a clean match.
   return {
-    primary: 'brief',
+    primary: 'mystique',
     toolCalls: [
       {
         name: 'searchAssets',
@@ -162,7 +162,7 @@ function blastFlow(
   return {
     primary: 'hunter',
     handoffs: [
-      { fromId: 'hunter', toId: 'brief', rationale: 'Hunter found the paths — Brief is summarizing them.' },
+      { fromId: 'hunter', toId: 'mystique', rationale: 'Hunter found the paths — Mystique is summarizing them.' },
     ],
     toolCalls: [
       {
@@ -208,7 +208,7 @@ Open **Blast Radius** to walk this interactively.`,
 
 function overnightFlow(): AgentFlow {
   return {
-    primary: 'brief',
+    primary: 'mystique',
     toolCalls: [
       { name: 'getDriftSince', input: { hours: 24 }, result: '5 changes detected' },
       { name: 'listThreatObservations', input: { hours: 24 }, result: '14 phish attempts, 11 blocked' },
@@ -351,7 +351,7 @@ Open **Compliance** to see all four zones (PCI · HIPAA · GDPR · SOX) and walk
 function crqFlow(top: RiskScenario[], totalAle: number, mitigations: Mitigation[]): AgentFlow {
   const active = mitigations.filter((m) => m.status === 'active');
   return {
-    primary: 'brief',
+    primary: 'mystique',
     toolCalls: [
       { name: 'getCurrentCrqSnapshot', input: {}, result: `ALE ${formatDollars(totalAle)}` },
       { name: 'listMitigations', input: { active: true }, result: `${active.length}/${mitigations.length} active` },
@@ -433,7 +433,7 @@ Each one is sized larger in the 3D scene and has a red orbit ring. The Twin reco
 
 function helpFlow(): AgentFlow {
   return {
-    primary: 'brief',
+    primary: 'mystique',
     toolCalls: [],
     answer: `I can answer questions over the live graph. Things I'm good at:
 

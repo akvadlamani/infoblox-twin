@@ -10,7 +10,8 @@ export type AgentId =
   | 'sandbox'
   | 'action'
   | 'takedown'
-  | 'brief';
+  | 'mystique'
+  | 'mythos';
 
 export type AutonomyLevel = 'advisory' | 'semi' | 'autonomous';
 
@@ -22,6 +23,8 @@ export type AgentDomain =
   | 'patch-risk'
   | 'compliance'
   | 'agent-iez'
+  | 'mythos'
+  | 'agents'
   | 'settings';
 
 export interface AgentScope {

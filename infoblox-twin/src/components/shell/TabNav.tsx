@@ -8,14 +8,21 @@ import {
   IconBandage,
   IconClipboardCheck,
   IconRobot,
+  IconFlame,
 } from '@tabler/icons-react';
+
+const MYTHOS_GREEN = '#1aae9f';
 import { useAppStore } from '@/lib/state/store';
 import type { ViewName } from '@/lib/types/twin.types';
 
 interface Tab {
   id: ViewName;
   label: string;
-  icon: React.ComponentType<{ size?: number | string; className?: string }>;
+  icon: React.ComponentType<{
+    size?: number | string;
+    className?: string;
+    style?: React.CSSProperties;
+  }>;
   hint: string;
 }
 
@@ -57,10 +64,16 @@ const ALL_TABS: Tab[] = [
     hint: 'PCI · HIPAA · GDPR · SOX zones auto-classified. Drift surfaced continuously.',
   },
   {
+    id: 'mythos',
+    label: 'Mythos',
+    icon: IconFlame,
+    hint: "What happens if any asset falls? Mythos is your continuous red team — runs sandbox simulations every ~18s and reports impact in dollars.",
+  },
+  {
     id: 'agents',
     label: 'Agents',
     icon: IconRobot,
-    hint: 'Meet your AI security team. Identity, scope, autonomy, and trust — for each of the nine agents.',
+    hint: 'Meet your AI security team. Identity, scope, autonomy, and trust — for each of the ten agents.',
   },
   {
     id: 'agent-iez',
@@ -78,7 +91,9 @@ export function TabNav() {
 
   let tabs = ALL_TABS;
   if (persona === 'cro')
-    tabs = ALL_TABS.filter((t) => !['aev', 'agent-iez', 'patch-risk', 'agents'].includes(t.id));
+    tabs = ALL_TABS.filter(
+      (t) => !['aev', 'agent-iez', 'patch-risk', 'agents', 'mythos'].includes(t.id)
+    );
 
   return (
     <nav className="absolute top-[56px] left-1/2 -translate-x-1/2 z-30">
@@ -87,6 +102,7 @@ export function TabNav() {
           const Icon = t.icon;
           const active = view === t.id;
           const isHovered = hovered === t.id;
+          const isMythos = t.id === 'mythos';
           return (
             <div key={t.id} className="relative">
               <button
@@ -95,14 +111,44 @@ export function TabNav() {
                 onMouseLeave={() => setHovered(null)}
                 onFocus={() => setHovered(t.id)}
                 onBlur={() => setHovered(null)}
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-[12px] font-medium transition-all duration-fast ${
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-[12px] font-medium transition-all duration-fast relative ${
                   active
-                    ? 'bg-accent/15 text-text1'
+                    ? isMythos
+                      ? 'text-text1'
+                      : 'bg-accent/15 text-text1'
+                    : isMythos
+                    ? 'hover:bg-white/5'
                     : 'text-text2 hover:text-text1 hover:bg-white/5'
                 }`}
+                style={
+                  isMythos
+                    ? active
+                      ? {
+                          background: `${MYTHOS_GREEN}26`,
+                          color: '#fff',
+                          boxShadow: `inset 0 0 0 1px ${MYTHOS_GREEN}66`,
+                        }
+                      : { color: MYTHOS_GREEN }
+                    : undefined
+                }
               >
-                <Icon size={13} className={active ? 'text-accent2' : ''} />
+                <Icon
+                  size={13}
+                  className={!isMythos && active ? 'text-accent2' : ''}
+                  style={isMythos ? { color: MYTHOS_GREEN } : undefined}
+                />
                 <span>{t.label}</span>
+                {isMythos && (
+                  <span
+                    className="ml-0.5 inline-block rounded-full anim-pulse-dot"
+                    style={{
+                      width: 6,
+                      height: 6,
+                      background: MYTHOS_GREEN,
+                      boxShadow: `0 0 8px ${MYTHOS_GREEN}99`,
+                    }}
+                  />
+                )}
               </button>
               {isHovered && !active && (
                 <Tooltip label={t.label} hint={t.hint} />

@@ -110,9 +110,9 @@ export function AskTwinPanel({ open, onClose }: Props) {
             <IconSparkles size={14} className="text-accent2" />
           </div>
           <div className="flex-1">
-            <div className="text-[13px] font-medium text-text1">Ask Twin</div>
+            <div className="text-[13px] font-medium text-text1">Ask Mystique</div>
             <div className="text-[10px] text-text3 lowercase tracking-wider">
-              agent grounded on your live graph
+              your AI orchestrator · routes to specialist agents
             </div>
           </div>
           <span className="px-1.5 py-0.5 rounded text-[9px] font-mono uppercase tracking-wider bg-warning/15 text-warning border border-warning/40">
@@ -121,7 +121,7 @@ export function AskTwinPanel({ open, onClose }: Props) {
           <button
             onClick={onClose}
             className="p-1.5 rounded-md text-text3 hover:bg-white/5 hover:text-text1 transition-colors duration-fast"
-            aria-label="Close Ask Twin"
+            aria-label="Close Ask Mystique"
           >
             <IconX size={14} />
           </button>
@@ -136,7 +136,7 @@ export function AskTwinPanel({ open, onClose }: Props) {
                 <Bubble key={m.id} msg={m} agents={agents} onPick={send} />
               ))}
               {thinking && messages[messages.length - 1]?.role !== 'tool' && (
-                <Thinking agent={lastAssistantAgent(messages, agents)} />
+                <Thinking agent={lastAssistantAgent(messages, agents) ?? agents.get('mystique')} />
               )}
             </div>
           )}
@@ -348,7 +348,7 @@ function Thinking({ agent }: { agent?: Agent }) {
   return (
     <div className="flex items-center gap-2 text-[11px] pl-8" style={{ color: agent ? accent : '#a0a0b0' }}>
       <span className="inline-block w-1.5 h-1.5 rounded-full anim-pulse-dot" style={{ background: accent }} />
-      <span>{agent ? `${agent.name} is thinking…` : 'Twin is thinking…'}</span>
+      <span>{agent ? `${agent.name} is thinking…` : 'Mystique is thinking…'}</span>
     </div>
   );
 }
@@ -473,10 +473,10 @@ export function AskTwinLauncher({ onOpen }: { onOpen: () => void }) {
     <button
       onClick={onOpen}
       className="fixed bottom-5 right-5 z-30 flex items-center gap-2 px-3.5 py-2.5 rounded-full bg-accent text-white shadow-xl hover:bg-accent2 transition-colors duration-fast"
-      title="Ask Twin (⌘.)"
+      title="Ask Mystique (⌘.)"
     >
       <IconSparkles size={14} />
-      <span className="text-[12px] font-medium">Ask Twin</span>
+      <span className="text-[12px] font-medium">Ask Mystique</span>
       <span className="text-[10px] opacity-70 font-mono">⌘.</span>
     </button>
   );
