@@ -1,0 +1,754 @@
+[
+  {
+    "id": "e1",
+    "source": "ast_internet",
+    "target": "ast_firewall",
+    "type": "network",
+    "weight": 0.9,
+    "observed": true
+  },
+  {
+    "id": "e2",
+    "source": "ast_internet",
+    "target": "ast_email-gw",
+    "type": "dns",
+    "weight": 0.85,
+    "observed": true
+  },
+  {
+    "id": "e3",
+    "source": "ast_internet",
+    "target": "ast_web-dmz",
+    "type": "network",
+    "weight": 0.8,
+    "observed": true
+  },
+  {
+    "id": "e4",
+    "source": "ast_firewall",
+    "target": "ast_ad-primary",
+    "type": "network",
+    "weight": 0.9,
+    "observed": true
+  },
+  {
+    "id": "e5",
+    "source": "ast_firewall",
+    "target": "ast_dc-core",
+    "type": "network",
+    "weight": 0.95,
+    "observed": true
+  },
+  {
+    "id": "e6",
+    "source": "ast_ad-primary",
+    "target": "ast_cfo-ws",
+    "type": "identity",
+    "weight": 0.85,
+    "observed": true
+  },
+  {
+    "id": "e7",
+    "source": "ast_ad-primary",
+    "target": "ast_ceo-ws",
+    "type": "identity",
+    "weight": 0.85,
+    "observed": true
+  },
+  {
+    "id": "e8",
+    "source": "ast_ad-primary",
+    "target": "ast_fin-db",
+    "type": "identity",
+    "weight": 0.9,
+    "observed": true
+  },
+  {
+    "id": "e9",
+    "source": "ast_ad-primary",
+    "target": "ast_sap-prod",
+    "type": "identity",
+    "weight": 0.9,
+    "observed": true
+  },
+  {
+    "id": "e10",
+    "source": "ast_ad-primary",
+    "target": "ast_payroll",
+    "type": "identity",
+    "weight": 0.8,
+    "observed": true
+  },
+  {
+    "id": "e11",
+    "source": "ast_ad-primary",
+    "target": "ast_eng-jump",
+    "type": "identity",
+    "weight": 0.8,
+    "observed": true
+  },
+  {
+    "id": "e12",
+    "source": "ast_ad-primary",
+    "target": "ast_file-svr",
+    "type": "identity",
+    "weight": 0.7,
+    "observed": true
+  },
+  {
+    "id": "e13",
+    "source": "ast_mfa",
+    "target": "ast_ad-primary",
+    "type": "identity",
+    "weight": 0.85,
+    "observed": true
+  },
+  {
+    "id": "e14",
+    "source": "ast_mfa",
+    "target": "ast_cfo-ws",
+    "type": "identity",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e15",
+    "source": "ast_mfa",
+    "target": "ast_ceo-ws",
+    "type": "identity",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e16",
+    "source": "ast_mfa",
+    "target": "ast_eng-jump",
+    "type": "identity",
+    "weight": 0.7,
+    "observed": true
+  },
+  {
+    "id": "e17",
+    "source": "ast_pki",
+    "target": "ast_ad-primary",
+    "type": "trust",
+    "weight": 0.5,
+    "observed": true
+  },
+  {
+    "id": "e18",
+    "source": "ast_cfo-ws",
+    "target": "ast_fin-db",
+    "type": "data-flow",
+    "weight": 0.9,
+    "observed": true
+  },
+  {
+    "id": "e19",
+    "source": "ast_fin-db",
+    "target": "ast_sap-prod",
+    "type": "data-flow",
+    "weight": 0.95,
+    "observed": true
+  },
+  {
+    "id": "e20",
+    "source": "ast_sap-prod",
+    "target": "ast_payroll",
+    "type": "data-flow",
+    "weight": 0.85,
+    "observed": true
+  },
+  {
+    "id": "e21",
+    "source": "ast_ceo-ws",
+    "target": "ast_sap-prod",
+    "type": "data-flow",
+    "weight": 0.6,
+    "observed": true
+  },
+  {
+    "id": "e22",
+    "source": "ast_eng-jump",
+    "target": "ast_rd-vault",
+    "type": "network",
+    "weight": 0.9,
+    "observed": true
+  },
+  {
+    "id": "e23",
+    "source": "ast_eng-jump",
+    "target": "ast_build-svr",
+    "type": "network",
+    "weight": 0.85,
+    "observed": true
+  },
+  {
+    "id": "e24",
+    "source": "ast_build-svr",
+    "target": "ast_git-primary",
+    "type": "data-flow",
+    "weight": 0.9,
+    "observed": true
+  },
+  {
+    "id": "e25",
+    "source": "ast_rd-vault",
+    "target": "ast_build-svr",
+    "type": "trust",
+    "weight": 0.8,
+    "observed": true
+  },
+  {
+    "id": "e26",
+    "source": "ast_dc-core",
+    "target": "ast_file-svr",
+    "type": "network",
+    "weight": 0.8,
+    "observed": true
+  },
+  {
+    "id": "e27",
+    "source": "ast_dc-core",
+    "target": "ast_backup",
+    "type": "network",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e28",
+    "source": "ast_dc-core",
+    "target": "ast_mfg-scada",
+    "type": "network",
+    "weight": 0.85,
+    "observed": true
+  },
+  {
+    "id": "e29",
+    "source": "ast_dc-core",
+    "target": "ast_crm-db",
+    "type": "network",
+    "weight": 0.7,
+    "observed": true
+  },
+  {
+    "id": "e30",
+    "source": "ast_dc-core",
+    "target": "ast_ad-primary",
+    "type": "network",
+    "weight": 0.95,
+    "observed": true
+  },
+  {
+    "id": "e31",
+    "source": "ast_crm-app",
+    "target": "ast_crm-db",
+    "type": "data-flow",
+    "weight": 0.9,
+    "observed": true
+  },
+  {
+    "id": "e32",
+    "source": "ast_cms",
+    "target": "ast_crm-app",
+    "type": "data-flow",
+    "weight": 0.6,
+    "observed": true
+  },
+  {
+    "id": "e33",
+    "source": "ast_vpn-gw",
+    "target": "ast_emp-pool-finance",
+    "type": "network",
+    "weight": 0.7,
+    "observed": true
+  },
+  {
+    "id": "e34",
+    "source": "ast_vpn-gw",
+    "target": "ast_emp-pool-eng",
+    "type": "network",
+    "weight": 0.7,
+    "observed": true
+  },
+  {
+    "id": "e35",
+    "source": "ast_vpn-gw",
+    "target": "ast_emp-pool-sales",
+    "type": "network",
+    "weight": 0.7,
+    "observed": true
+  },
+  {
+    "id": "e36",
+    "source": "ast_email-gw",
+    "target": "ast_emp-pool-finance",
+    "type": "dns",
+    "weight": 0.85,
+    "observed": true
+  },
+  {
+    "id": "e37",
+    "source": "ast_email-gw",
+    "target": "ast_emp-pool-eng",
+    "type": "dns",
+    "weight": 0.85,
+    "observed": true
+  },
+  {
+    "id": "e38",
+    "source": "ast_email-gw",
+    "target": "ast_emp-pool-sales",
+    "type": "dns",
+    "weight": 0.85,
+    "observed": true
+  },
+  {
+    "id": "e39",
+    "source": "ast_email-gw",
+    "target": "ast_emp-pool-exec",
+    "type": "dns",
+    "weight": 0.9,
+    "observed": true
+  },
+  {
+    "id": "e40",
+    "source": "ast_emp-pool-finance",
+    "target": "ast_ad-primary",
+    "type": "identity",
+    "weight": 0.7,
+    "observed": true
+  },
+  {
+    "id": "e41",
+    "source": "ast_emp-pool-eng",
+    "target": "ast_ad-primary",
+    "type": "identity",
+    "weight": 0.7,
+    "observed": true
+  },
+  {
+    "id": "e42",
+    "source": "ast_emp-pool-sales",
+    "target": "ast_ad-primary",
+    "type": "identity",
+    "weight": 0.7,
+    "observed": true
+  },
+  {
+    "id": "e43",
+    "source": "ast_emp-pool-exec",
+    "target": "ast_ad-primary",
+    "type": "identity",
+    "weight": 0.8,
+    "observed": true
+  },
+  {
+    "id": "e44",
+    "source": "ast_emp-pool-exec",
+    "target": "ast_cfo-ws",
+    "type": "trust",
+    "weight": 0.7,
+    "observed": false
+  },
+  {
+    "id": "e45",
+    "source": "ast_emp-pool-exec",
+    "target": "ast_ceo-ws",
+    "type": "trust",
+    "weight": 0.7,
+    "observed": false
+  },
+  {
+    "id": "e46",
+    "source": "ast_mfg-scada",
+    "target": "ast_plc1",
+    "type": "network",
+    "weight": 0.95,
+    "observed": true
+  },
+  {
+    "id": "e47",
+    "source": "ast_mfg-scada",
+    "target": "ast_plc2",
+    "type": "network",
+    "weight": 0.95,
+    "observed": true
+  },
+  {
+    "id": "e48",
+    "source": "ast_web-dmz",
+    "target": "ast_crm-app",
+    "type": "network",
+    "weight": 0.6,
+    "observed": true
+  },
+  {
+    "id": "e49",
+    "source": "ast_emp-pool-finance",
+    "target": "ast_cfo-ws",
+    "type": "trust",
+    "weight": 0.5,
+    "observed": false
+  },
+  {
+    "id": "e50",
+    "source": "ast_emp-pool-eng",
+    "target": "ast_eng-jump",
+    "type": "network",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e51",
+    "source": "ast_finlap-1",
+    "target": "ast_ad-primary",
+    "type": "identity",
+    "weight": 0.7,
+    "observed": true
+  },
+  {
+    "id": "e52",
+    "source": "ast_finlap-2",
+    "target": "ast_ad-primary",
+    "type": "identity",
+    "weight": 0.7,
+    "observed": true
+  },
+  {
+    "id": "e53",
+    "source": "ast_email-gw",
+    "target": "ast_finlap-1",
+    "type": "dns",
+    "weight": 0.85,
+    "observed": true
+  },
+  {
+    "id": "e54",
+    "source": "ast_email-gw",
+    "target": "ast_finlap-2",
+    "type": "dns",
+    "weight": 0.85,
+    "observed": true
+  },
+  {
+    "id": "e55",
+    "source": "ast_finlap-1",
+    "target": "ast_fin-db",
+    "type": "data-flow",
+    "weight": 0.5,
+    "observed": true
+  },
+  {
+    "id": "e56",
+    "source": "ast_finlap-2",
+    "target": "ast_sap-prod",
+    "type": "data-flow",
+    "weight": 0.5,
+    "observed": true
+  },
+  {
+    "id": "e57",
+    "source": "ast_finmob-1",
+    "target": "ast_saas-365",
+    "type": "identity",
+    "weight": 0.7,
+    "observed": true
+  },
+  {
+    "id": "e58",
+    "source": "ast_finmob-2",
+    "target": "ast_saas-365",
+    "type": "identity",
+    "weight": 0.7,
+    "observed": true
+  },
+  {
+    "id": "e59",
+    "source": "ast_finmob-1",
+    "target": "ast_mfa",
+    "type": "identity",
+    "weight": 0.8,
+    "observed": true
+  },
+  {
+    "id": "e60",
+    "source": "ast_finmob-2",
+    "target": "ast_mfa",
+    "type": "identity",
+    "weight": 0.8,
+    "observed": true
+  },
+  {
+    "id": "e61",
+    "source": "ast_englap-1",
+    "target": "ast_eng-jump",
+    "type": "network",
+    "weight": 0.7,
+    "observed": true
+  },
+  {
+    "id": "e62",
+    "source": "ast_englap-2",
+    "target": "ast_eng-jump",
+    "type": "network",
+    "weight": 0.7,
+    "observed": true
+  },
+  {
+    "id": "e63",
+    "source": "ast_englap-1",
+    "target": "ast_git-primary",
+    "type": "data-flow",
+    "weight": 0.8,
+    "observed": true
+  },
+  {
+    "id": "e64",
+    "source": "ast_englap-2",
+    "target": "ast_git-primary",
+    "type": "data-flow",
+    "weight": 0.8,
+    "observed": true
+  },
+  {
+    "id": "e65",
+    "source": "ast_eng-jump",
+    "target": "ast_wl-api",
+    "type": "network",
+    "weight": 0.85,
+    "observed": true
+  },
+  {
+    "id": "e66",
+    "source": "ast_wl-api",
+    "target": "ast_wl-data",
+    "type": "data-flow",
+    "weight": 0.85,
+    "observed": true
+  },
+  {
+    "id": "e67",
+    "source": "ast_wl-api",
+    "target": "ast_saas-aws",
+    "type": "trust",
+    "weight": 0.7,
+    "observed": true
+  },
+  {
+    "id": "e68",
+    "source": "ast_wl-data",
+    "target": "ast_saas-aws",
+    "type": "trust",
+    "weight": 0.7,
+    "observed": true
+  },
+  {
+    "id": "e69",
+    "source": "ast_build-svr",
+    "target": "ast_wl-api",
+    "type": "data-flow",
+    "weight": 0.8,
+    "observed": true
+  },
+  {
+    "id": "e70",
+    "source": "ast_build-svr",
+    "target": "ast_saas-aws",
+    "type": "data-flow",
+    "weight": 0.7,
+    "observed": true
+  },
+  {
+    "id": "e71",
+    "source": "ast_sales-lap-1",
+    "target": "ast_crm-app",
+    "type": "data-flow",
+    "weight": 0.8,
+    "observed": true
+  },
+  {
+    "id": "e72",
+    "source": "ast_sales-lap-2",
+    "target": "ast_crm-app",
+    "type": "data-flow",
+    "weight": 0.8,
+    "observed": true
+  },
+  {
+    "id": "e73",
+    "source": "ast_sales-mob-1",
+    "target": "ast_crm-app",
+    "type": "data-flow",
+    "weight": 0.7,
+    "observed": true
+  },
+  {
+    "id": "e74",
+    "source": "ast_sales-mob-1",
+    "target": "ast_saas-365",
+    "type": "identity",
+    "weight": 0.7,
+    "observed": true
+  },
+  {
+    "id": "e75",
+    "source": "ast_email-gw",
+    "target": "ast_sales-lap-1",
+    "type": "dns",
+    "weight": 0.85,
+    "observed": true
+  },
+  {
+    "id": "e76",
+    "source": "ast_email-gw",
+    "target": "ast_sales-lap-2",
+    "type": "dns",
+    "weight": 0.85,
+    "observed": true
+  },
+  {
+    "id": "e77",
+    "source": "ast_dns-primary",
+    "target": "ast_internet",
+    "type": "dns",
+    "weight": 0.95,
+    "observed": true
+  },
+  {
+    "id": "e78",
+    "source": "ast_dns-primary",
+    "target": "ast_ad-primary",
+    "type": "dns",
+    "weight": 0.9,
+    "observed": true
+  },
+  {
+    "id": "e79",
+    "source": "ast_dhcp",
+    "target": "ast_dns-primary",
+    "type": "network",
+    "weight": 0.85,
+    "observed": true
+  },
+  {
+    "id": "e80",
+    "source": "ast_dhcp",
+    "target": "ast_ipam",
+    "type": "network",
+    "weight": 0.85,
+    "observed": true
+  },
+  {
+    "id": "e81",
+    "source": "ast_dc-core",
+    "target": "ast_dns-primary",
+    "type": "network",
+    "weight": 0.9,
+    "observed": true
+  },
+  {
+    "id": "e82",
+    "source": "ast_ad-primary",
+    "target": "ast_ad-secondary",
+    "type": "identity",
+    "weight": 0.95,
+    "observed": true
+  },
+  {
+    "id": "e83",
+    "source": "ast_ad-secondary",
+    "target": "ast_emp-pool-eng",
+    "type": "identity",
+    "weight": 0.65,
+    "observed": true
+  },
+  {
+    "id": "e84",
+    "source": "ast_ad-secondary",
+    "target": "ast_emp-pool-sales",
+    "type": "identity",
+    "weight": 0.65,
+    "observed": true
+  },
+  {
+    "id": "e85",
+    "source": "ast_mfg-scada",
+    "target": "ast_hmi-1",
+    "type": "network",
+    "weight": 0.9,
+    "observed": true
+  },
+  {
+    "id": "e86",
+    "source": "ast_hmi-1",
+    "target": "ast_plc1",
+    "type": "network",
+    "weight": 0.85,
+    "observed": true
+  },
+  {
+    "id": "e87",
+    "source": "ast_hmi-1",
+    "target": "ast_plc2",
+    "type": "network",
+    "weight": 0.85,
+    "observed": true
+  },
+  {
+    "id": "e88",
+    "source": "ast_plc1",
+    "target": "ast_sensor-1",
+    "type": "network",
+    "weight": 0.95,
+    "observed": true
+  },
+  {
+    "id": "e89",
+    "source": "ast_plc2",
+    "target": "ast_sensor-2",
+    "type": "network",
+    "weight": 0.95,
+    "observed": true
+  },
+  {
+    "id": "e90",
+    "source": "ast_saas-365",
+    "target": "ast_emp-pool-finance",
+    "type": "identity",
+    "weight": 0.7,
+    "observed": true
+  },
+  {
+    "id": "e91",
+    "source": "ast_saas-365",
+    "target": "ast_emp-pool-eng",
+    "type": "identity",
+    "weight": 0.7,
+    "observed": true
+  },
+  {
+    "id": "e92",
+    "source": "ast_saas-365",
+    "target": "ast_emp-pool-sales",
+    "type": "identity",
+    "weight": 0.7,
+    "observed": true
+  },
+  {
+    "id": "e93",
+    "source": "ast_printers",
+    "target": "ast_dns-primary",
+    "type": "dns",
+    "weight": 0.6,
+    "observed": true
+  },
+  {
+    "id": "e94",
+    "source": "ast_printers",
+    "target": "ast_dhcp",
+    "type": "network",
+    "weight": 0.6,
+    "observed": true
+  }
+]

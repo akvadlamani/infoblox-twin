@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "twin-dev",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "cd infoblox-twin && pnpm dev"],
+      "port": 5173
+    }
+  ]
+}

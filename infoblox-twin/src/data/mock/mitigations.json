@@ -1,0 +1,66 @@
+[
+  {
+    "id": "m_td-finance",
+    "name": "Deploy Threat Defense on Finance segment",
+    "type": "control",
+    "setupCost": 140000,
+    "annualCost": 32000,
+    "expectedRiskReduction": 0.41,
+    "affectedScenarios": ["vigorish-viper", "vextrio"],
+    "product": "td",
+    "status": "inactive"
+  },
+  {
+    "id": "m_cyber911",
+    "name": "Enable Cyber 911 failover",
+    "type": "control",
+    "setupCost": 85000,
+    "annualCost": 24000,
+    "expectedRiskReduction": 0.18,
+    "affectedScenarios": ["vigorish-viper", "vextrio"],
+    "product": "cyber-911",
+    "status": "inactive"
+  },
+  {
+    "id": "m_mfa-exec",
+    "name": "Tighten AD MFA for execs",
+    "type": "policy",
+    "setupCost": 22000,
+    "annualCost": 4000,
+    "expectedRiskReduction": 0.24,
+    "affectedScenarios": ["vigorish-viper", "savvy-seahorse"],
+    "status": "inactive"
+  },
+  {
+    "id": "m_segment-rd",
+    "name": "Segment R&D from corporate AD",
+    "type": "segmentation",
+    "setupCost": 95000,
+    "annualCost": 12000,
+    "expectedRiskReduction": 0.31,
+    "affectedScenarios": ["decoy-dog", "savvy-seahorse"],
+    "status": "inactive"
+  },
+  {
+    "id": "m_inflight",
+    "name": "Enable Inflight email security pre-delivery",
+    "type": "control",
+    "setupCost": 110000,
+    "annualCost": 28000,
+    "expectedRiskReduction": 0.35,
+    "affectedScenarios": ["vigorish-viper", "vextrio"],
+    "product": "inflight",
+    "status": "inactive"
+  },
+  {
+    "id": "m_soc-insights",
+    "name": "Roll out SOC Insights agentic triage",
+    "type": "control",
+    "setupCost": 65000,
+    "annualCost": 18000,
+    "expectedRiskReduction": 0.22,
+    "affectedScenarios": ["vigorish-viper", "vextrio", "savvy-seahorse", "decoy-dog"],
+    "product": "soc-insights",
+    "status": "inactive"
+  }
+]

@@ -1,0 +1,298 @@
+[
+  {
+    "id": "vigorish-viper",
+    "name": "Vigorish Viper",
+    "family": "aitm",
+    "origin": "Suspected China-nexus",
+    "tigSource": "Infoblox Threat Intel — published Jul 2024",
+    "mitreTactics": ["Initial Access", "Credential Access", "Lateral Movement", "Exfiltration"],
+    "lastObserved": "2026-05-17T09:32:00Z",
+    "campaignCount": 170000,
+    "description": "Publicly disclosed by Infoblox in 2024. Operates a sprawling traffic distribution and AiTM infrastructure linked to illegal gambling and credential harvesting. 170K+ associated domains tracked.",
+    "iocs": [
+      "acme-finance-portal[.]vip",
+      "secure-acme-pay[.]top",
+      "okta-acme-login[.]live"
+    ],
+    "killChainTemplate": [
+      {
+        "id": "viper_1",
+        "order": 1,
+        "timeLabel": "T-48h",
+        "technique": "Spoofed Okta domain registered",
+        "mitreId": "T1583.001",
+        "sourceAsset": "external",
+        "targetAsset": "ast_email-gw",
+        "iconName": "ti-world",
+        "description": "okta-acme-login.live registered via privacy-protected registrar.",
+        "disposition": "blocked",
+        "explanation": "Threat Defense intercepts via Infoblox NRD + Viper-cluster signature.",
+        "control": "td"
+      },
+      {
+        "id": "viper_2",
+        "order": 2,
+        "timeLabel": "T-24h",
+        "technique": "Phishing: spear-phish links",
+        "mitreId": "T1566.002",
+        "sourceAsset": "ast_email-gw",
+        "targetAsset": "ast_emp-pool-finance",
+        "iconName": "ti-mail",
+        "description": "Targeted phishing to 12 finance staff with credential-harvest links.",
+        "disposition": "blocked",
+        "explanation": "TD blocks pre-delivery for 11 of 12 endpoints — 1 unprotected.",
+        "control": "td"
+      },
+      {
+        "id": "viper_3",
+        "order": 3,
+        "timeLabel": "T-2h",
+        "technique": "Adversary-in-the-Middle",
+        "mitreId": "T1557",
+        "sourceAsset": "ast_emp-pool-finance",
+        "targetAsset": "ast_cfo-ws",
+        "iconName": "ti-mouse",
+        "description": "Unprotected endpoint follows link; AiTM captures Okta session token.",
+        "disposition": "observed",
+        "explanation": "Endpoint protection drift — Twin flags as exposure.",
+        "control": "none"
+      },
+      {
+        "id": "viper_4",
+        "order": 4,
+        "timeLabel": "T-0",
+        "technique": "Use Alternate Authentication Material",
+        "mitreId": "T1550.001",
+        "sourceAsset": "ast_cfo-ws",
+        "targetAsset": "ast_ad-primary",
+        "iconName": "ti-key",
+        "description": "Captured session replayed against AD federation endpoint.",
+        "disposition": "contained",
+        "explanation": "Token-replay anomaly — SOC Insights opens incident.",
+        "control": "soc-insights"
+      },
+      {
+        "id": "viper_5",
+        "order": 5,
+        "timeLabel": "T+18m",
+        "technique": "Data from Information Repositories",
+        "mitreId": "T1213",
+        "sourceAsset": "ast_ad-primary",
+        "targetAsset": "ast_fin-db",
+        "iconName": "ti-database",
+        "description": "Lateral movement attempt to financial database via SQLnet.",
+        "disposition": "contained",
+        "explanation": "Contained at hop 2 with deployed controls.",
+        "control": "soc-insights"
+      }
+    ]
+  },
+  {
+    "id": "vextrio",
+    "name": "VexTrio Viper",
+    "family": "commodity-malware",
+    "origin": "Russia-linked criminal syndicate",
+    "tigSource": "Infoblox Threat Intel — disclosed Jan 2024",
+    "mitreTactics": ["Initial Access", "Command and Control", "Collection", "Exfiltration"],
+    "lastObserved": "2026-05-12T14:11:00Z",
+    "campaignCount": 70000,
+    "description": "World's largest DNS-based Traffic Distribution System. Routes victims to scams, banking trojans, and tech-support fraud across 70K+ partner domains. Disclosed by Infoblox in early 2024.",
+    "iocs": [
+      "payroll-update[.]click",
+      "wd-sync[.]live",
+      "tds-route[.]top"
+    ],
+    "killChainTemplate": [
+      {
+        "id": "vextrio_1",
+        "order": 1,
+        "timeLabel": "T-72h",
+        "technique": "Drive-by Compromise",
+        "mitreId": "T1189",
+        "sourceAsset": "external",
+        "targetAsset": "ast_email-gw",
+        "iconName": "ti-bug",
+        "description": "Malspam delivers TDS link to payroll team.",
+        "disposition": "blocked",
+        "explanation": "TD blocks via Infoblox VexTrio TDS signature.",
+        "control": "td"
+      },
+      {
+        "id": "vextrio_2",
+        "order": 2,
+        "timeLabel": "T-24h",
+        "technique": "User Execution: Malicious Link",
+        "mitreId": "T1204.001",
+        "sourceAsset": "ast_email-gw",
+        "targetAsset": "ast_emp-pool-finance",
+        "iconName": "ti-download",
+        "description": "Payload attempted on finance endpoints.",
+        "disposition": "blocked",
+        "explanation": "DNS Armor blocks resolution of tds-route.top across finance pool.",
+        "control": "dns-armor"
+      },
+      {
+        "id": "vextrio_3",
+        "order": 3,
+        "timeLabel": "T-2h",
+        "technique": "Credentials from Web Browsers",
+        "mitreId": "T1555.003",
+        "sourceAsset": "ast_emp-pool-finance",
+        "targetAsset": "ast_payroll",
+        "iconName": "ti-credit-card",
+        "description": "Stealer attempts to scrape Workday session cookies.",
+        "disposition": "contained",
+        "explanation": "TD blocks outbound C2 — no creds reach VexTrio.",
+        "control": "td"
+      },
+      {
+        "id": "vextrio_4",
+        "order": 4,
+        "timeLabel": "T-0",
+        "technique": "Exfiltration Over C2 Channel",
+        "mitreId": "T1041",
+        "sourceAsset": "ast_payroll",
+        "targetAsset": "external",
+        "iconName": "ti-package-export",
+        "description": "Stealer attempts to exfiltrate Workday session and payroll data.",
+        "disposition": "blocked",
+        "explanation": "Agentic Takedown filed registrar abuse report — domain seized in 2h.",
+        "control": "agentic-takedown"
+      }
+    ]
+  },
+  {
+    "id": "savvy-seahorse",
+    "name": "Savvy Seahorse",
+    "family": "aitm",
+    "origin": "Unknown — financially motivated",
+    "tigSource": "Infoblox Threat Intel — disclosed Feb 2024",
+    "mitreTactics": ["Initial Access", "Credential Access", "Discovery", "Collection"],
+    "lastObserved": "2026-05-18T08:14:00Z",
+    "campaignCount": 4200,
+    "description": "DNS CNAME-based traffic distribution and AiTM infrastructure that aged domains for months before activation — bypassing newly-observed-domain feeds.",
+    "iocs": [
+      "acmemfg-portal[.]co",
+      "exec-acme[.]online",
+      "acme-board-secure[.]net"
+    ],
+    "killChainTemplate": [
+      {
+        "id": "seahorse_1",
+        "order": 1,
+        "timeLabel": "T-30d",
+        "technique": "Acquire Infrastructure: Domains",
+        "mitreId": "T1583.001",
+        "sourceAsset": "external",
+        "targetAsset": "ast_email-gw",
+        "iconName": "ti-world",
+        "description": "Long-aged domain matures across legitimate traffic — bypasses NRD feeds.",
+        "disposition": "observed",
+        "explanation": "Domain aged beyond NRD threshold — Twin surfaces as drift.",
+        "control": "none"
+      },
+      {
+        "id": "seahorse_2",
+        "order": 2,
+        "timeLabel": "T-2h",
+        "technique": "Phishing: Spearphishing Link",
+        "mitreId": "T1566.002",
+        "sourceAsset": "ast_email-gw",
+        "targetAsset": "ast_ceo-ws",
+        "iconName": "ti-mail",
+        "description": "Highly-tailored lure pretending to be board calendar.",
+        "disposition": "observed",
+        "explanation": "Reputation feeds clean — needs SOC Insights anomaly model.",
+        "control": "none"
+      },
+      {
+        "id": "seahorse_3",
+        "order": 3,
+        "timeLabel": "T-0",
+        "technique": "Adversary-in-the-Middle: 2FA Interception",
+        "mitreId": "T1557.002",
+        "sourceAsset": "ast_ceo-ws",
+        "targetAsset": "ast_ad-primary",
+        "iconName": "ti-key",
+        "description": "Session token replayed against AD federation endpoint.",
+        "disposition": "observed",
+        "explanation": "Twin recommends MFA hardening on exec cluster.",
+        "control": "none"
+      },
+      {
+        "id": "seahorse_4",
+        "order": 4,
+        "timeLabel": "T+45m",
+        "technique": "Account Discovery",
+        "mitreId": "T1087",
+        "sourceAsset": "ast_ad-primary",
+        "targetAsset": "ast_rd-vault",
+        "iconName": "ti-eye",
+        "description": "Identity-based discovery against Vault — searching for secrets.",
+        "disposition": "observed",
+        "explanation": "Twin flags lack of R&D segmentation — segment R&D from corporate AD.",
+        "control": "none"
+      }
+    ]
+  },
+  {
+    "id": "decoy-dog",
+    "name": "Decoy Dog",
+    "family": "apt",
+    "origin": "Nation-state-aligned, persistent",
+    "tigSource": "Infoblox Threat Intel — disclosed Apr 2023",
+    "mitreTactics": ["Initial Access", "Persistence", "Command and Control", "Collection"],
+    "lastObserved": "2026-05-15T22:48:00Z",
+    "campaignCount": 80,
+    "description": "Pupy-RAT-derived remote access toolkit using DNS as its primary C2 channel. Discovered by Infoblox in 2023 — operates at very low DNS-query volumes to evade detection.",
+    "iocs": [
+      "beacons-cdn[.]io",
+      "telemetry-svc[.]net",
+      "metric-bus[.]live"
+    ],
+    "killChainTemplate": [
+      {
+        "id": "decoy_1",
+        "order": 1,
+        "timeLabel": "T-180d",
+        "technique": "Application Layer Protocol: DNS",
+        "mitreId": "T1071.004",
+        "sourceAsset": "external",
+        "targetAsset": "ast_internet",
+        "iconName": "ti-cloud",
+        "description": "Slow, periodic DNS queries to beacons-cdn.io.",
+        "disposition": "blocked",
+        "explanation": "Infoblox long-dwell DNS pattern fires — TD blocks.",
+        "control": "td"
+      },
+      {
+        "id": "decoy_2",
+        "order": 2,
+        "timeLabel": "T-7d",
+        "technique": "Valid Accounts",
+        "mitreId": "T1078",
+        "sourceAsset": "external",
+        "targetAsset": "ast_eng-jump",
+        "iconName": "ti-shield-off",
+        "description": "Reused engineering credentials from prior breach data.",
+        "disposition": "blocked",
+        "explanation": "DNS Armor blocks resolution of Decoy Dog C2 from jump host.",
+        "control": "dns-armor"
+      },
+      {
+        "id": "decoy_3",
+        "order": 3,
+        "timeLabel": "T-0",
+        "technique": "Lateral Movement: Remote Services",
+        "mitreId": "T1021",
+        "sourceAsset": "ast_eng-jump",
+        "targetAsset": "ast_rd-vault",
+        "iconName": "ti-folder-open",
+        "description": "Discovery against Vault — secrets enumeration.",
+        "disposition": "observed",
+        "explanation": "Recommend Vault audit log forwarding to SOC Insights.",
+        "control": "none"
+      }
+    ]
+  }
+]

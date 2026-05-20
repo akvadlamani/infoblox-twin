@@ -1,0 +1,1664 @@
+[
+  {
+    "id": "ast_internet",
+    "name": "Internet edge",
+    "segment": "external",
+    "criticality": 2,
+    "type": "network-device",
+    "vendor": "Cloudflare",
+    "model": "Magic Transit",
+    "os": "n/a",
+    "osVersion": "n/a",
+    "ipAddresses": [
+      "198.51.100.1"
+    ],
+    "macAddresses": [],
+    "firstSeen": "2024-01-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI",
+      "DNS-telemetry"
+    ],
+    "owner": "NetOps",
+    "location": "DC1",
+    "position3D": {
+      "x": 0,
+      "y": 7.7,
+      "z": 0
+    },
+    "tags": [
+      "edge",
+      "ingress"
+    ]
+  },
+  {
+    "id": "ast_firewall",
+    "name": "Firewall",
+    "segment": "external",
+    "criticality": 4,
+    "type": "security-appliance",
+    "vendor": "Palo Alto",
+    "model": "PA-5450",
+    "os": "PAN-OS",
+    "osVersion": "11.1.3",
+    "ipAddresses": [
+      "10.0.0.1"
+    ],
+    "macAddresses": [
+      "00:1B:17:00:01:01"
+    ],
+    "firstSeen": "2024-02-10T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI",
+      "NIOS"
+    ],
+    "owner": "NetOps",
+    "location": "DC1",
+    "position3D": {
+      "x": -4.5,
+      "y": 6.6,
+      "z": 0
+    },
+    "tags": [
+      "edge",
+      "perimeter"
+    ]
+  },
+  {
+    "id": "ast_email-gw",
+    "name": "Email gateway",
+    "segment": "external",
+    "criticality": 4,
+    "type": "security-appliance",
+    "vendor": "Proofpoint",
+    "model": "P-Series",
+    "os": "Proofpoint OS",
+    "osVersion": "8.20",
+    "ipAddresses": [
+      "10.0.0.10"
+    ],
+    "macAddresses": [
+      "00:1B:17:00:01:0A"
+    ],
+    "firstSeen": "2024-03-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI"
+    ],
+    "owner": "SecOps",
+    "location": "DC1",
+    "position3D": {
+      "x": 4.5,
+      "y": 6.6,
+      "z": 0
+    },
+    "tags": [
+      "email",
+      "ingress"
+    ]
+  },
+  {
+    "id": "ast_web-dmz",
+    "name": "Web DMZ",
+    "segment": "external",
+    "criticality": 3,
+    "type": "security-appliance",
+    "vendor": "F5",
+    "model": "BIG-IP i5800",
+    "os": "TMOS",
+    "osVersion": "17.1",
+    "ipAddresses": [
+      "10.0.0.20"
+    ],
+    "macAddresses": [
+      "00:1B:17:00:01:14"
+    ],
+    "firstSeen": "2024-04-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI"
+    ],
+    "owner": "NetOps",
+    "location": "DC1",
+    "position3D": {
+      "x": 0,
+      "y": 6.05,
+      "z": 1.5
+    },
+    "tags": [
+      "dmz"
+    ]
+  },
+  {
+    "id": "ast_ad-primary",
+    "name": "AD-PRIMARY",
+    "segment": "identity",
+    "criticality": 5,
+    "type": "server",
+    "vendor": "Microsoft",
+    "model": "Windows Server",
+    "os": "Windows Server",
+    "osVersion": "2022",
+    "ipAddresses": [
+      "10.1.0.10"
+    ],
+    "macAddresses": [
+      "00:1C:18:01:00:0A"
+    ],
+    "firstSeen": "2023-01-15T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI",
+      "NIOS",
+      "EDR"
+    ],
+    "owner": "IdentityOps",
+    "location": "DC1",
+    "position3D": {
+      "x": 0,
+      "y": 4.4,
+      "z": 0
+    },
+    "tags": [
+      "crown-jewel",
+      "identity",
+      "sox",
+      "gdpr"
+    ]
+  },
+  {
+    "id": "ast_mfa",
+    "name": "MFA service",
+    "segment": "identity",
+    "criticality": 4,
+    "type": "application",
+    "vendor": "Okta",
+    "model": "Workforce Identity Cloud",
+    "os": "SaaS",
+    "osVersion": "2026.04",
+    "ipAddresses": [
+      "10.1.0.20"
+    ],
+    "macAddresses": [],
+    "firstSeen": "2024-01-10T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI"
+    ],
+    "owner": "IdentityOps",
+    "location": "SaaS",
+    "position3D": {
+      "x": -3,
+      "y": 4.4,
+      "z": -1.5
+    },
+    "tags": [
+      "mfa"
+    ]
+  },
+  {
+    "id": "ast_pki",
+    "name": "PKI",
+    "segment": "identity",
+    "criticality": 3,
+    "type": "application",
+    "vendor": "DigiCert",
+    "model": "Trust Lifecycle",
+    "os": "SaaS",
+    "osVersion": "2026.04",
+    "ipAddresses": [
+      "10.1.0.30"
+    ],
+    "macAddresses": [],
+    "firstSeen": "2024-01-20T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI"
+    ],
+    "owner": "IdentityOps",
+    "location": "SaaS",
+    "position3D": {
+      "x": 3,
+      "y": 4.4,
+      "z": -1.5
+    },
+    "tags": [
+      "pki"
+    ]
+  },
+  {
+    "id": "ast_cfo-ws",
+    "name": "EXEC-WS-CFO",
+    "segment": "finance",
+    "criticality": 4,
+    "type": "workstation",
+    "vendor": "Dell",
+    "model": "Precision 5680",
+    "os": "Windows",
+    "osVersion": "11 23H2",
+    "ipAddresses": [
+      "10.2.1.11"
+    ],
+    "macAddresses": [
+      "00:1D:19:02:01:0B"
+    ],
+    "firstSeen": "2024-09-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:50:00Z",
+    "sources": [
+      "UAI",
+      "EDR"
+    ],
+    "owner": "CFO",
+    "location": "HQ-FL12",
+    "position3D": {
+      "x": -9,
+      "y": 3.3,
+      "z": -1.5
+    },
+    "tags": [
+      "exec",
+      "sox"
+    ]
+  },
+  {
+    "id": "ast_ceo-ws",
+    "name": "EXEC-WS-CEO",
+    "segment": "finance",
+    "criticality": 4,
+    "type": "workstation",
+    "vendor": "Apple",
+    "model": "MacBook Pro 16",
+    "os": "macOS",
+    "osVersion": "15.4",
+    "ipAddresses": [
+      "10.2.1.12"
+    ],
+    "macAddresses": [
+      "F4:D4:88:02:01:0C"
+    ],
+    "firstSeen": "2024-08-12T00:00:00Z",
+    "lastSeen": "2026-05-19T11:55:00Z",
+    "sources": [
+      "UAI",
+      "EDR"
+    ],
+    "owner": "CEO",
+    "location": "HQ-FL12",
+    "position3D": {
+      "x": -10.5,
+      "y": 3.3,
+      "z": 1.5
+    },
+    "tags": [
+      "exec",
+      "sox"
+    ]
+  },
+  {
+    "id": "ast_fin-db",
+    "name": "FIN-DB",
+    "segment": "finance",
+    "criticality": 5,
+    "type": "database",
+    "vendor": "Oracle",
+    "model": "Exadata X10M",
+    "os": "Oracle Linux",
+    "osVersion": "9.4",
+    "ipAddresses": [
+      "10.2.0.10"
+    ],
+    "macAddresses": [
+      "00:1D:19:02:00:0A"
+    ],
+    "firstSeen": "2023-06-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI",
+      "EDR"
+    ],
+    "owner": "FinanceOps",
+    "location": "DC1",
+    "position3D": {
+      "x": -9.75,
+      "y": 2.2,
+      "z": 0
+    },
+    "tags": [
+      "crown-jewel",
+      "pci-dss",
+      "sox"
+    ]
+  },
+  {
+    "id": "ast_sap-prod",
+    "name": "SAP-PROD",
+    "segment": "finance",
+    "criticality": 5,
+    "type": "application",
+    "vendor": "SAP",
+    "model": "S/4HANA",
+    "os": "SUSE Linux",
+    "osVersion": "15 SP5",
+    "ipAddresses": [
+      "10.2.0.20"
+    ],
+    "macAddresses": [
+      "00:1D:19:02:00:14"
+    ],
+    "firstSeen": "2023-06-05T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI"
+    ],
+    "owner": "FinanceOps",
+    "location": "DC1",
+    "position3D": {
+      "x": -7.5,
+      "y": 1.1,
+      "z": -1.5
+    },
+    "tags": [
+      "crown-jewel",
+      "sox"
+    ]
+  },
+  {
+    "id": "ast_payroll",
+    "name": "Payroll",
+    "segment": "finance",
+    "criticality": 4,
+    "type": "application",
+    "vendor": "Workday",
+    "model": "HCM",
+    "os": "SaaS",
+    "osVersion": "2026.R1",
+    "ipAddresses": [
+      "10.2.0.30"
+    ],
+    "macAddresses": [],
+    "firstSeen": "2024-02-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI"
+    ],
+    "owner": "HR-Ops",
+    "location": "SaaS",
+    "position3D": {
+      "x": -8.25,
+      "y": 1.1,
+      "z": 1.5
+    },
+    "tags": [
+      "sox",
+      "pii",
+      "gdpr"
+    ]
+  },
+  {
+    "id": "ast_eng-jump",
+    "name": "Eng jump host",
+    "segment": "engineering",
+    "criticality": 3,
+    "type": "server",
+    "vendor": "Canonical",
+    "model": "Ubuntu",
+    "os": "Ubuntu",
+    "osVersion": "22.04 LTS",
+    "ipAddresses": [
+      "10.3.0.10"
+    ],
+    "macAddresses": [
+      "00:1E:1A:03:00:0A"
+    ],
+    "firstSeen": "2024-04-10T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI"
+    ],
+    "owner": "PlatformOps",
+    "location": "DC2",
+    "position3D": {
+      "x": 9,
+      "y": 3.3,
+      "z": 0
+    },
+    "tags": [
+      "bastion"
+    ]
+  },
+  {
+    "id": "ast_rd-vault",
+    "name": "R&D-VAULT",
+    "segment": "engineering",
+    "criticality": 5,
+    "type": "application",
+    "vendor": "HashiCorp",
+    "model": "Vault Enterprise",
+    "os": "Linux",
+    "osVersion": "1.16",
+    "ipAddresses": [
+      "10.3.0.20"
+    ],
+    "macAddresses": [
+      "00:1E:1A:03:00:14"
+    ],
+    "firstSeen": "2023-12-15T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI"
+    ],
+    "owner": "PlatformOps",
+    "location": "DC2",
+    "position3D": {
+      "x": 10.5,
+      "y": 2.2,
+      "z": -1.5
+    },
+    "tags": [
+      "crown-jewel",
+      "secrets"
+    ]
+  },
+  {
+    "id": "ast_build-svr",
+    "name": "BUILD-SVR",
+    "segment": "engineering",
+    "criticality": 4,
+    "type": "server",
+    "vendor": "Canonical",
+    "model": "Ubuntu",
+    "os": "Ubuntu",
+    "osVersion": "22.04 LTS",
+    "ipAddresses": [
+      "10.3.0.30"
+    ],
+    "macAddresses": [
+      "00:1E:1A:03:00:1E"
+    ],
+    "firstSeen": "2024-05-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI"
+    ],
+    "owner": "PlatformOps",
+    "location": "DC2",
+    "position3D": {
+      "x": 8.25,
+      "y": 2.2,
+      "z": 1.5
+    },
+    "tags": [
+      "ci-cd"
+    ]
+  },
+  {
+    "id": "ast_git-primary",
+    "name": "GIT-PRIMARY",
+    "segment": "engineering",
+    "criticality": 4,
+    "type": "application",
+    "vendor": "GitLab",
+    "model": "Self-managed Premium",
+    "os": "Linux",
+    "osVersion": "Ubuntu 22.04",
+    "ipAddresses": [
+      "10.3.0.40"
+    ],
+    "macAddresses": [
+      "00:1E:1A:03:00:28"
+    ],
+    "firstSeen": "2023-09-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI"
+    ],
+    "owner": "PlatformOps",
+    "location": "DC2",
+    "position3D": {
+      "x": 11.25,
+      "y": 1.1,
+      "z": 1.5
+    },
+    "tags": [
+      "scm"
+    ]
+  },
+  {
+    "id": "ast_dc-core",
+    "name": "DC-CORE",
+    "segment": "it",
+    "criticality": 5,
+    "type": "network-device",
+    "vendor": "Cisco",
+    "model": "Nexus 9508",
+    "os": "NX-OS",
+    "osVersion": "10.4",
+    "ipAddresses": [
+      "10.4.0.1"
+    ],
+    "macAddresses": [
+      "00:1F:1B:04:00:01"
+    ],
+    "firstSeen": "2023-01-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI",
+      "NIOS"
+    ],
+    "owner": "NetOps",
+    "location": "DC1",
+    "position3D": {
+      "x": 0,
+      "y": 2.75,
+      "z": -4.5
+    },
+    "tags": [
+      "crown-jewel",
+      "core"
+    ]
+  },
+  {
+    "id": "ast_file-svr",
+    "name": "File server",
+    "segment": "it",
+    "criticality": 3,
+    "type": "server",
+    "vendor": "NetApp",
+    "model": "FAS9500",
+    "os": "ONTAP",
+    "osVersion": "9.14",
+    "ipAddresses": [
+      "10.4.0.10"
+    ],
+    "macAddresses": [
+      "00:1F:1B:04:00:0A"
+    ],
+    "firstSeen": "2023-08-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI"
+    ],
+    "owner": "ITOps",
+    "location": "DC1",
+    "position3D": {
+      "x": -3,
+      "y": 1.65,
+      "z": -4.5
+    },
+    "tags": [
+      "storage"
+    ]
+  },
+  {
+    "id": "ast_backup",
+    "name": "Backup vault",
+    "segment": "it",
+    "criticality": 3,
+    "type": "application",
+    "vendor": "Rubrik",
+    "model": "Cloud Data Management",
+    "os": "Linux",
+    "osVersion": "Rubrik 9.0",
+    "ipAddresses": [
+      "10.4.0.20"
+    ],
+    "macAddresses": [
+      "00:1F:1B:04:00:14"
+    ],
+    "firstSeen": "2024-01-15T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI"
+    ],
+    "owner": "ITOps",
+    "location": "DC1",
+    "position3D": {
+      "x": 3,
+      "y": 1.65,
+      "z": -5.25
+    },
+    "tags": [
+      "backup"
+    ]
+  },
+  {
+    "id": "ast_vpn-gw",
+    "name": "VPN gateway",
+    "segment": "it",
+    "criticality": 3,
+    "type": "security-appliance",
+    "vendor": "Palo Alto",
+    "model": "GlobalProtect",
+    "os": "PAN-OS",
+    "osVersion": "11.1.3",
+    "ipAddresses": [
+      "10.4.0.30"
+    ],
+    "macAddresses": [
+      "00:1F:1B:04:00:1E"
+    ],
+    "firstSeen": "2024-02-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI"
+    ],
+    "owner": "NetOps",
+    "location": "DC1",
+    "position3D": {
+      "x": 0,
+      "y": 1.1,
+      "z": -6
+    },
+    "tags": [
+      "remote-access"
+    ]
+  },
+  {
+    "id": "ast_crm-app",
+    "name": "CRM-APP",
+    "segment": "sales",
+    "criticality": 3,
+    "type": "application",
+    "vendor": "Salesforce",
+    "model": "Sales Cloud",
+    "os": "SaaS",
+    "osVersion": "Spring '26",
+    "ipAddresses": [
+      "10.5.0.10"
+    ],
+    "macAddresses": [],
+    "firstSeen": "2024-03-15T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI"
+    ],
+    "owner": "RevOps",
+    "location": "SaaS",
+    "position3D": {
+      "x": 0,
+      "y": 2.75,
+      "z": 5.25
+    },
+    "tags": [
+      "crm",
+      "gdpr"
+    ]
+  },
+  {
+    "id": "ast_crm-db",
+    "name": "CRM-DB",
+    "segment": "sales",
+    "criticality": 4,
+    "type": "database",
+    "vendor": "Oracle",
+    "model": "Database 19c",
+    "os": "Oracle Linux",
+    "osVersion": "8.10",
+    "ipAddresses": [
+      "10.5.0.20"
+    ],
+    "macAddresses": [
+      "00:20:1C:05:00:14"
+    ],
+    "firstSeen": "2023-11-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI"
+    ],
+    "owner": "RevOps",
+    "location": "DC1",
+    "position3D": {
+      "x": -3,
+      "y": 1.65,
+      "z": 5.25
+    },
+    "tags": [
+      "crm",
+      "pii",
+      "gdpr"
+    ]
+  },
+  {
+    "id": "ast_cms",
+    "name": "Marketing CMS",
+    "segment": "sales",
+    "criticality": 2,
+    "type": "application",
+    "vendor": "Adobe",
+    "model": "AEM",
+    "os": "Linux",
+    "osVersion": "RHEL 9.4",
+    "ipAddresses": [
+      "10.5.0.30"
+    ],
+    "macAddresses": [],
+    "firstSeen": "2024-04-12T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI"
+    ],
+    "owner": "Marketing",
+    "location": "SaaS",
+    "position3D": {
+      "x": 3,
+      "y": 1.65,
+      "z": 5.25
+    },
+    "tags": [
+      "cms"
+    ]
+  },
+  {
+    "id": "ast_mfg-scada",
+    "name": "MFG-SCADA",
+    "segment": "ot",
+    "criticality": 5,
+    "type": "ot-controller",
+    "vendor": "Siemens",
+    "model": "WinCC OA",
+    "os": "Windows Server",
+    "osVersion": "2019",
+    "ipAddresses": [
+      "10.6.0.10"
+    ],
+    "macAddresses": [
+      "00:21:1D:06:00:0A"
+    ],
+    "firstSeen": "2023-03-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI",
+      "OT-discovery"
+    ],
+    "owner": "ManufacturingOps",
+    "location": "Plant-East",
+    "position3D": {
+      "x": 0,
+      "y": -1.65,
+      "z": 0
+    },
+    "tags": [
+      "crown-jewel",
+      "ot",
+      "safety-critical",
+      "hipaa"
+    ]
+  },
+  {
+    "id": "ast_plc1",
+    "name": "PLC line 1",
+    "segment": "ot",
+    "criticality": 4,
+    "type": "ot-controller",
+    "vendor": "Rockwell",
+    "model": "ControlLogix 5580",
+    "os": "Rockwell Firmware",
+    "osVersion": "33.011",
+    "ipAddresses": [
+      "10.6.0.21"
+    ],
+    "macAddresses": [
+      "00:21:1D:06:00:15"
+    ],
+    "firstSeen": "2023-03-10T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "OT-discovery"
+    ],
+    "owner": "ManufacturingOps",
+    "location": "Plant-East",
+    "position3D": {
+      "x": -3.75,
+      "y": -2.75,
+      "z": -0.75
+    },
+    "tags": [
+      "ot",
+      "safety-critical"
+    ]
+  },
+  {
+    "id": "ast_plc2",
+    "name": "PLC line 2",
+    "segment": "ot",
+    "criticality": 4,
+    "type": "ot-controller",
+    "vendor": "Rockwell",
+    "model": "ControlLogix 5580",
+    "os": "Rockwell Firmware",
+    "osVersion": "33.011",
+    "ipAddresses": [
+      "10.6.0.22"
+    ],
+    "macAddresses": [
+      "00:21:1D:06:00:16"
+    ],
+    "firstSeen": "2023-03-10T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "OT-discovery"
+    ],
+    "owner": "ManufacturingOps",
+    "location": "Plant-East",
+    "position3D": {
+      "x": 3.75,
+      "y": -2.75,
+      "z": -0.75
+    },
+    "tags": [
+      "ot",
+      "safety-critical"
+    ]
+  },
+  {
+    "id": "ast_emp-pool-finance",
+    "name": "Endpoints — Finance",
+    "segment": "endpoint",
+    "criticality": 1,
+    "type": "endpoint-pool",
+    "vendor": "Mixed",
+    "model": "Pool of 420 endpoints",
+    "os": "Windows / macOS",
+    "osVersion": "mixed",
+    "ipAddresses": [
+      "10.7.1.0/24"
+    ],
+    "macAddresses": [],
+    "firstSeen": "2024-01-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI",
+      "EDR"
+    ],
+    "owner": "ITOps",
+    "location": "HQ",
+    "position3D": {
+      "x": -7.5,
+      "y": 0,
+      "z": 3
+    },
+    "tags": [
+      "endpoint-pool"
+    ]
+  },
+  {
+    "id": "ast_emp-pool-eng",
+    "name": "Endpoints — Engineering",
+    "segment": "endpoint",
+    "criticality": 1,
+    "type": "endpoint-pool",
+    "vendor": "Mixed",
+    "model": "Pool of 980 endpoints",
+    "os": "Linux / macOS",
+    "osVersion": "mixed",
+    "ipAddresses": [
+      "10.7.2.0/24"
+    ],
+    "macAddresses": [],
+    "firstSeen": "2024-01-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI",
+      "EDR"
+    ],
+    "owner": "ITOps",
+    "location": "HQ",
+    "position3D": {
+      "x": 7.5,
+      "y": 0,
+      "z": 3
+    },
+    "tags": [
+      "endpoint-pool"
+    ]
+  },
+  {
+    "id": "ast_emp-pool-sales",
+    "name": "Endpoints — Sales",
+    "segment": "endpoint",
+    "criticality": 1,
+    "type": "endpoint-pool",
+    "vendor": "Mixed",
+    "model": "Pool of 1,800 endpoints",
+    "os": "Windows / macOS",
+    "osVersion": "mixed",
+    "ipAddresses": [
+      "10.7.3.0/24"
+    ],
+    "macAddresses": [],
+    "firstSeen": "2024-01-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI",
+      "EDR"
+    ],
+    "owner": "ITOps",
+    "location": "Regional",
+    "position3D": {
+      "x": 0,
+      "y": 0,
+      "z": 6
+    },
+    "tags": [
+      "endpoint-pool",
+      "gdpr"
+    ]
+  },
+  {
+    "id": "ast_emp-pool-exec",
+    "name": "Exec cluster",
+    "segment": "endpoint",
+    "criticality": 2,
+    "type": "endpoint-pool",
+    "vendor": "Mixed",
+    "model": "Pool of 22 endpoints",
+    "os": "Windows / macOS",
+    "osVersion": "mixed",
+    "ipAddresses": [
+      "10.7.0.0/26"
+    ],
+    "macAddresses": [],
+    "firstSeen": "2024-01-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI",
+      "EDR"
+    ],
+    "owner": "ITOps",
+    "location": "HQ-FL12",
+    "position3D": {
+      "x": -12,
+      "y": 4.4,
+      "z": 0
+    },
+    "tags": [
+      "endpoint-pool",
+      "exec"
+    ]
+  },
+  {
+    "id": "ast_finlap-1",
+    "name": "fin-lap-21",
+    "segment": "finance",
+    "criticality": 2,
+    "type": "workstation",
+    "vendor": "Dell",
+    "model": "Latitude 7440",
+    "os": "Windows",
+    "osVersion": "11 23H2",
+    "ipAddresses": [
+      "10.7.1.21"
+    ],
+    "macAddresses": [
+      "00:1D:19:02:21:01"
+    ],
+    "firstSeen": "2025-04-12T00:00:00Z",
+    "lastSeen": "2026-05-19T11:45:00Z",
+    "sources": [
+      "UAI",
+      "EDR"
+    ],
+    "owner": "Finance Ops",
+    "location": "HQ-FL11",
+    "position3D": {
+      "x": -8.5,
+      "y": 0.5,
+      "z": 2.6
+    },
+    "tags": [
+      "laptop"
+    ]
+  },
+  {
+    "id": "ast_finlap-2",
+    "name": "fin-lap-22",
+    "segment": "finance",
+    "criticality": 2,
+    "type": "workstation",
+    "vendor": "Dell",
+    "model": "Latitude 7440",
+    "os": "Windows",
+    "osVersion": "11 23H2",
+    "ipAddresses": [
+      "10.7.1.22"
+    ],
+    "macAddresses": [
+      "00:1D:19:02:22:01"
+    ],
+    "firstSeen": "2025-06-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:30:00Z",
+    "sources": [
+      "UAI",
+      "EDR"
+    ],
+    "owner": "Finance Ops",
+    "location": "HQ-FL11",
+    "position3D": {
+      "x": -7.5,
+      "y": 0.5,
+      "z": 3.4
+    },
+    "tags": [
+      "laptop"
+    ]
+  },
+  {
+    "id": "ast_finmob-1",
+    "name": "cfo-iphone",
+    "segment": "finance",
+    "criticality": 3,
+    "type": "workstation",
+    "vendor": "Apple",
+    "model": "iPhone 16 Pro",
+    "os": "iOS",
+    "osVersion": "19.2",
+    "ipAddresses": [
+      "10.7.1.50"
+    ],
+    "macAddresses": [
+      "F4:D4:88:02:50:01"
+    ],
+    "firstSeen": "2025-11-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI",
+      "MDM"
+    ],
+    "owner": "CFO",
+    "location": "mobile",
+    "position3D": {
+      "x": -9.5,
+      "y": 1.6,
+      "z": 2.8
+    },
+    "tags": [
+      "mobile",
+      "exec"
+    ]
+  },
+  {
+    "id": "ast_finmob-2",
+    "name": "ceo-iphone",
+    "segment": "finance",
+    "criticality": 3,
+    "type": "workstation",
+    "vendor": "Apple",
+    "model": "iPhone 16 Pro",
+    "os": "iOS",
+    "osVersion": "19.2",
+    "ipAddresses": [
+      "10.7.1.51"
+    ],
+    "macAddresses": [
+      "F4:D4:88:02:51:01"
+    ],
+    "firstSeen": "2025-11-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI",
+      "MDM"
+    ],
+    "owner": "CEO",
+    "location": "mobile",
+    "position3D": {
+      "x": -10.8,
+      "y": 1.6,
+      "z": 0.3
+    },
+    "tags": [
+      "mobile",
+      "exec"
+    ]
+  },
+  {
+    "id": "ast_englap-1",
+    "name": "eng-lap-77",
+    "segment": "engineering",
+    "criticality": 2,
+    "type": "workstation",
+    "vendor": "Apple",
+    "model": "MacBook Pro 14",
+    "os": "macOS",
+    "osVersion": "15.4",
+    "ipAddresses": [
+      "10.7.2.77"
+    ],
+    "macAddresses": [
+      "F4:D4:88:03:77:01"
+    ],
+    "firstSeen": "2025-09-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:55:00Z",
+    "sources": [
+      "UAI",
+      "EDR"
+    ],
+    "owner": "Platform team",
+    "location": "remote",
+    "position3D": {
+      "x": 8.5,
+      "y": 0.5,
+      "z": 2.6
+    },
+    "tags": [
+      "laptop"
+    ]
+  },
+  {
+    "id": "ast_englap-2",
+    "name": "eng-lap-78",
+    "segment": "engineering",
+    "criticality": 2,
+    "type": "workstation",
+    "vendor": "Apple",
+    "model": "MacBook Pro 14",
+    "os": "macOS",
+    "osVersion": "15.4",
+    "ipAddresses": [
+      "10.7.2.78"
+    ],
+    "macAddresses": [
+      "F4:D4:88:03:78:01"
+    ],
+    "firstSeen": "2025-09-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:50:00Z",
+    "sources": [
+      "UAI",
+      "EDR"
+    ],
+    "owner": "Platform team",
+    "location": "remote",
+    "position3D": {
+      "x": 9.6,
+      "y": 0.5,
+      "z": 3
+    },
+    "tags": [
+      "laptop"
+    ]
+  },
+  {
+    "id": "ast_wl-api",
+    "name": "API-prod cluster",
+    "segment": "engineering",
+    "criticality": 4,
+    "type": "application",
+    "vendor": "AWS",
+    "model": "EKS workload",
+    "os": "Linux",
+    "osVersion": "Amazon Linux 2023",
+    "ipAddresses": [
+      "10.3.1.10"
+    ],
+    "macAddresses": [],
+    "firstSeen": "2024-08-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI",
+      "CSPM"
+    ],
+    "owner": "Platform team",
+    "location": "aws/us-east-1",
+    "position3D": {
+      "x": 11.5,
+      "y": 2,
+      "z": 0.5
+    },
+    "tags": [
+      "cloud",
+      "workload"
+    ]
+  },
+  {
+    "id": "ast_wl-data",
+    "name": "data-pipeline workload",
+    "segment": "engineering",
+    "criticality": 3,
+    "type": "application",
+    "vendor": "AWS",
+    "model": "EKS workload",
+    "os": "Linux",
+    "osVersion": "Amazon Linux 2023",
+    "ipAddresses": [
+      "10.3.1.20"
+    ],
+    "macAddresses": [],
+    "firstSeen": "2024-10-12T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI",
+      "CSPM"
+    ],
+    "owner": "Platform team",
+    "location": "aws/us-east-1",
+    "position3D": {
+      "x": 12.4,
+      "y": 0.8,
+      "z": -0.4
+    },
+    "tags": [
+      "cloud",
+      "workload"
+    ]
+  },
+  {
+    "id": "ast_sales-lap-1",
+    "name": "sales-lap-12",
+    "segment": "sales",
+    "criticality": 1,
+    "type": "workstation",
+    "vendor": "Dell",
+    "model": "Latitude 5440",
+    "os": "Windows",
+    "osVersion": "11 23H2",
+    "ipAddresses": [
+      "10.7.3.12"
+    ],
+    "macAddresses": [
+      "00:20:1C:05:12:01"
+    ],
+    "firstSeen": "2025-02-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:30:00Z",
+    "sources": [
+      "UAI",
+      "EDR"
+    ],
+    "owner": "Sales",
+    "location": "remote",
+    "position3D": {
+      "x": 1.4,
+      "y": 0.5,
+      "z": 5
+    },
+    "tags": [
+      "laptop",
+      "gdpr"
+    ]
+  },
+  {
+    "id": "ast_sales-lap-2",
+    "name": "sales-lap-13",
+    "segment": "sales",
+    "criticality": 1,
+    "type": "workstation",
+    "vendor": "Dell",
+    "model": "Latitude 5440",
+    "os": "Windows",
+    "osVersion": "11 23H2",
+    "ipAddresses": [
+      "10.7.3.13"
+    ],
+    "macAddresses": [
+      "00:20:1C:05:13:01"
+    ],
+    "firstSeen": "2025-02-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:42:00Z",
+    "sources": [
+      "UAI",
+      "EDR"
+    ],
+    "owner": "Sales",
+    "location": "remote",
+    "position3D": {
+      "x": -1.4,
+      "y": 0.5,
+      "z": 5
+    },
+    "tags": [
+      "laptop",
+      "gdpr"
+    ]
+  },
+  {
+    "id": "ast_sales-mob-1",
+    "name": "vp-sales-iphone",
+    "segment": "sales",
+    "criticality": 2,
+    "type": "workstation",
+    "vendor": "Apple",
+    "model": "iPhone 15 Pro",
+    "os": "iOS",
+    "osVersion": "19.2",
+    "ipAddresses": [
+      "10.7.3.50"
+    ],
+    "macAddresses": [
+      "F4:D4:88:05:50:01"
+    ],
+    "firstSeen": "2025-08-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI",
+      "MDM"
+    ],
+    "owner": "VP Sales",
+    "location": "mobile",
+    "position3D": {
+      "x": 0,
+      "y": 1.4,
+      "z": 5.8
+    },
+    "tags": [
+      "mobile",
+      "gdpr"
+    ]
+  },
+  {
+    "id": "ast_dns-primary",
+    "name": "DNS primary",
+    "segment": "it",
+    "criticality": 4,
+    "type": "network-device",
+    "vendor": "Infoblox",
+    "model": "NIOS Grid Master",
+    "os": "NIOS",
+    "osVersion": "9.0.4",
+    "ipAddresses": [
+      "10.4.1.5"
+    ],
+    "macAddresses": [
+      "00:1F:1B:04:01:05"
+    ],
+    "firstSeen": "2023-01-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "NIOS"
+    ],
+    "owner": "NetOps",
+    "location": "DC1",
+    "position3D": {
+      "x": 1.8,
+      "y": 3,
+      "z": -4.3
+    },
+    "tags": [
+      "dns",
+      "grid"
+    ]
+  },
+  {
+    "id": "ast_dhcp",
+    "name": "DHCP service",
+    "segment": "it",
+    "criticality": 3,
+    "type": "network-device",
+    "vendor": "Infoblox",
+    "model": "NIOS member",
+    "os": "NIOS",
+    "osVersion": "9.0.4",
+    "ipAddresses": [
+      "10.4.1.6"
+    ],
+    "macAddresses": [
+      "00:1F:1B:04:01:06"
+    ],
+    "firstSeen": "2023-01-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "NIOS"
+    ],
+    "owner": "NetOps",
+    "location": "DC1",
+    "position3D": {
+      "x": -1.8,
+      "y": 3,
+      "z": -4.3
+    },
+    "tags": [
+      "dhcp"
+    ]
+  },
+  {
+    "id": "ast_ipam",
+    "name": "IPAM",
+    "segment": "it",
+    "criticality": 3,
+    "type": "application",
+    "vendor": "Infoblox",
+    "model": "IPAM",
+    "os": "NIOS",
+    "osVersion": "9.0.4",
+    "ipAddresses": [
+      "10.4.1.7"
+    ],
+    "macAddresses": [],
+    "firstSeen": "2023-01-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "NIOS"
+    ],
+    "owner": "NetOps",
+    "location": "DC1",
+    "position3D": {
+      "x": 0,
+      "y": 3,
+      "z": -5.2
+    },
+    "tags": [
+      "ipam"
+    ]
+  },
+  {
+    "id": "ast_ad-secondary",
+    "name": "AD-SECONDARY",
+    "segment": "identity",
+    "criticality": 4,
+    "type": "server",
+    "vendor": "Microsoft",
+    "model": "Windows Server",
+    "os": "Windows Server",
+    "osVersion": "2022",
+    "ipAddresses": [
+      "10.1.0.11"
+    ],
+    "macAddresses": [
+      "00:1C:18:01:00:0B"
+    ],
+    "firstSeen": "2023-01-15T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI",
+      "NIOS",
+      "EDR"
+    ],
+    "owner": "IdentityOps",
+    "location": "DC2",
+    "position3D": {
+      "x": 0.7,
+      "y": 4.4,
+      "z": 0.7
+    },
+    "tags": [
+      "identity"
+    ]
+  },
+  {
+    "id": "ast_hmi-1",
+    "name": "HMI station 1",
+    "segment": "ot",
+    "criticality": 3,
+    "type": "ot-controller",
+    "vendor": "Siemens",
+    "model": "WinCC HMI",
+    "os": "Windows IoT",
+    "osVersion": "10 LTSC",
+    "ipAddresses": [
+      "10.6.0.40"
+    ],
+    "macAddresses": [
+      "00:21:1D:06:40:01"
+    ],
+    "firstSeen": "2024-03-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "OT-discovery"
+    ],
+    "owner": "ManufacturingOps",
+    "location": "Plant-East",
+    "position3D": {
+      "x": -4,
+      "y": -3.3,
+      "z": -1
+    },
+    "tags": [
+      "ot",
+      "hmi"
+    ]
+  },
+  {
+    "id": "ast_sensor-1",
+    "name": "pressure sensor A",
+    "segment": "ot",
+    "criticality": 2,
+    "type": "iot",
+    "vendor": "Endress+Hauser",
+    "model": "Cerabar PMP55",
+    "os": "firmware",
+    "osVersion": "2.1",
+    "ipAddresses": [
+      "10.6.0.71"
+    ],
+    "macAddresses": [
+      "00:21:1D:06:71:01"
+    ],
+    "firstSeen": "2024-06-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "OT-discovery"
+    ],
+    "owner": "ManufacturingOps",
+    "location": "Plant-East",
+    "position3D": {
+      "x": -2.5,
+      "y": -3.8,
+      "z": -2.5
+    },
+    "tags": [
+      "ot",
+      "iot"
+    ]
+  },
+  {
+    "id": "ast_sensor-2",
+    "name": "pressure sensor B",
+    "segment": "ot",
+    "criticality": 2,
+    "type": "iot",
+    "vendor": "Endress+Hauser",
+    "model": "Cerabar PMP55",
+    "os": "firmware",
+    "osVersion": "2.1",
+    "ipAddresses": [
+      "10.6.0.72"
+    ],
+    "macAddresses": [
+      "00:21:1D:06:72:01"
+    ],
+    "firstSeen": "2024-06-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "OT-discovery"
+    ],
+    "owner": "ManufacturingOps",
+    "location": "Plant-East",
+    "position3D": {
+      "x": 2.5,
+      "y": -3.8,
+      "z": -2.5
+    },
+    "tags": [
+      "ot",
+      "iot"
+    ]
+  },
+  {
+    "id": "ast_saas-365",
+    "name": "Microsoft 365",
+    "segment": "identity",
+    "criticality": 4,
+    "type": "application",
+    "vendor": "Microsoft",
+    "model": "Microsoft 365 E5",
+    "os": "SaaS",
+    "osVersion": "2026.05",
+    "ipAddresses": [],
+    "macAddresses": [],
+    "firstSeen": "2024-01-10T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI"
+    ],
+    "owner": "IdentityOps",
+    "location": "SaaS",
+    "position3D": {
+      "x": 4,
+      "y": 5.6,
+      "z": -1
+    },
+    "tags": [
+      "saas",
+      "gdpr",
+      "pii"
+    ]
+  },
+  {
+    "id": "ast_saas-aws",
+    "name": "AWS Org",
+    "segment": "engineering",
+    "criticality": 4,
+    "type": "application",
+    "vendor": "AWS",
+    "model": "Organization",
+    "os": "cloud",
+    "osVersion": "n/a",
+    "ipAddresses": [],
+    "macAddresses": [],
+    "firstSeen": "2024-04-10T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI",
+      "CSPM"
+    ],
+    "owner": "Platform team",
+    "location": "cloud",
+    "position3D": {
+      "x": 10,
+      "y": 4.5,
+      "z": 0
+    },
+    "tags": [
+      "cloud"
+    ]
+  },
+  {
+    "id": "ast_printers",
+    "name": "Printer fleet",
+    "segment": "endpoint",
+    "criticality": 1,
+    "type": "iot",
+    "vendor": "HP",
+    "model": "LaserJet Enterprise",
+    "os": "embedded",
+    "osVersion": "FW 4.0",
+    "ipAddresses": [
+      "10.7.4.0/24"
+    ],
+    "macAddresses": [],
+    "firstSeen": "2024-01-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI"
+    ],
+    "owner": "ITOps",
+    "location": "multi-site",
+    "position3D": {
+      "x": 4.5,
+      "y": -0.5,
+      "z": 4
+    },
+    "tags": [
+      "iot",
+      "printer"
+    ]
+  }
+]

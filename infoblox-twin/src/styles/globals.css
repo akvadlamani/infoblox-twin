@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  background: #0a0a0f;
+  color: #f5f5f7;
+  overflow: hidden;
+}
+
+button { font-family: inherit; }
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: #2a2a3a; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #3a3a4a; }
+::-webkit-scrollbar-track { background: transparent; }
+
+@keyframes streamIn {
+  0% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.anim-stream-in { animation: streamIn 600ms cubic-bezier(0.2, 0.6, 0.2, 1) both; }
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+.anim-fade-in { animation: fadeIn 1500ms ease-out both; }
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+.anim-pulse-dot { animation: pulseDot 2s ease-in-out infinite; }
+
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+  color: #6f6f80;
+}
+
+.divider { background: linear-gradient(90deg, transparent, #2a2a3a, transparent); height: 1px; }
+
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { scrollbar-width: none; }
+
+.focus-ring:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}

@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm install *)",
+      "Bash(pnpm typecheck *)",
+      "Bash(pnpm dev *)",
+      "Bash(mkdir -p \"/Users/avadlamani/Documents/projects/Claude Code/Digital Twin/infoblox-twin/.claude\")",
+      "Bash(lsof -ti:5173)",
+      "Bash(xargs -r kill -9)",
+      "Bash(mkdir -p \"/Users/avadlamani/Documents/projects/Claude Code/Digital Twin/.claude\")",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(node -e ' *)",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\\\\n\" http://localhost:5173/)",
+      "Bash(node)",
+      "Bash(pnpm build *)",
+      "Bash(pnpm add *)"
+    ]
+  }
+}
