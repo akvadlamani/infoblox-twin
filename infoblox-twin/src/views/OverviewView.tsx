@@ -6,7 +6,7 @@ import { twinClient } from '@/lib/data-clients/factory';
 import type { Asset, Edge } from '@/lib/types/twin.types';
 import { useAppStore } from '@/lib/state/store';
 import { narrate } from '@/lib/llm/narrator-canned';
-import { IntelBrief } from '@/components/twin/IntelBrief';
+import { AgentFeed } from '@/components/twin/AgentFeed';
 
 export function OverviewView() {
   const [assets, setAssets] = useState<Asset[]>([]);
@@ -27,8 +27,8 @@ export function OverviewView() {
         <NetworkGraph assets={assets} edges={edges} />
       </SceneRoot>
 
-      {/* CISO intel brief on the left */}
-      <IntelBrief />
+      {/* Agent activity feed on the left */}
+      <AgentFeed />
 
       {/* Right rail — single consolidated card */}
       <div className="absolute top-[110px] right-5 z-20 w-[280px]">

@@ -8,15 +8,19 @@
 
 import { twinClient } from '@/lib/data-clients/factory';
 import type { Asset, Mitigation, RiskScenario, ThreatActor } from '@/lib/types/twin.types';
+import type { AgentId } from '@/lib/types/agent.types';
 import { formatDollars } from '@/lib/scene/colors';
 
-export type AgentRole = 'user' | 'assistant' | 'tool';
+export type AgentRole = 'user' | 'assistant' | 'tool' | 'system';
 
 export interface AgentMessage {
   id: string;
   role: AgentRole;
   // assistant body. Streamed in chunks while in flight.
   content: string;
+  // Which agent owns this message. Assistants attribute. Tool calls inherit
+  // the calling agent. System messages narrate handoffs.
+  agentId?: AgentId;
   // Tool calls modeled like Claude Messages API tool_use blocks
   toolName?: string;
   toolInput?: Record<string, unknown>;
@@ -31,9 +35,15 @@ interface ToolEmit {
   name: string;
   input: Record<string, unknown>;
   result: string;
+  // Agent that ran this tool (defaults to primary).
+  by?: AgentId;
 }
 
 interface AgentFlow {
+  // Primary agent that owns the turn.
+  primary: AgentId;
+  // Optional handoffs introduced mid-flow as system bubbles.
+  handoffs?: { fromId: AgentId; toId: AgentId; rationale: string }[];
   toolCalls: ToolEmit[];
   answer: string;
   suggestions?: string[];
@@ -118,6 +128,7 @@ async function planFlow(question: string): Promise<AgentFlow> {
 
   // Fallback: act like the assistant searched and didn't find a clean match.
   return {
+    primary: 'brief',
     toolCalls: [
       {
         name: 'searchAssets',
@@ -149,6 +160,10 @@ function blastFlow(
     .sort((a, b) => b.expectedRiskReduction - a.expectedRiskReduction)
     .slice(0, 3);
   return {
+    primary: 'hunter',
+    handoffs: [
+      { fromId: 'hunter', toId: 'brief', rationale: 'Hunter found the paths — Brief is summarizing them.' },
+    ],
     toolCalls: [
       {
         name: 'getAsset',
@@ -193,6 +208,7 @@ Open **Blast Radius** to walk this interactively.`,
 
 function overnightFlow(): AgentFlow {
   return {
+    primary: 'brief',
     toolCalls: [
       { name: 'getDriftSince', input: { hours: 24 }, result: '5 changes detected' },
       { name: 'listThreatObservations', input: { hours: 24 }, result: '14 phish attempts, 11 blocked' },
@@ -217,6 +233,7 @@ You can act on any of these from the **Overview** intel brief.`,
 
 function patchFlow(): AgentFlow {
   return {
+    primary: 'pilot',
     toolCalls: [
       { name: 'listOpenCves', input: {}, result: '6 CVEs open' },
       {
@@ -250,6 +267,7 @@ Open **Patch Risk** for the full ranking and recommendation.`,
 function replayFlow(actors: ThreatActor[]): AgentFlow {
   const viper = actors.find((a) => a.id === 'vigorish-viper');
   return {
+    primary: 'hunter',
     toolCalls: [
       { name: 'getThreatActor', input: { id: 'vigorish-viper' }, result: 'Vigorish Viper · 170K+ domains' },
       { name: 'computeKillChain', input: { actorId: 'vigorish-viper' }, result: '5 hops · 3 blocked · 1 observed · 1 contained' },
@@ -271,6 +289,7 @@ Open **Breach Replay** to watch this hop-by-hop with the active MITRE technique 
 
 function decoyFlow(actors: ThreatActor[]): AgentFlow {
   return {
+    primary: 'hunter',
     toolCalls: [
       { name: 'getThreatActor', input: { id: 'decoy-dog' }, result: 'Decoy Dog · DNS-C2 RAT · 3 hops' },
     ],
@@ -285,6 +304,7 @@ Segmenting R&D from corporate AD would cut Decoy Dog exposure by ~31%.`,
 
 function seahorseFlow(actors: ThreatActor[]): AgentFlow {
   return {
+    primary: 'hunter',
     toolCalls: [
       { name: 'getThreatActor', input: { id: 'savvy-seahorse' }, result: 'Savvy Seahorse · aged-domain AiTM' },
     ],
@@ -297,6 +317,10 @@ Top mitigations against Seahorse: **tighten AD MFA for execs** (−24%) and **se
 
 function vextrioFlow(actors: ThreatActor[]): AgentFlow {
   return {
+    primary: 'hunter',
+    handoffs: [
+      { fromId: 'hunter', toId: 'takedown', rationale: 'Hunter identified the leak mirrors — Takedown is filing abuse.' },
+    ],
     toolCalls: [
       { name: 'getThreatActor', input: { id: 'vextrio' }, result: 'VexTrio · DNS TDS · 70K+ partner domains' },
     ],
@@ -310,6 +334,7 @@ Against your payroll path: 4 hops, all blocked. The interesting one is hop 4 —
 function complianceFlow(assets: Asset[]): AgentFlow {
   const pci = assets.filter((a) => a.tags?.includes('pci-dss') || (a.segment === 'finance' && a.criticality >= 3));
   return {
+    primary: 'scope',
     toolCalls: [
       { name: 'classifyZone', input: { zone: 'pci' }, result: `${pci.length} assets in PCI scope` },
       { name: 'detectDrift', input: { zone: 'pci' }, result: '7 assets touch PCI but not classified inside' },
@@ -326,6 +351,7 @@ Open **Compliance** to see all four zones (PCI · HIPAA · GDPR · SOX) and walk
 function crqFlow(top: RiskScenario[], totalAle: number, mitigations: Mitigation[]): AgentFlow {
   const active = mitigations.filter((m) => m.status === 'active');
   return {
+    primary: 'brief',
     toolCalls: [
       { name: 'getCurrentCrqSnapshot', input: {}, result: `ALE ${formatDollars(totalAle)}` },
       { name: 'listMitigations', input: { active: true }, result: `${active.length}/${mitigations.length} active` },
@@ -353,6 +379,7 @@ function controlsFlow(mitigations: Mitigation[], scenarios: RiskScenario[]): Age
     .sort((a, b) => b.expectedRiskReduction - a.expectedRiskReduction)
     .slice(0, 3);
   return {
+    primary: 'pilot',
     toolCalls: [
       { name: 'listMitigations', input: {}, result: `${mitigations.length} controls` },
     ],
@@ -372,6 +399,7 @@ Each one is wired into the MDP formula, so toggling it in **Board CRQ** recomput
 
 function agentIezFlow(): AgentFlow {
   return {
+    primary: 'sandbox',
     toolCalls: [
       { name: 'listPendingAgentActions', input: {}, result: '4 pending' },
     ],
@@ -392,6 +420,7 @@ Open **Agent IEZ** to approve or escalate each one.`,
 function crownJewelsFlow(assets: Asset[]): AgentFlow {
   const cj = assets.filter((a) => a.criticality === 5);
   return {
+    primary: 'sentinel',
     toolCalls: [{ name: 'listAssets', input: { criticality: 5 }, result: `${cj.length} crown jewels` }],
     answer: `You have **${cj.length} crown jewels** under continuous watch:
 
@@ -404,6 +433,7 @@ Each one is sized larger in the 3D scene and has a red orbit ring. The Twin reco
 
 function helpFlow(): AgentFlow {
   return {
+    primary: 'brief',
     toolCalls: [],
     answer: `I can answer questions over the live graph. Things I'm good at:
 
@@ -432,6 +462,17 @@ export async function* runAgent(question: string): AsyncGenerator<AgentMessage, 
   await wait(220);
 
   const flow = await planFlow(question);
+  const primary = flow.primary;
+
+  // Announce which agent is picking it up.
+  yield {
+    id: uid(),
+    role: 'system',
+    content: '',
+    agentId: primary,
+    createdAt: Date.now(),
+  };
+  await wait(300);
 
   // 2. Emit each tool call as its own message with a small delay
   for (const t of flow.toolCalls) {
@@ -439,6 +480,7 @@ export async function* runAgent(question: string): AsyncGenerator<AgentMessage, 
       id: uid(),
       role: 'tool',
       content: '',
+      agentId: t.by ?? primary,
       toolName: t.name,
       toolInput: t.input,
       status: 'streaming',
@@ -453,7 +495,23 @@ export async function* runAgent(question: string): AsyncGenerator<AgentMessage, 
     };
   }
 
-  // 3. Stream the final answer, token-ish at a time
+  // 3. If there's a handoff queued, narrate it before the final answer.
+  let answerAgent: AgentId = primary;
+  if (flow.handoffs && flow.handoffs.length > 0) {
+    for (const h of flow.handoffs) {
+      yield {
+        id: uid(),
+        role: 'system',
+        content: h.rationale,
+        agentId: h.toId,
+        createdAt: Date.now(),
+      };
+      answerAgent = h.toId;
+      await wait(380);
+    }
+  }
+
+  // 4. Stream the final answer, attributed to the answering agent.
   const id = uid();
   const tokens = flow.answer.split(/(\s+)/); // keep whitespace
   let acc = '';
@@ -463,6 +521,7 @@ export async function* runAgent(question: string): AsyncGenerator<AgentMessage, 
       id,
       role: 'assistant',
       content: acc,
+      agentId: answerAgent,
       status: 'streaming',
       createdAt: Date.now(),
     };
@@ -474,6 +533,7 @@ export async function* runAgent(question: string): AsyncGenerator<AgentMessage, 
     id,
     role: 'assistant',
     content: flow.answer,
+    agentId: answerAgent,
     suggestions: flow.suggestions,
     status: 'done',
     createdAt: Date.now(),

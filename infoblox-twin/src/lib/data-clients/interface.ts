@@ -11,6 +11,7 @@ import type {
   OrgInfo,
   DataSourceHealth,
 } from '@/lib/types/twin.types';
+import type { Agent, AgentActivity, AgentId, AutonomyLevel } from '@/lib/types/agent.types';
 
 export interface AssetFilter {
   segment?: string;
@@ -40,4 +41,9 @@ export interface TwinDataClient {
   toggleMitigation(id: string, on: boolean): Promise<CrqSnapshot>;
   getInsurancePolicy(insurerId?: string): Promise<InsurancePolicy>;
   getDataSourceHealth(): Promise<DataSourceHealth[]>;
+  // Agentic
+  listAgents(): Promise<Agent[]>;
+  getAgent(id: AgentId): Promise<Agent>;
+  setAgentAutonomy(id: AgentId, level: AutonomyLevel): Promise<Agent>;
+  listAgentActivities(opts?: { agentId?: AgentId; limit?: number }): Promise<AgentActivity[]>;
 }

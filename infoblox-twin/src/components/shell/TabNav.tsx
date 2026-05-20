@@ -7,6 +7,7 @@ import {
   IconChartBar,
   IconBandage,
   IconClipboardCheck,
+  IconRobot,
 } from '@tabler/icons-react';
 import { useAppStore } from '@/lib/state/store';
 import type { ViewName } from '@/lib/types/twin.types';
@@ -56,10 +57,16 @@ const ALL_TABS: Tab[] = [
     hint: 'PCI · HIPAA · GDPR · SOX zones auto-classified. Drift surfaced continuously.',
   },
   {
+    id: 'agents',
+    label: 'Agents',
+    icon: IconRobot,
+    hint: 'Meet your AI security team. Identity, scope, autonomy, and trust — for each of the nine agents.',
+  },
+  {
     id: 'agent-iez',
-    label: 'Agent IEZ',
+    label: 'Console',
     icon: IconShieldBolt,
-    hint: 'Vet every agentic SOC proposal in a sandbox Twin before it touches production.',
+    hint: 'Pending agent proposals waiting on a human. Each is attributed to the agent that proposed it.',
   },
 ];
 
@@ -71,7 +78,7 @@ export function TabNav() {
 
   let tabs = ALL_TABS;
   if (persona === 'cro')
-    tabs = ALL_TABS.filter((t) => !['aev', 'agent-iez', 'patch-risk'].includes(t.id));
+    tabs = ALL_TABS.filter((t) => !['aev', 'agent-iez', 'patch-risk', 'agents'].includes(t.id));
 
   return (
     <nav className="absolute top-[56px] left-1/2 -translate-x-1/2 z-30">

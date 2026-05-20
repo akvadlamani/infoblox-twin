@@ -8,8 +8,12 @@ import {
   IconCircleCheck,
   IconLoader2,
   IconMessageCircle,
+  IconArrowsRightLeft,
 } from '@tabler/icons-react';
 import { runAgent, STARTER_PROMPTS, type AgentMessage } from '@/lib/agent/twin-agent';
+import { twinClient } from '@/lib/data-clients/factory';
+import { iconForAgent } from '@/lib/agent/agent-icons';
+import type { Agent, AgentId } from '@/lib/types/agent.types';
 
 interface Props {
   open: boolean;
@@ -20,8 +24,15 @@ export function AskTwinPanel({ open, onClose }: Props) {
   const [messages, setMessages] = useState<AgentMessage[]>([]);
   const [input, setInput] = useState('');
   const [thinking, setThinking] = useState(false);
+  const [agents, setAgents] = useState<Map<AgentId, Agent>>(new Map());
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    twinClient.listAgents().then((list) => {
+      setAgents(new Map(list.map((a) => [a.id, a])));
+    });
+  }, []);
 
   useEffect(() => {
     if (open) {
@@ -122,10 +133,10 @@ export function AskTwinPanel({ open, onClose }: Props) {
           ) : (
             <div className="flex flex-col gap-3">
               {messages.map((m) => (
-                <Bubble key={m.id} msg={m} onPick={send} />
+                <Bubble key={m.id} msg={m} agents={agents} onPick={send} />
               ))}
               {thinking && messages[messages.length - 1]?.role !== 'tool' && (
-                <Thinking />
+                <Thinking agent={lastAssistantAgent(messages, agents)} />
               )}
             </div>
           )}
@@ -182,9 +193,11 @@ function Welcome({ onPick }: { onPick: (q: string) => void }) {
 
 function Bubble({
   msg,
+  agents,
   onPick,
 }: {
   msg: AgentMessage;
+  agents: Map<AgentId, Agent>;
   onPick: (q: string) => void;
 }) {
   if (msg.role === 'user') {
@@ -199,19 +212,73 @@ function Bubble({
       </div>
     );
   }
+  if (msg.role === 'system') {
+    // Handoff / pickup announcement.
+    const agent = msg.agentId ? agents.get(msg.agentId) : undefined;
+    if (!agent) return null;
+    const AgentIcon = iconForAgent(agent.id);
+    const isHandoff = !!msg.content;
+    return (
+      <div className="flex items-center gap-2 my-1 self-start max-w-[92%]">
+        <span
+          className="rounded-md flex items-center justify-center shrink-0"
+          style={{
+            width: 20,
+            height: 20,
+            background: `${agent.color}22`,
+            border: `1px solid ${agent.color}55`,
+            color: agent.color,
+          }}
+        >
+          <AgentIcon size={11} stroke={1.8} />
+        </span>
+        <div className="text-[11px] text-text3 leading-tight">
+          {isHandoff ? (
+            <span className="inline-flex items-center gap-1.5">
+              <IconArrowsRightLeft size={10} className="text-text3" />
+              <span>
+                <span className="font-medium" style={{ color: agent.color }}>{agent.name}</span> picked it up — <span className="italic">{msg.content}</span>
+              </span>
+            </span>
+          ) : (
+            <>
+              <span className="font-medium" style={{ color: agent.color }}>
+                {agent.name}
+              </span>{' '}
+              is on it…
+            </>
+          )}
+        </div>
+      </div>
+    );
+  }
   if (msg.role === 'tool') {
     const pending = msg.status !== 'done';
+    const agent = msg.agentId ? agents.get(msg.agentId) : undefined;
+    const accent = agent?.color ?? '#3b82f6';
     return (
       <div className="flex items-start gap-2 max-w-[92%]">
-        <div className="h-6 w-6 rounded-md bg-white/5 border border-white/8 flex items-center justify-center shrink-0 mt-0.5">
+        <div
+          className="h-6 w-6 rounded-md flex items-center justify-center shrink-0 mt-0.5"
+          style={{
+            background: `${accent}1a`,
+            border: `1px solid ${accent}55`,
+            color: accent,
+          }}
+        >
           {pending ? (
-            <IconLoader2 size={11} className="text-accent2 animate-spin" />
+            <IconLoader2 size={11} className="animate-spin" />
           ) : (
-            <IconCircleCheck size={11} className="text-success" />
+            <IconCircleCheck size={11} />
           )}
         </div>
         <div className="flex-1 min-w-0 px-3 py-2 rounded-lg bg-page/40 border border-white/5">
           <div className="flex items-baseline gap-2 mb-0.5">
+            {agent && (
+              <span className="text-[10px] font-medium" style={{ color: accent }}>
+                {agent.name}
+              </span>
+            )}
             <IconTool size={10} className="text-text3" />
             <span className="font-mono text-[11px] text-text1">{msg.toolName}</span>
             <span className="text-[10px] text-text3 font-mono truncate">
@@ -228,16 +295,34 @@ function Bubble({
     );
   }
   // assistant
+  const agent = msg.agentId ? agents.get(msg.agentId) : undefined;
+  const accent = agent?.color ?? '#3b82f6';
+  const AgentIcon = agent ? iconForAgent(agent.id) : IconSparkles;
   return (
     <div className="flex items-start gap-2 max-w-[92%]">
-      <div className="h-6 w-6 rounded-md bg-accent/15 border border-accent/30 flex items-center justify-center shrink-0 mt-0.5">
-        <IconSparkles size={11} className="text-accent2" />
+      <div
+        className="h-6 w-6 rounded-md flex items-center justify-center shrink-0 mt-0.5"
+        style={{
+          background: `${accent}1a`,
+          border: `1px solid ${accent}55`,
+          color: accent,
+        }}
+      >
+        <AgentIcon size={11} stroke={1.8} />
       </div>
       <div className="flex-1 min-w-0">
+        {agent && (
+          <div className="flex items-baseline gap-1.5 mb-1 px-1">
+            <span className="text-[11px] font-medium" style={{ color: accent }}>
+              {agent.name}
+            </span>
+            <span className="text-[9px] text-text3 font-mono">{agent.model}</span>
+          </div>
+        )}
         <div className="px-3 py-2.5 rounded-lg bg-page/60 border border-white/8">
           <Markdown text={msg.content} />
           {msg.status === 'streaming' && (
-            <span className="inline-block w-[1px] h-[12px] bg-accent2/80 ml-1 align-middle animate-pulse" />
+            <span className="inline-block w-[1px] h-[12px] ml-1 align-middle animate-pulse" style={{ background: `${accent}cc` }} />
           )}
         </div>
         {msg.suggestions && msg.status === 'done' && (
@@ -258,13 +343,27 @@ function Bubble({
   );
 }
 
-function Thinking() {
+function Thinking({ agent }: { agent?: Agent }) {
+  const accent = agent?.color ?? '#60a5fa';
   return (
-    <div className="flex items-center gap-2 text-text3 text-[11px] pl-8">
-      <span className="inline-block w-1.5 h-1.5 rounded-full bg-accent2 anim-pulse-dot" />
-      <span>Twin is thinking…</span>
+    <div className="flex items-center gap-2 text-[11px] pl-8" style={{ color: agent ? accent : '#a0a0b0' }}>
+      <span className="inline-block w-1.5 h-1.5 rounded-full anim-pulse-dot" style={{ background: accent }} />
+      <span>{agent ? `${agent.name} is thinking…` : 'Twin is thinking…'}</span>
     </div>
   );
+}
+
+function lastAssistantAgent(
+  messages: AgentMessage[],
+  agents: Map<AgentId, Agent>
+): Agent | undefined {
+  for (let i = messages.length - 1; i >= 0; i--) {
+    const m = messages[i];
+    if ((m.role === 'assistant' || m.role === 'system') && m.agentId) {
+      return agents.get(m.agentId);
+    }
+  }
+  return undefined;
 }
 
 function Composer({

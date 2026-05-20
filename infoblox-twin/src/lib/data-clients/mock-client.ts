@@ -18,11 +18,16 @@ import assetsJson from '@/data/mock/acme-corp-assets.json';
 import edgesJson from '@/data/mock/acme-corp-edges.json';
 import actorsJson from '@/data/mock/threat-actors.json';
 import mitigationsJson from '@/data/mock/mitigations.json';
+import agentsJson from '@/data/mock/agents.json';
+import agentActivitiesJson from '@/data/mock/agent-activities.json';
+import type { Agent, AgentActivity, AgentId, AutonomyLevel } from '@/lib/types/agent.types';
 
 const ASSETS = assetsJson as Asset[];
 const EDGES = edgesJson as Edge[];
 const ACTORS = actorsJson as ThreatActor[];
 const INIT_MITIGATIONS = mitigationsJson as Mitigation[];
+const INIT_AGENTS = agentsJson as Agent[];
+const AGENT_ACTIVITIES = agentActivitiesJson as AgentActivity[];
 
 function delay<T>(value: T, ms = 80 + Math.random() * 120): Promise<T> {
   return new Promise((resolve) => setTimeout(() => resolve(value), ms));
@@ -106,10 +111,13 @@ export class MockClient implements TwinDataClient {
   private pendingActions: AgentAction[] = [
     {
       id: 'aa_1',
-      agentName: 'Action agent',
+      agentName: 'Action',
+      agentId: 'action',
       proposedAt: '2026-05-19T11:42:00Z',
       description:
         'Quarantine endpoint pool finance (suspicious DNS pattern, 18 requests to newly-observed domain).',
+      rationale:
+        'Sentinel observed an unprotected endpoint resolving okta-acme-login.live — confidence 0.94 this is the Vigorish Viper landing page. Sandbox cleared the quarantine action: 0 production dependencies.',
       targetAssetIds: ['ast_emp-pool-finance'],
       simulation: {
         verdict: 'safe',
@@ -124,9 +132,12 @@ export class MockClient implements TwinDataClient {
     },
     {
       id: 'aa_2',
-      agentName: 'Action agent',
+      agentName: 'Action',
+      agentId: 'action',
       proposedAt: '2026-05-19T11:39:00Z',
       description: 'Block domain api-update-svc.io org-wide.',
+      rationale:
+        'Hunter flagged the domain as a possible C2 staging host. Action proposed an org-wide block; Sandbox returned unsafe — 23 internal services depend on it. Routed to human.',
       targetAssetIds: ['ast_internet'],
       simulation: {
         verdict: 'unsafe',
@@ -141,9 +152,12 @@ export class MockClient implements TwinDataClient {
     },
     {
       id: 'aa_3',
-      agentName: 'Verification agent',
+      agentName: 'Action',
+      agentId: 'action',
       proposedAt: '2026-05-19T11:35:00Z',
       description: 'Push Threat Defense policy update to Engineering segment.',
+      rationale:
+        "Pilot recommended the policy update after CVE-2026-12277 disclosure. Sandbox modelled the rollout: 2 services briefly affected, no business impact.",
       targetAssetIds: ['ast_emp-pool-eng', 'ast_eng-jump'],
       simulation: {
         verdict: 'safe',
@@ -157,9 +171,12 @@ export class MockClient implements TwinDataClient {
     },
     {
       id: 'aa_4',
-      agentName: 'Triage agent',
+      agentName: 'Triage',
+      agentId: 'triage',
       proposedAt: '2026-05-19T11:30:00Z',
       description: 'Auto-close 1,247 low-severity alerts matching known benign pattern.',
+      rationale:
+        'Pattern match against the "scheduled Salesforce bulk export" benign signature. Triage wants to close 1,239 inline and escalate 8 outliers for human review.',
       targetAssetIds: [],
       simulation: {
         verdict: 'safe-with-audit',
@@ -169,6 +186,44 @@ export class MockClient implements TwinDataClient {
         rationale:
           '1,239 of 1,247 match known benign pattern, auto-close those and escalate 8 outliers.',
         confidence: 0.88,
+      },
+      status: 'pending',
+    },
+    {
+      id: 'aa_5',
+      agentName: 'Pilot',
+      agentId: 'pilot',
+      proposedAt: '2026-05-19T10:55:00Z',
+      description: 'Draft change ticket — patch CVE-2026-29911 on AD-PRIMARY (Wed 02:00 UTC).',
+      rationale:
+        'Twin risk 89, reaches 12 assets and 3 crown jewels. Proposed maintenance window aligns with the existing IdentityOps change calendar. Sandbox verified rollback path.',
+      targetAssetIds: ['ast_ad-primary'],
+      simulation: {
+        verdict: 'safe',
+        dependenciesAffected: 12,
+        usersAffected: 0,
+        servicesRerouted: 0,
+        rationale: 'Patch applies during scheduled window; rollback path verified.',
+        confidence: 0.91,
+      },
+      status: 'pending',
+    },
+    {
+      id: 'aa_6',
+      agentName: 'Scope',
+      agentId: 'scope',
+      proposedAt: '2026-05-19T09:14:00Z',
+      description: 'Tag fin-lap-21, fin-lap-22, cfo-iphone as PCI-DSS in-scope.',
+      rationale:
+        'These three new finance assets now process cardholder data (observed Stripe + SAP financial-flow traffic). Auditor sign-off required.',
+      targetAssetIds: ['ast_finlap-1', 'ast_finlap-2', 'ast_finmob-1'],
+      simulation: {
+        verdict: 'safe-with-audit',
+        dependenciesAffected: 0,
+        usersAffected: 0,
+        servicesRerouted: 0,
+        rationale: 'Tagging only — no operational change. Auditor approval required for record.',
+        confidence: 0.94,
       },
       status: 'pending',
     },
@@ -415,5 +470,53 @@ export class MockClient implements TwinDataClient {
       { source: 'NIOS DDI', healthy: true, lastSyncAt: now, error: null },
       { source: 'SOC Insights', healthy: true, lastSyncAt: now, error: null },
     ]);
+  }
+
+  // ---- Agents ----
+  private agents: Agent[] = INIT_AGENTS.map((a) => ({ ...a }));
+
+  async listAgents(): Promise<Agent[]> {
+    return delay(this.agents.slice());
+  }
+
+  async getAgent(id: AgentId): Promise<Agent> {
+    const a = this.agents.find((x) => x.id === id);
+    if (!a) throw new Error(`Agent not found: ${id}`);
+    return delay(a);
+  }
+
+  async setAgentAutonomy(id: AgentId, level: AutonomyLevel): Promise<Agent> {
+    const a = this.agents.find((x) => x.id === id);
+    if (!a) throw new Error(`Agent not found: ${id}`);
+    // Trust gate: cannot lift to autonomous if trust < 0.9.
+    if (level === 'autonomous' && a.trust < 0.9) {
+      throw new Error(
+        `${a.name} trust score is ${(a.trust * 100).toFixed(0)}% — promote to autonomous requires ≥ 90%.`
+      );
+    }
+    // MaxAutonomy guard
+    const order: Record<AutonomyLevel, number> = {
+      advisory: 0,
+      semi: 1,
+      autonomous: 2,
+    };
+    if (order[level] > order[a.maxAutonomy]) {
+      throw new Error(
+        `${a.name}'s max autonomy is ${a.maxAutonomy}. Cannot lift higher.`
+      );
+    }
+    a.autonomy = level;
+    return delay(a);
+  }
+
+  async listAgentActivities(
+    opts?: { agentId?: AgentId; limit?: number }
+  ): Promise<AgentActivity[]> {
+    let out = AGENT_ACTIVITIES.slice().sort((a, b) =>
+      b.timestamp.localeCompare(a.timestamp)
+    );
+    if (opts?.agentId) out = out.filter((a) => a.agentId === opts.agentId);
+    if (opts?.limit) out = out.slice(0, opts.limit);
+    return delay(out);
   }
 }

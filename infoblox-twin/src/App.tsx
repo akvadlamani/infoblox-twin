@@ -4,6 +4,7 @@ import { HeroLanding } from '@/components/twin/HeroLanding';
 import { TopBar } from '@/components/shell/TopBar';
 import { TabNav } from '@/components/shell/TabNav';
 import { AskTwinPanel, AskTwinLauncher } from '@/components/agent/AskTwinPanel';
+import { ViewAgentChip } from '@/components/agent/ViewAgentChip';
 import { LoginView } from '@/views/LoginView';
 import { OverviewView } from '@/views/OverviewView';
 import { AevLabView } from '@/views/AevLabView';
@@ -13,6 +14,7 @@ import { CrqView } from '@/views/CrqView';
 import { PatchRiskView } from '@/views/PatchRiskView';
 import { ComplianceView } from '@/views/ComplianceView';
 import { SettingsView } from '@/views/SettingsView';
+import { AgentsView } from '@/views/AgentsView';
 
 export default function App() {
   const view = useAppStore((s) => s.view);
@@ -56,6 +58,7 @@ export default function App() {
       >
         <TopBar />
         <TabNav />
+        <ViewAgentChip />
         <div className="absolute inset-0">
           {view === 'overview' && <OverviewView />}
           {view === 'aev' && <AevLabView />}
@@ -64,6 +67,7 @@ export default function App() {
           {view === 'crq' && <CrqView />}
           {view === 'patch-risk' && <PatchRiskView />}
           {view === 'compliance' && <ComplianceView />}
+          {view === 'agents' && <AgentsView />}
           {view === 'settings' && <SettingsView />}
         </div>
         {!askOpen && heroComplete && <AskTwinLauncher onOpen={() => setAskOpen(true)} />}

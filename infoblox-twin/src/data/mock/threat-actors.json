@@ -5,7 +5,12 @@
     "family": "aitm",
     "origin": "Suspected China-nexus",
     "tigSource": "Infoblox Threat Intel — published Jul 2024",
-    "mitreTactics": ["Initial Access", "Credential Access", "Lateral Movement", "Exfiltration"],
+    "mitreTactics": [
+      "Initial Access",
+      "Credential Access",
+      "Lateral Movement",
+      "Exfiltration"
+    ],
     "lastObserved": "2026-05-17T09:32:00Z",
     "campaignCount": 170000,
     "description": "Publicly disclosed by Infoblox in 2024. Operates a sprawling traffic distribution and AiTM infrastructure linked to illegal gambling and credential harvesting. 170K+ associated domains tracked.",
@@ -93,7 +98,12 @@
     "family": "commodity-malware",
     "origin": "Russia-linked criminal syndicate",
     "tigSource": "Infoblox Threat Intel — disclosed Jan 2024",
-    "mitreTactics": ["Initial Access", "Command and Control", "Collection", "Exfiltration"],
+    "mitreTactics": [
+      "Initial Access",
+      "Command and Control",
+      "Collection",
+      "Exfiltration"
+    ],
     "lastObserved": "2026-05-12T14:11:00Z",
     "campaignCount": 70000,
     "description": "World's largest DNS-based Traffic Distribution System. Routes victims to scams, banking trojans, and tech-support fraud across 70K+ partner domains. Disclosed by Infoblox in early 2024.",
@@ -167,7 +177,12 @@
     "family": "aitm",
     "origin": "Unknown — financially motivated",
     "tigSource": "Infoblox Threat Intel — disclosed Feb 2024",
-    "mitreTactics": ["Initial Access", "Credential Access", "Discovery", "Collection"],
+    "mitreTactics": [
+      "Initial Access",
+      "Credential Access",
+      "Discovery",
+      "Collection"
+    ],
     "lastObserved": "2026-05-18T08:14:00Z",
     "campaignCount": 4200,
     "description": "DNS CNAME-based traffic distribution and AiTM infrastructure that aged domains for months before activation — bypassing newly-observed-domain feeds.",
@@ -241,7 +256,12 @@
     "family": "apt",
     "origin": "Nation-state-aligned, persistent",
     "tigSource": "Infoblox Threat Intel — disclosed Apr 2023",
-    "mitreTactics": ["Initial Access", "Persistence", "Command and Control", "Collection"],
+    "mitreTactics": [
+      "Initial Access",
+      "Persistence",
+      "Command and Control",
+      "Collection"
+    ],
     "lastObserved": "2026-05-15T22:48:00Z",
     "campaignCount": 80,
     "description": "Pupy-RAT-derived remote access toolkit using DNS as its primary C2 channel. Discovered by Infoblox in 2023 — operates at very low DNS-query volumes to evade detection.",
@@ -292,6 +312,345 @@
         "disposition": "observed",
         "explanation": "Recommend Vault audit log forwarding to SOC Insights.",
         "control": "none"
+      }
+    ]
+  },
+  {
+    "id": "apt29",
+    "name": "APT29 (Cozy Bear)",
+    "family": "apt",
+    "origin": "Russia · SVR (Foreign Intelligence Service)",
+    "tigSource": "CISA, NCSC, Mandiant — corroborated by Infoblox DNS telemetry",
+    "mitreTactics": [
+      "Initial Access",
+      "Persistence",
+      "Defense Evasion",
+      "Credential Access",
+      "Discovery",
+      "Lateral Movement",
+      "Collection",
+      "Exfiltration"
+    ],
+    "lastObserved": "2026-05-16T03:11:00Z",
+    "campaignCount": 53,
+    "description": "Russian state-sponsored long-dwell operator behind SolarWinds, MIDNIGHT BLIZZARD, and the 2023 M365 intrusions. Targets identity infrastructure and email. Goes very quiet between bursts.",
+    "iocs": [
+      "rotate.cloudapp-svc[.]net",
+      "authentik-acme[.]live",
+      "graph-helpers[.]io"
+    ],
+    "killChainTemplate": [
+      {
+        "id": "apt29_1",
+        "order": 1,
+        "timeLabel": "T-21d",
+        "technique": "Valid Accounts: Cloud Accounts",
+        "mitreId": "T1078.004",
+        "sourceAsset": "external",
+        "targetAsset": "ast_saas-365",
+        "iconName": "ti-key",
+        "description": "Stolen M365 service principal token from a third-party SaaS breach.",
+        "disposition": "observed",
+        "explanation": "No detection at acquisition — Twin flags token usage anomaly post-hoc.",
+        "control": "none"
+      },
+      {
+        "id": "apt29_2",
+        "order": 2,
+        "timeLabel": "T-7d",
+        "technique": "Steal Application Access Token",
+        "mitreId": "T1528",
+        "sourceAsset": "ast_saas-365",
+        "targetAsset": "ast_ad-primary",
+        "iconName": "ti-shield-off",
+        "description": "Privileged consent grant to attacker-owned OAuth app via Entra.",
+        "disposition": "contained",
+        "explanation": "SOC Insights surfaces unusual OAuth consent — held pending human review.",
+        "control": "soc-insights"
+      },
+      {
+        "id": "apt29_3",
+        "order": 3,
+        "timeLabel": "T-2d",
+        "technique": "Account Manipulation: Additional Cloud Roles",
+        "mitreId": "T1098.003",
+        "sourceAsset": "ast_ad-primary",
+        "targetAsset": "ast_ad-secondary",
+        "iconName": "ti-key",
+        "description": "Adds GlobalAdmin to attacker principal in shadow path.",
+        "disposition": "observed",
+        "explanation": "Twin recommends conditional-access hardening + privileged role review.",
+        "control": "none"
+      },
+      {
+        "id": "apt29_4",
+        "order": 4,
+        "timeLabel": "T-0",
+        "technique": "Email Collection: Remote Email Collection",
+        "mitreId": "T1114.002",
+        "sourceAsset": "ast_ad-secondary",
+        "targetAsset": "ast_saas-365",
+        "iconName": "ti-mail",
+        "description": "Mass mailbox pull of exec inbox via Graph API.",
+        "disposition": "contained",
+        "explanation": "SOC Insights anomaly fires on Graph API volume — token revoked.",
+        "control": "soc-insights"
+      }
+    ]
+  },
+  {
+    "id": "scattered-spider",
+    "name": "Scattered Spider (UNC3944)",
+    "family": "apt",
+    "origin": "English-speaking · financially motivated",
+    "tigSource": "Mandiant, CrowdStrike, CISA — corroborated by Infoblox DNS telemetry",
+    "mitreTactics": [
+      "Reconnaissance",
+      "Initial Access",
+      "Credential Access",
+      "Persistence",
+      "Defense Evasion",
+      "Lateral Movement",
+      "Impact"
+    ],
+    "lastObserved": "2026-05-18T22:04:00Z",
+    "campaignCount": 38,
+    "description": "Financially-motivated group behind the MGM and Caesars intrusions. Specializes in phone-based social engineering against IT helpdesks to reset MFA, then ransomware via ALPHV affiliate. Devastating against orgs with weak helpdesk verification.",
+    "iocs": [
+      "acme-helpdesk-sso[.]com",
+      "mfa-acme-reset[.]net",
+      "sn-acme-prod[.]com"
+    ],
+    "killChainTemplate": [
+      {
+        "id": "spider_1",
+        "order": 1,
+        "timeLabel": "T-3d",
+        "technique": "Phishing for Information: Spearphishing Voice",
+        "mitreId": "T1598.004",
+        "sourceAsset": "external",
+        "targetAsset": "ast_emp-pool-finance",
+        "iconName": "ti-mail",
+        "description": "Phone call to IT helpdesk impersonating EXEC-WS-CFO user — requests MFA reset.",
+        "disposition": "observed",
+        "explanation": "Twin flags as drift — helpdesk verification workflow does not pull Twin identity context.",
+        "control": "none"
+      },
+      {
+        "id": "spider_2",
+        "order": 2,
+        "timeLabel": "T-2d",
+        "technique": "Multi-Factor Authentication Request Generation",
+        "mitreId": "T1621",
+        "sourceAsset": "ast_emp-pool-finance",
+        "targetAsset": "ast_cfo-ws",
+        "iconName": "ti-key",
+        "description": "MFA factor reset and re-enrollment from attacker device.",
+        "disposition": "observed",
+        "explanation": "Okta MFA policy permits self-reset post-helpdesk — Twin recommends hardening.",
+        "control": "none"
+      },
+      {
+        "id": "spider_3",
+        "order": 3,
+        "timeLabel": "T-12h",
+        "technique": "Remote Services: Remote Desktop Protocol",
+        "mitreId": "T1021.001",
+        "sourceAsset": "ast_cfo-ws",
+        "targetAsset": "ast_ad-primary",
+        "iconName": "ti-shield-off",
+        "description": "Lateral move via legitimate VPN + RDP using compromised account.",
+        "disposition": "contained",
+        "explanation": "SOC Insights flags impossible-travel; access held for human approval.",
+        "control": "soc-insights"
+      },
+      {
+        "id": "spider_4",
+        "order": 4,
+        "timeLabel": "T-2h",
+        "technique": "Indicator Removal: File Deletion",
+        "mitreId": "T1070.004",
+        "sourceAsset": "ast_ad-primary",
+        "targetAsset": "ast_backup",
+        "iconName": "ti-shield-off",
+        "description": "Attempts to clear backup vault catalogs before ransomware fires.",
+        "disposition": "blocked",
+        "explanation": "Backup vault immutability policy blocks delete — TD also blocks attacker C2 resolution.",
+        "control": "td"
+      },
+      {
+        "id": "spider_5",
+        "order": 5,
+        "timeLabel": "T-0",
+        "technique": "Data Encrypted for Impact",
+        "mitreId": "T1486",
+        "sourceAsset": "ast_ad-primary",
+        "targetAsset": "ast_fin-db",
+        "iconName": "ti-bug",
+        "description": "ALPHV ransomware payload deployment to crown jewel.",
+        "disposition": "blocked",
+        "explanation": "DNS Armor blocks C2 retrieval — payload cannot execute without key.",
+        "control": "dns-armor"
+      }
+    ]
+  },
+  {
+    "id": "alphv",
+    "name": "ALPHV / BlackCat",
+    "family": "commodity-malware",
+    "origin": "Russia-linked ransomware-as-a-service",
+    "tigSource": "FBI, CISA · #StopRansomware advisory",
+    "mitreTactics": [
+      "Initial Access",
+      "Discovery",
+      "Lateral Movement",
+      "Exfiltration",
+      "Impact"
+    ],
+    "lastObserved": "2026-05-14T17:50:00Z",
+    "campaignCount": 240,
+    "description": "Rust-written ransomware-as-a-service. Affiliates use stolen creds + Scattered-Spider-style social engineering. Famous for the Change Healthcare breach. Specializes in deleting backup catalogs before encrypting.",
+    "iocs": [
+      "alphv-collect[.]onion",
+      "leakdata-svc[.]top",
+      "mirror-acme[.]xyz"
+    ],
+    "killChainTemplate": [
+      {
+        "id": "alphv_1",
+        "order": 1,
+        "timeLabel": "T-7d",
+        "technique": "Valid Accounts",
+        "mitreId": "T1078",
+        "sourceAsset": "external",
+        "targetAsset": "ast_vpn-gw",
+        "iconName": "ti-shield-off",
+        "description": "Stolen VPN creds from initial access broker.",
+        "disposition": "contained",
+        "explanation": "TD blocks resolution of alphv-collect.onion proxy — affiliate cannot establish C2.",
+        "control": "td"
+      },
+      {
+        "id": "alphv_2",
+        "order": 2,
+        "timeLabel": "T-2d",
+        "technique": "Account Discovery: Domain Account",
+        "mitreId": "T1087.002",
+        "sourceAsset": "ast_vpn-gw",
+        "targetAsset": "ast_ad-primary",
+        "iconName": "ti-eye",
+        "description": "BloodHound-style domain enumeration.",
+        "disposition": "observed",
+        "explanation": "Volume anomaly on LDAP — SOC Insights opens incident.",
+        "control": "soc-insights"
+      },
+      {
+        "id": "alphv_3",
+        "order": 3,
+        "timeLabel": "T-6h",
+        "technique": "Exfiltration Over Web Service",
+        "mitreId": "T1567.002",
+        "sourceAsset": "ast_file-svr",
+        "targetAsset": "external",
+        "iconName": "ti-package-export",
+        "description": "Double-extortion: 800 GB exfil to leakdata-svc.top before encryption.",
+        "disposition": "blocked",
+        "explanation": "DNS Armor blocks leak site resolution — exfil aborted.",
+        "control": "dns-armor"
+      },
+      {
+        "id": "alphv_4",
+        "order": 4,
+        "timeLabel": "T-0",
+        "technique": "Data Encrypted for Impact",
+        "mitreId": "T1486",
+        "sourceAsset": "ast_ad-primary",
+        "targetAsset": "ast_backup",
+        "iconName": "ti-bug",
+        "description": "Encrypts backup vault to prevent recovery.",
+        "disposition": "blocked",
+        "explanation": "Backup immutability policy holds — Rubrik snapshot cannot be deleted.",
+        "control": "none"
+      }
+    ]
+  },
+  {
+    "id": "fin7",
+    "name": "FIN7",
+    "family": "banking-trojan",
+    "origin": "Russia-linked criminal syndicate (active since 2013)",
+    "tigSource": "Mandiant, Mitre ATT&CK · corroborated by Infoblox DNS telemetry",
+    "mitreTactics": [
+      "Initial Access",
+      "Execution",
+      "Persistence",
+      "Collection",
+      "Exfiltration"
+    ],
+    "lastObserved": "2026-05-13T08:22:00Z",
+    "campaignCount": 92,
+    "description": "One of the most prolific financially-motivated groups. Pioneered Carbanak-style intrusions against banks and retailers. Pivoted to ransomware affiliate work after 2022 indictments. Targets POS and payment infrastructure.",
+    "iocs": [
+      "acme-invoice-sync[.]com",
+      "pay-acme-stmt[.]net",
+      "sap-reports[.]live"
+    ],
+    "killChainTemplate": [
+      {
+        "id": "fin7_1",
+        "order": 1,
+        "timeLabel": "T-5d",
+        "technique": "Phishing: Spearphishing Attachment",
+        "mitreId": "T1566.001",
+        "sourceAsset": "external",
+        "targetAsset": "ast_email-gw",
+        "iconName": "ti-mail",
+        "description": "Weaponized invoice document with malicious macro.",
+        "disposition": "blocked",
+        "explanation": "Inflight email security strips attachment pre-delivery.",
+        "control": "inflight"
+      },
+      {
+        "id": "fin7_2",
+        "order": 2,
+        "timeLabel": "T-3d",
+        "technique": "User Execution: Malicious File",
+        "mitreId": "T1204.002",
+        "sourceAsset": "ast_email-gw",
+        "targetAsset": "ast_emp-pool-finance",
+        "iconName": "ti-download",
+        "description": "One unprotected endpoint opens attachment.",
+        "disposition": "blocked",
+        "explanation": "CrowdStrike Falcon prevents execution — payload quarantined.",
+        "control": "none"
+      },
+      {
+        "id": "fin7_3",
+        "order": 3,
+        "timeLabel": "T-1d",
+        "technique": "Data from Information Repositories: SharePoint",
+        "mitreId": "T1213.002",
+        "sourceAsset": "ast_emp-pool-finance",
+        "targetAsset": "ast_sap-prod",
+        "iconName": "ti-database",
+        "description": "Attempts to query SAP financial reporting tables.",
+        "disposition": "contained",
+        "explanation": "Twin recommends data-loss-prevention policy on SAP reports.",
+        "control": "none"
+      },
+      {
+        "id": "fin7_4",
+        "order": 4,
+        "timeLabel": "T-0",
+        "technique": "Exfiltration to Cloud Storage",
+        "mitreId": "T1567.002",
+        "sourceAsset": "ast_sap-prod",
+        "targetAsset": "external",
+        "iconName": "ti-package-export",
+        "description": "Exfil to sap-reports.live — FIN7 staging server.",
+        "disposition": "blocked",
+        "explanation": "DNS Armor blocks resolution — agentic takedown notified.",
+        "control": "dns-armor"
       }
     ]
   }

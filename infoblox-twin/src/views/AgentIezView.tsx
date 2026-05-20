@@ -5,6 +5,8 @@ import { NarratorStrip } from '@/components/shell/NarratorStrip';
 import { AgentActionCard } from '@/components/twin/AgentActionCard';
 import { twinClient } from '@/lib/data-clients/factory';
 import type { Asset, Edge, AgentAction } from '@/lib/types/twin.types';
+import type { Agent } from '@/lib/types/agent.types';
+import { iconForAgent } from '@/lib/agent/agent-icons';
 import { useAppStore } from '@/lib/state/store';
 import { narrate } from '@/lib/llm/narrator-canned';
 import {
@@ -31,6 +33,7 @@ export function AgentIezView() {
   const [assets, setAssets] = useState<Asset[]>([]);
   const [edges, setEdges] = useState<Edge[]>([]);
   const [actions, setActions] = useState<AgentAction[]>([]);
+  const [agents, setAgents] = useState<Agent[]>([]);
   const [selectedActionId, setSelectedActionId] = useState<string | null>(null);
   const [autoApprove, setAutoApprove] = useState(false);
   const setNarrator = useAppStore((s) => s.setNarrator);
@@ -39,12 +42,19 @@ export function AgentIezView() {
   useEffect(() => {
     twinClient.listAssets().then(setAssets);
     twinClient.getEdges().then(setEdges);
+    twinClient.listAgents().then(setAgents);
     twinClient.listPendingAgentActions().then((list) => {
       setActions(list);
       if (list[0]) setSelectedActionId(list[0].id);
     });
     setNarrator(narrate({ kind: 'view-change', view: 'agent-iez' }));
   }, [setNarrator]);
+
+  const agentById = useMemo(() => new Map(agents.map((a) => [a.id, a])), [agents]);
+  const selectedAgent = useMemo(() => {
+    const action = actions.find((a) => a.id === selectedActionId);
+    return action?.agentId ? agentById.get(action.agentId) : undefined;
+  }, [actions, selectedActionId, agentById]);
 
   const selected = useMemo(
     () => actions.find((a) => a.id === selectedActionId) ?? null,
@@ -120,12 +130,16 @@ export function AgentIezView() {
       {/* Bottom: actions queue + detail */}
       <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-3 min-h-0">
         <div className="rounded-lg bg-surface/40 border border-white/5 p-3 overflow-y-auto">
-          <div className="eyebrow mb-2">pending agent actions ({actions.filter((a) => a.status === 'pending').length})</div>
+          <div className="flex items-center justify-between mb-2">
+            <div className="eyebrow">pending agent proposals ({actions.filter((a) => a.status === 'pending').length})</div>
+            <span className="text-[10px] text-text3">sorted newest first</span>
+          </div>
           <div className="flex flex-col gap-2">
             {actions.map((a) => (
               <AgentActionCard
                 key={a.id}
                 action={a}
+                agent={a.agentId ? agentById.get(a.agentId) : undefined}
                 selected={selectedActionId === a.id}
                 onClick={() => setSelectedActionId(a.id)}
               />
@@ -138,6 +152,38 @@ export function AgentIezView() {
             <div className="text-text3 text-small">Select an agent action to see Twin's verdict.</div>
           ) : (
             <div>
+              {selectedAgent && (
+                <div
+                  className="mb-3 p-2.5 rounded-md flex items-center gap-2.5"
+                  style={{
+                    background: `${selectedAgent.color}10`,
+                    border: `1px solid ${selectedAgent.color}40`,
+                  }}
+                >
+                  <div
+                    className="h-8 w-8 rounded-md flex items-center justify-center shrink-0"
+                    style={{
+                      background: `${selectedAgent.color}26`,
+                      color: selectedAgent.color,
+                      border: `1px solid ${selectedAgent.color}55`,
+                    }}
+                  >
+                    {(() => {
+                      const Icon = iconForAgent(selectedAgent.id);
+                      return <Icon size={14} stroke={1.7} />;
+                    })()}
+                  </div>
+                  <div className="leading-tight flex-1 min-w-0">
+                    <div className="text-[11px] font-medium" style={{ color: selectedAgent.color }}>
+                      {selectedAgent.name} proposed this
+                    </div>
+                    <div className="text-[10px] text-text3 truncate">{selectedAgent.role}</div>
+                  </div>
+                  <span className="text-[9px] font-mono uppercase tracking-wider px-1.5 py-0.5 rounded border border-white/10 text-text3">
+                    {selectedAgent.autonomy}
+                  </span>
+                </div>
+              )}
               <div className="flex items-center gap-2 mb-2">
                 <VInfo.icon size={20} className={VInfo.color} />
                 <div className="text-h2 font-medium text-text1">{VInfo.label}</div>
@@ -146,9 +192,14 @@ export function AgentIezView() {
                 </span>
               </div>
               <div className="text-small text-text2 mb-3 leading-snug">
-                <span className="text-text3">{selected.agentName} proposed: </span>
                 {selected.description}
               </div>
+              {selected.rationale && (
+                <div className="p-3 rounded-md bg-page/40 border border-white/5 mb-3">
+                  <div className="eyebrow mb-1">why this proposal</div>
+                  <div className="text-[12px] text-text2 leading-snug">{selected.rationale}</div>
+                </div>
+              )}
 
               <div className="grid grid-cols-3 gap-2 mb-3">
                 <Stat

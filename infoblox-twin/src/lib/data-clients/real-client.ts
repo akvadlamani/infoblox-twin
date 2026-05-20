@@ -33,4 +33,8 @@ export class RealClient implements TwinDataClient {
   async toggleMitigation() { return notImpl('toggleMitigation'); }
   async getInsurancePolicy() { return notImpl('getInsurancePolicy'); }
   async getDataSourceHealth() { return notImpl('getDataSourceHealth'); }
+  async listAgents() { return notImpl('listAgents'); }
+  async getAgent() { return notImpl('getAgent'); }
+  async setAgentAutonomy() { return notImpl('setAgentAutonomy'); }
+  async listAgentActivities() { return notImpl('listAgentActivities'); }
 }
