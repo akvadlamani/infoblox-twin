@@ -1660,5 +1660,1027 @@
       "iot",
       "printer"
     ]
+  },
+  {
+    "id": "ast_wl-payments",
+    "name": "Payments API (prod)",
+    "segment": "engineering",
+    "criticality": 5,
+    "type": "application",
+    "vendor": "AWS",
+    "model": "EKS workload",
+    "os": "Linux",
+    "osVersion": "Amazon Linux 2023",
+    "ipAddresses": [
+      "10.3.2.10"
+    ],
+    "macAddresses": [],
+    "firstSeen": "2024-05-12T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI",
+      "CSPM"
+    ],
+    "owner": "Payments team",
+    "location": "aws/us-east-1",
+    "position3D": {
+      "x": 13.5,
+      "y": 3,
+      "z": -1
+    },
+    "tags": [
+      "cloud",
+      "workload",
+      "crown-jewel",
+      "pci-dss"
+    ]
+  },
+  {
+    "id": "ast_wl-search",
+    "name": "Search API",
+    "segment": "engineering",
+    "criticality": 3,
+    "type": "application",
+    "vendor": "AWS",
+    "model": "EKS workload",
+    "os": "Linux",
+    "osVersion": "Amazon Linux 2023",
+    "ipAddresses": [
+      "10.3.2.30"
+    ],
+    "macAddresses": [],
+    "firstSeen": "2024-09-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI",
+      "CSPM"
+    ],
+    "owner": "Platform team",
+    "location": "aws/us-east-1",
+    "position3D": {
+      "x": 14.2,
+      "y": 1.5,
+      "z": 1.2
+    },
+    "tags": [
+      "cloud",
+      "workload"
+    ]
+  },
+  {
+    "id": "ast_wl-events",
+    "name": "Event bus (Kafka)",
+    "segment": "engineering",
+    "criticality": 4,
+    "type": "application",
+    "vendor": "AWS",
+    "model": "MSK",
+    "os": "Linux",
+    "osVersion": "Amazon Linux 2023",
+    "ipAddresses": [
+      "10.3.2.40"
+    ],
+    "macAddresses": [],
+    "firstSeen": "2024-07-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI",
+      "CSPM"
+    ],
+    "owner": "Data team",
+    "location": "aws/us-east-1",
+    "position3D": {
+      "x": 13.8,
+      "y": 0.3,
+      "z": -1.8
+    },
+    "tags": [
+      "cloud",
+      "workload",
+      "data"
+    ]
+  },
+  {
+    "id": "ast_s3-evidence",
+    "name": "S3 Evidence bucket",
+    "segment": "engineering",
+    "criticality": 4,
+    "type": "application",
+    "vendor": "AWS",
+    "model": "S3",
+    "os": "cloud",
+    "osVersion": "n/a",
+    "ipAddresses": [],
+    "macAddresses": [],
+    "firstSeen": "2024-04-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI",
+      "CSPM"
+    ],
+    "owner": "Legal",
+    "location": "aws/us-east-2",
+    "position3D": {
+      "x": 14.6,
+      "y": 2.4,
+      "z": 0.4
+    },
+    "tags": [
+      "cloud",
+      "storage",
+      "sox"
+    ]
+  },
+  {
+    "id": "ast_rds-analytics",
+    "name": "RDS · analytics",
+    "segment": "engineering",
+    "criticality": 3,
+    "type": "database",
+    "vendor": "AWS",
+    "model": "RDS Postgres 16",
+    "os": "Linux",
+    "osVersion": "Amazon Linux 2023",
+    "ipAddresses": [
+      "10.3.3.10"
+    ],
+    "macAddresses": [],
+    "firstSeen": "2024-08-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI",
+      "CSPM"
+    ],
+    "owner": "Data team",
+    "location": "aws/us-east-1",
+    "position3D": {
+      "x": 12.8,
+      "y": -0.2,
+      "z": 1.6
+    },
+    "tags": [
+      "cloud",
+      "data",
+      "gdpr"
+    ]
+  },
+  {
+    "id": "ast_az-entra",
+    "name": "Entra ID (tenant)",
+    "segment": "identity",
+    "criticality": 5,
+    "type": "application",
+    "vendor": "Microsoft",
+    "model": "Entra ID",
+    "os": "SaaS",
+    "osVersion": "2026.05",
+    "ipAddresses": [],
+    "macAddresses": [],
+    "firstSeen": "2023-01-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI"
+    ],
+    "owner": "IdentityOps",
+    "location": "SaaS",
+    "position3D": {
+      "x": 4.5,
+      "y": 4.7,
+      "z": -2.4
+    },
+    "tags": [
+      "identity",
+      "crown-jewel",
+      "sso",
+      "gdpr"
+    ]
+  },
+  {
+    "id": "ast_az-vm-jump",
+    "name": "Azure jump host",
+    "segment": "engineering",
+    "criticality": 3,
+    "type": "server",
+    "vendor": "Microsoft",
+    "model": "Azure VM B2s",
+    "os": "Windows Server",
+    "osVersion": "2022",
+    "ipAddresses": [
+      "10.50.0.10"
+    ],
+    "macAddresses": [],
+    "firstSeen": "2024-06-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI"
+    ],
+    "owner": "PlatformOps",
+    "location": "azure/eastus",
+    "position3D": {
+      "x": 11.5,
+      "y": 4.2,
+      "z": 2.2
+    },
+    "tags": [
+      "cloud",
+      "bastion"
+    ]
+  },
+  {
+    "id": "ast_az-sql",
+    "name": "Azure SQL · CRM",
+    "segment": "sales",
+    "criticality": 4,
+    "type": "database",
+    "vendor": "Microsoft",
+    "model": "Azure SQL",
+    "os": "cloud",
+    "osVersion": "n/a",
+    "ipAddresses": [],
+    "macAddresses": [],
+    "firstSeen": "2024-09-15T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI"
+    ],
+    "owner": "RevOps",
+    "location": "azure/eastus",
+    "position3D": {
+      "x": -3.5,
+      "y": 1,
+      "z": 4.8
+    },
+    "tags": [
+      "cloud",
+      "data",
+      "pii",
+      "gdpr"
+    ]
+  },
+  {
+    "id": "ast_gcp-bq",
+    "name": "BigQuery · marketing",
+    "segment": "sales",
+    "criticality": 2,
+    "type": "database",
+    "vendor": "Google Cloud",
+    "model": "BigQuery",
+    "os": "cloud",
+    "osVersion": "n/a",
+    "ipAddresses": [],
+    "macAddresses": [],
+    "firstSeen": "2024-12-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI"
+    ],
+    "owner": "Marketing",
+    "location": "gcp/us-central1",
+    "position3D": {
+      "x": 4,
+      "y": 1.8,
+      "z": 5.2
+    },
+    "tags": [
+      "cloud",
+      "data",
+      "gdpr"
+    ]
+  },
+  {
+    "id": "ast_pingfed",
+    "name": "PingFederate",
+    "segment": "identity",
+    "criticality": 3,
+    "type": "application",
+    "vendor": "Ping Identity",
+    "model": "PingFederate",
+    "os": "Linux",
+    "osVersion": "RHEL 9",
+    "ipAddresses": [
+      "10.1.0.40"
+    ],
+    "macAddresses": [],
+    "firstSeen": "2024-02-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI"
+    ],
+    "owner": "IdentityOps",
+    "location": "DC1",
+    "position3D": {
+      "x": -4.5,
+      "y": 4.7,
+      "z": -2.4
+    },
+    "tags": [
+      "identity",
+      "sso"
+    ]
+  },
+  {
+    "id": "ast_secrets",
+    "name": "CyberArk Vault",
+    "segment": "identity",
+    "criticality": 4,
+    "type": "application",
+    "vendor": "CyberArk",
+    "model": "PAM",
+    "os": "Linux",
+    "osVersion": "RHEL 9",
+    "ipAddresses": [
+      "10.1.0.50"
+    ],
+    "macAddresses": [],
+    "firstSeen": "2023-12-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI"
+    ],
+    "owner": "IdentityOps",
+    "location": "DC1",
+    "position3D": {
+      "x": 0,
+      "y": 5.5,
+      "z": -2.2
+    },
+    "tags": [
+      "identity",
+      "secrets",
+      "sox"
+    ]
+  },
+  {
+    "id": "ast_finsub-eu-db",
+    "name": "FIN-DB · EU subsidiary",
+    "segment": "finance",
+    "criticality": 4,
+    "type": "database",
+    "vendor": "Oracle",
+    "model": "Exadata X10M",
+    "os": "Oracle Linux",
+    "osVersion": "9.4",
+    "ipAddresses": [
+      "10.20.0.10"
+    ],
+    "macAddresses": [
+      "00:1D:19:20:00:0A"
+    ],
+    "firstSeen": "2024-03-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI",
+      "EDR"
+    ],
+    "owner": "EU FinanceOps",
+    "location": "DC-EU-Dublin",
+    "position3D": {
+      "x": -12.5,
+      "y": 1.6,
+      "z": 1.2
+    },
+    "tags": [
+      "pci-dss",
+      "sox",
+      "gdpr"
+    ]
+  },
+  {
+    "id": "ast_finsub-eu-sap",
+    "name": "SAP-EU",
+    "segment": "finance",
+    "criticality": 4,
+    "type": "application",
+    "vendor": "SAP",
+    "model": "S/4HANA",
+    "os": "SUSE Linux",
+    "osVersion": "15 SP5",
+    "ipAddresses": [
+      "10.20.0.20"
+    ],
+    "macAddresses": [],
+    "firstSeen": "2024-03-05T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI"
+    ],
+    "owner": "EU FinanceOps",
+    "location": "DC-EU-Dublin",
+    "position3D": {
+      "x": -13,
+      "y": 0.6,
+      "z": -1.2
+    },
+    "tags": [
+      "sox",
+      "gdpr"
+    ]
+  },
+  {
+    "id": "ast_lab-svr-1",
+    "name": "rnd-sim-01",
+    "segment": "engineering",
+    "criticality": 3,
+    "type": "server",
+    "vendor": "Supermicro",
+    "model": "A+ Server 8125GS-TNHR",
+    "os": "Linux",
+    "osVersion": "Ubuntu 22.04",
+    "ipAddresses": [
+      "10.3.4.10"
+    ],
+    "macAddresses": [
+      "00:1E:1A:03:40:01"
+    ],
+    "firstSeen": "2024-09-15T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI"
+    ],
+    "owner": "R&D",
+    "location": "DC2",
+    "position3D": {
+      "x": 8.5,
+      "y": 2.5,
+      "z": -2.5
+    },
+    "tags": [
+      "research",
+      "gpu"
+    ]
+  },
+  {
+    "id": "ast_lab-svr-2",
+    "name": "rnd-sim-02",
+    "segment": "engineering",
+    "criticality": 3,
+    "type": "server",
+    "vendor": "Supermicro",
+    "model": "A+ Server 8125GS-TNHR",
+    "os": "Linux",
+    "osVersion": "Ubuntu 22.04",
+    "ipAddresses": [
+      "10.3.4.11"
+    ],
+    "macAddresses": [
+      "00:1E:1A:03:40:02"
+    ],
+    "firstSeen": "2024-09-15T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI"
+    ],
+    "owner": "R&D",
+    "location": "DC2",
+    "position3D": {
+      "x": 9.3,
+      "y": 2.5,
+      "z": -2
+    },
+    "tags": [
+      "research",
+      "gpu"
+    ]
+  },
+  {
+    "id": "ast_crm-app-eu",
+    "name": "CRM-APP · EMEA",
+    "segment": "sales",
+    "criticality": 3,
+    "type": "application",
+    "vendor": "Salesforce",
+    "model": "Sales Cloud",
+    "os": "SaaS",
+    "osVersion": "Spring '26",
+    "ipAddresses": [],
+    "macAddresses": [],
+    "firstSeen": "2024-03-15T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI"
+    ],
+    "owner": "EMEA RevOps",
+    "location": "SaaS",
+    "position3D": {
+      "x": -2.5,
+      "y": 3.4,
+      "z": 5.4
+    },
+    "tags": [
+      "crm",
+      "gdpr"
+    ]
+  },
+  {
+    "id": "ast_mfg-scada-2",
+    "name": "MFG-SCADA · West",
+    "segment": "ot",
+    "criticality": 4,
+    "type": "ot-controller",
+    "vendor": "Siemens",
+    "model": "WinCC OA",
+    "os": "Windows Server",
+    "osVersion": "2019",
+    "ipAddresses": [
+      "10.6.1.10"
+    ],
+    "macAddresses": [
+      "00:21:1D:06:10:0A"
+    ],
+    "firstSeen": "2024-06-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI",
+      "OT-discovery"
+    ],
+    "owner": "ManufacturingOps West",
+    "location": "Plant-West",
+    "position3D": {
+      "x": 4.5,
+      "y": -1.5,
+      "z": 2
+    },
+    "tags": [
+      "ot",
+      "safety-critical",
+      "crown-jewel"
+    ]
+  },
+  {
+    "id": "ast_plc3",
+    "name": "PLC line 3",
+    "segment": "ot",
+    "criticality": 4,
+    "type": "ot-controller",
+    "vendor": "Rockwell",
+    "model": "ControlLogix 5580",
+    "os": "Rockwell Firmware",
+    "osVersion": "33.011",
+    "ipAddresses": [
+      "10.6.1.21"
+    ],
+    "macAddresses": [
+      "00:21:1D:06:10:15"
+    ],
+    "firstSeen": "2024-06-10T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "OT-discovery"
+    ],
+    "owner": "ManufacturingOps West",
+    "location": "Plant-West",
+    "position3D": {
+      "x": 3.5,
+      "y": -2.5,
+      "z": 2.5
+    },
+    "tags": [
+      "ot",
+      "safety-critical"
+    ]
+  },
+  {
+    "id": "ast_plc4",
+    "name": "PLC line 4",
+    "segment": "ot",
+    "criticality": 4,
+    "type": "ot-controller",
+    "vendor": "Rockwell",
+    "model": "ControlLogix 5580",
+    "os": "Rockwell Firmware",
+    "osVersion": "33.011",
+    "ipAddresses": [
+      "10.6.1.22"
+    ],
+    "macAddresses": [
+      "00:21:1D:06:10:16"
+    ],
+    "firstSeen": "2024-06-10T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "OT-discovery"
+    ],
+    "owner": "ManufacturingOps West",
+    "location": "Plant-West",
+    "position3D": {
+      "x": 5.5,
+      "y": -2.5,
+      "z": 2.5
+    },
+    "tags": [
+      "ot",
+      "safety-critical"
+    ]
+  },
+  {
+    "id": "ast_temp-sensor-1",
+    "name": "temperature sensor A",
+    "segment": "ot",
+    "criticality": 2,
+    "type": "iot",
+    "vendor": "Endress+Hauser",
+    "model": "iTHERM TM301",
+    "os": "firmware",
+    "osVersion": "1.4",
+    "ipAddresses": [
+      "10.6.0.81"
+    ],
+    "macAddresses": [
+      "00:21:1D:06:81:01"
+    ],
+    "firstSeen": "2024-07-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "OT-discovery"
+    ],
+    "owner": "ManufacturingOps",
+    "location": "Plant-East",
+    "position3D": {
+      "x": -1.5,
+      "y": -3.8,
+      "z": 0.5
+    },
+    "tags": [
+      "ot",
+      "iot"
+    ]
+  },
+  {
+    "id": "ast_flow-sensor-1",
+    "name": "flow meter A",
+    "segment": "ot",
+    "criticality": 2,
+    "type": "iot",
+    "vendor": "Krohne",
+    "model": "OPTIFLUX 4000",
+    "os": "firmware",
+    "osVersion": "2.2",
+    "ipAddresses": [
+      "10.6.0.82"
+    ],
+    "macAddresses": [
+      "00:21:1D:06:82:01"
+    ],
+    "firstSeen": "2024-07-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "OT-discovery"
+    ],
+    "owner": "ManufacturingOps",
+    "location": "Plant-East",
+    "position3D": {
+      "x": 1.5,
+      "y": -3.8,
+      "z": 0.5
+    },
+    "tags": [
+      "ot",
+      "iot"
+    ]
+  },
+  {
+    "id": "ast_hmi-2",
+    "name": "HMI station 2",
+    "segment": "ot",
+    "criticality": 3,
+    "type": "ot-controller",
+    "vendor": "Siemens",
+    "model": "WinCC HMI",
+    "os": "Windows IoT",
+    "osVersion": "10 LTSC",
+    "ipAddresses": [
+      "10.6.0.41"
+    ],
+    "macAddresses": [
+      "00:21:1D:06:41:01"
+    ],
+    "firstSeen": "2024-04-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "OT-discovery"
+    ],
+    "owner": "ManufacturingOps",
+    "location": "Plant-East",
+    "position3D": {
+      "x": 4,
+      "y": -3.3,
+      "z": -1
+    },
+    "tags": [
+      "ot",
+      "hmi"
+    ]
+  },
+  {
+    "id": "ast_siem",
+    "name": "Splunk SIEM",
+    "segment": "it",
+    "criticality": 4,
+    "type": "application",
+    "vendor": "Splunk",
+    "model": "Enterprise",
+    "os": "Linux",
+    "osVersion": "RHEL 9",
+    "ipAddresses": [
+      "10.4.2.10"
+    ],
+    "macAddresses": [
+      "00:1F:1B:04:02:0A"
+    ],
+    "firstSeen": "2023-04-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI"
+    ],
+    "owner": "SecOps",
+    "location": "DC1",
+    "position3D": {
+      "x": 2.4,
+      "y": 1.5,
+      "z": -5.5
+    },
+    "tags": [
+      "siem",
+      "logs"
+    ]
+  },
+  {
+    "id": "ast_observ",
+    "name": "Datadog",
+    "segment": "it",
+    "criticality": 3,
+    "type": "application",
+    "vendor": "Datadog",
+    "model": "Observability Platform",
+    "os": "SaaS",
+    "osVersion": "2026.05",
+    "ipAddresses": [],
+    "macAddresses": [],
+    "firstSeen": "2024-01-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI"
+    ],
+    "owner": "PlatformOps",
+    "location": "SaaS",
+    "position3D": {
+      "x": -2.4,
+      "y": 1.5,
+      "z": -5.5
+    },
+    "tags": [
+      "observability"
+    ]
+  },
+  {
+    "id": "ast_dr-site",
+    "name": "DR Backup (offsite)",
+    "segment": "it",
+    "criticality": 4,
+    "type": "server",
+    "vendor": "Rubrik",
+    "model": "Cloud Vault",
+    "os": "cloud",
+    "osVersion": "n/a",
+    "ipAddresses": [],
+    "macAddresses": [],
+    "firstSeen": "2024-02-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI"
+    ],
+    "owner": "ITOps",
+    "location": "azure/west-europe",
+    "position3D": {
+      "x": 0,
+      "y": 0.5,
+      "z": -5.5
+    },
+    "tags": [
+      "backup",
+      "dr"
+    ]
+  },
+  {
+    "id": "ast_emp-pool-eu",
+    "name": "Endpoints — EU office",
+    "segment": "endpoint",
+    "criticality": 1,
+    "type": "endpoint-pool",
+    "vendor": "Mixed",
+    "model": "Pool of 620 endpoints",
+    "os": "Windows / macOS",
+    "osVersion": "mixed",
+    "ipAddresses": [
+      "10.7.5.0/24"
+    ],
+    "macAddresses": [],
+    "firstSeen": "2024-01-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI",
+      "EDR"
+    ],
+    "owner": "ITOps EU",
+    "location": "EU-Dublin",
+    "position3D": {
+      "x": -7,
+      "y": -0.5,
+      "z": 4
+    },
+    "tags": [
+      "endpoint-pool",
+      "gdpr"
+    ]
+  },
+  {
+    "id": "ast_emp-pool-rnd",
+    "name": "Endpoints — R&D",
+    "segment": "endpoint",
+    "criticality": 2,
+    "type": "endpoint-pool",
+    "vendor": "Mixed",
+    "model": "Pool of 240 endpoints",
+    "os": "Linux / macOS",
+    "osVersion": "mixed",
+    "ipAddresses": [
+      "10.7.6.0/24"
+    ],
+    "macAddresses": [],
+    "firstSeen": "2024-01-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI",
+      "EDR"
+    ],
+    "owner": "PlatformOps",
+    "location": "DC2",
+    "position3D": {
+      "x": 9.5,
+      "y": -0.5,
+      "z": 0.5
+    },
+    "tags": [
+      "endpoint-pool",
+      "research"
+    ]
+  },
+  {
+    "id": "ast_emp-pool-mfg",
+    "name": "Endpoints — Plant",
+    "segment": "endpoint",
+    "criticality": 1,
+    "type": "endpoint-pool",
+    "vendor": "Mixed",
+    "model": "Pool of 180 endpoints",
+    "os": "Windows / mixed",
+    "osVersion": "mixed",
+    "ipAddresses": [
+      "10.7.7.0/24"
+    ],
+    "macAddresses": [],
+    "firstSeen": "2024-01-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI",
+      "EDR"
+    ],
+    "owner": "ManufacturingOps",
+    "location": "Plant-East",
+    "position3D": {
+      "x": 0,
+      "y": -1.2,
+      "z": 4
+    },
+    "tags": [
+      "endpoint-pool"
+    ]
+  },
+  {
+    "id": "ast_ws-cio",
+    "name": "EXEC-WS-CIO",
+    "segment": "it",
+    "criticality": 4,
+    "type": "workstation",
+    "vendor": "Apple",
+    "model": "MacBook Pro 16",
+    "os": "macOS",
+    "osVersion": "15.4",
+    "ipAddresses": [
+      "10.2.1.13"
+    ],
+    "macAddresses": [
+      "F4:D4:88:02:01:0D"
+    ],
+    "firstSeen": "2024-08-12T00:00:00Z",
+    "lastSeen": "2026-05-19T11:55:00Z",
+    "sources": [
+      "UAI",
+      "EDR"
+    ],
+    "owner": "CIO",
+    "location": "HQ-FL12",
+    "position3D": {
+      "x": -8.5,
+      "y": 4.4,
+      "z": 2.5
+    },
+    "tags": [
+      "exec"
+    ]
+  },
+  {
+    "id": "ast_ws-ciso",
+    "name": "EXEC-WS-CISO",
+    "segment": "it",
+    "criticality": 4,
+    "type": "workstation",
+    "vendor": "Apple",
+    "model": "MacBook Pro 16",
+    "os": "macOS",
+    "osVersion": "15.4",
+    "ipAddresses": [
+      "10.2.1.14"
+    ],
+    "macAddresses": [
+      "F4:D4:88:02:01:0E"
+    ],
+    "firstSeen": "2024-08-12T00:00:00Z",
+    "lastSeen": "2026-05-19T11:55:00Z",
+    "sources": [
+      "UAI",
+      "EDR"
+    ],
+    "owner": "CISO",
+    "location": "HQ-FL12",
+    "position3D": {
+      "x": -7.5,
+      "y": 4.4,
+      "z": 2.5
+    },
+    "tags": [
+      "exec"
+    ]
+  },
+  {
+    "id": "ast_zta",
+    "name": "Zscaler ZIA",
+    "segment": "external",
+    "criticality": 3,
+    "type": "security-appliance",
+    "vendor": "Zscaler",
+    "model": "ZIA",
+    "os": "SaaS",
+    "osVersion": "2026.05",
+    "ipAddresses": [],
+    "macAddresses": [],
+    "firstSeen": "2024-01-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI"
+    ],
+    "owner": "NetOps",
+    "location": "SaaS",
+    "position3D": {
+      "x": -3,
+      "y": 5.5,
+      "z": 2
+    },
+    "tags": [
+      "edge",
+      "ssl"
+    ]
+  },
+  {
+    "id": "ast_wan",
+    "name": "SD-WAN core",
+    "segment": "it",
+    "criticality": 4,
+    "type": "network-device",
+    "vendor": "Cisco",
+    "model": "Meraki MX450",
+    "os": "Meraki",
+    "osVersion": "18.107",
+    "ipAddresses": [
+      "10.4.3.1"
+    ],
+    "macAddresses": [
+      "00:1F:1B:04:03:01"
+    ],
+    "firstSeen": "2024-01-01T00:00:00Z",
+    "lastSeen": "2026-05-19T11:58:00Z",
+    "sources": [
+      "UAI"
+    ],
+    "owner": "NetOps",
+    "location": "multi-site",
+    "position3D": {
+      "x": 0,
+      "y": 5.2,
+      "z": -3.5
+    },
+    "tags": [
+      "sdwan"
+    ]
   }
 ]

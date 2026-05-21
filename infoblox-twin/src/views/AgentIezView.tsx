@@ -87,7 +87,7 @@ export function AgentIezView() {
   const VInfo = selected ? VERDICT_INFO[selected.simulation.verdict] : null;
 
   return (
-    <div className="absolute inset-0 pt-[100px] grid grid-rows-[minmax(0,1.1fr)_minmax(0,1fr)] gap-3 px-5 pb-24">
+    <div className="absolute inset-0 pt-[100px] grid grid-rows-[minmax(0,1.1fr)_minmax(0,1fr)] gap-3 px-5 pb-36">
       {/* Top: split twin viz */}
       <div className="relative grid grid-cols-2 gap-3 min-h-0">
         <div className="relative rounded-lg overflow-hidden border border-white/5 bg-surface/30">

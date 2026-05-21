@@ -38,9 +38,13 @@ export function NarratorStrip({ text, variant = 'default' }: Props) {
 
   return (
     <div
-      className={`absolute bottom-4 left-1/2 -translate-x-1/2 z-30 max-w-[720px] w-[calc(100%-40px)] px-4 py-2 rounded-lg bg-surface/85 border border-white/8 backdrop-blur-md transition-all duration-base ${
+      className={`absolute bottom-4 left-1/2 -translate-x-1/2 z-30 max-w-[720px] w-[calc(100%-40px)] px-4 py-2 rounded-lg border border-white/10 transition-all duration-base shadow-lg ${
         show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
       }`}
+      style={{
+        // Fully opaque background so scrolled content can't bleed through.
+        background: '#14141f',
+      }}
     >
       <div className="flex items-center gap-2.5">
         <IconSparkles size={12} className="text-accent2 shrink-0" />

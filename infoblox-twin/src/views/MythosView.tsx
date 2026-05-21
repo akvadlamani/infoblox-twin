@@ -252,7 +252,7 @@ export function MythosView() {
 
   return (
     <div
-      className="absolute inset-0 pt-[100px] pb-24"
+      className="absolute inset-0 pt-[100px] pb-36"
       style={{
         background:
           'radial-gradient(ellipse at top, rgba(26, 174, 159, 0.15), transparent 55%), radial-gradient(ellipse at 20% 80%, rgba(26, 174, 159, 0.08), transparent 60%), #0a0a0f',

@@ -287,7 +287,7 @@ export function SettingsView() {
   }
 
   return (
-    <div className="absolute inset-0 pt-[100px] pb-24 overflow-y-auto">
+    <div className="absolute inset-0 pt-[100px] pb-36 overflow-y-auto">
       <div className="max-w-[1080px] mx-auto px-6">
         <div className="flex items-end justify-between mb-6 flex-wrap gap-3">
           <div>

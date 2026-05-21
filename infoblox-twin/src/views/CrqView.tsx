@@ -60,7 +60,7 @@ export function CrqView() {
   }
 
   return (
-    <div className="absolute inset-0 pt-[100px] pb-24 overflow-y-auto">
+    <div className="absolute inset-0 pt-[100px] pb-36 overflow-y-auto">
       <div className="max-w-[1200px] mx-auto px-4 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-4">
           <div className="flex flex-col gap-4">

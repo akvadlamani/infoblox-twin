@@ -83,7 +83,9 @@ export function OverviewView() {
           </div>
         </div>
         <div className="mt-2 px-3 py-2 rounded-md bg-surface/60 border border-white/5 text-[10px] text-text3 leading-snug">
-          Click any node in the graph to open its detail panel.
+          Showing <span className="text-text2 font-mono">{assets.length}</span> most-relevant assets of{' '}
+          <span className="text-text2 font-mono">4,247</span> in scope. Endpoint pools represent fleets.
+          Click any node to open its detail panel.
         </div>
       </div>
 

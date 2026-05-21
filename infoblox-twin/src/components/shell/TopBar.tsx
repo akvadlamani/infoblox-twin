@@ -44,7 +44,13 @@ export function TopBar() {
         <div className="text-small flex items-center gap-2 min-w-0">
           <span className="text-text1 font-medium">{org?.name ?? 'Loading…'}</span>
           <span className="text-text3">·</span>
-          <span className="font-mono text-[12px] text-text2">{org?.assetCount ?? '—'} assets</span>
+          <span
+            className="font-mono text-[12px] text-text2"
+            title="Rendered in the graph · total in inventory"
+          >
+            <span className="text-text1">{org?.assetCount ?? '—'}</span>
+            <span className="text-text3"> / 4,247</span> assets
+          </span>
           <span className="text-text3">·</span>
           <span className="font-mono text-[12px] text-text2">{edgeCount} relationships</span>
           {DATA_MODE === 'mock' && (

@@ -750,5 +750,573 @@
     "type": "network",
     "weight": 0.6,
     "observed": true
+  },
+  {
+    "id": "e95",
+    "source": "ast_az-vm-jump",
+    "target": "ast_wl-api",
+    "type": "network",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e96",
+    "source": "ast_az-vm-jump",
+    "target": "ast_wl-payments",
+    "type": "network",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e97",
+    "source": "ast_az-vm-jump",
+    "target": "ast_wl-search",
+    "type": "network",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e98",
+    "source": "ast_wl-api",
+    "target": "ast_wl-payments",
+    "type": "data-flow",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e99",
+    "source": "ast_wl-payments",
+    "target": "ast_wl-events",
+    "type": "data-flow",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e100",
+    "source": "ast_wl-events",
+    "target": "ast_wl-data",
+    "type": "data-flow",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e101",
+    "source": "ast_wl-events",
+    "target": "ast_rds-analytics",
+    "type": "data-flow",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e102",
+    "source": "ast_wl-search",
+    "target": "ast_rds-analytics",
+    "type": "data-flow",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e103",
+    "source": "ast_wl-payments",
+    "target": "ast_s3-evidence",
+    "type": "data-flow",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e104",
+    "source": "ast_wl-payments",
+    "target": "ast_saas-aws",
+    "type": "trust",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e105",
+    "source": "ast_az-sql",
+    "target": "ast_crm-app",
+    "type": "data-flow",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e106",
+    "source": "ast_az-sql",
+    "target": "ast_crm-app-eu",
+    "type": "data-flow",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e107",
+    "source": "ast_crm-app-eu",
+    "target": "ast_crm-db",
+    "type": "data-flow",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e108",
+    "source": "ast_gcp-bq",
+    "target": "ast_crm-db",
+    "type": "data-flow",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e109",
+    "source": "ast_az-entra",
+    "target": "ast_saas-365",
+    "type": "identity",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e110",
+    "source": "ast_az-entra",
+    "target": "ast_saas-aws",
+    "type": "trust",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e111",
+    "source": "ast_az-entra",
+    "target": "ast_ad-primary",
+    "type": "trust",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e112",
+    "source": "ast_az-entra",
+    "target": "ast_mfa",
+    "type": "trust",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e113",
+    "source": "ast_pingfed",
+    "target": "ast_ad-primary",
+    "type": "identity",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e114",
+    "source": "ast_pingfed",
+    "target": "ast_az-entra",
+    "type": "identity",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e115",
+    "source": "ast_secrets",
+    "target": "ast_ad-primary",
+    "type": "identity",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e116",
+    "source": "ast_secrets",
+    "target": "ast_eng-jump",
+    "type": "identity",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e117",
+    "source": "ast_secrets",
+    "target": "ast_az-vm-jump",
+    "type": "identity",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e118",
+    "source": "ast_secrets",
+    "target": "ast_rd-vault",
+    "type": "trust",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e119",
+    "source": "ast_finsub-eu-db",
+    "target": "ast_finsub-eu-sap",
+    "type": "data-flow",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e120",
+    "source": "ast_finsub-eu-sap",
+    "target": "ast_fin-db",
+    "type": "data-flow",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e121",
+    "source": "ast_finsub-eu-db",
+    "target": "ast_az-entra",
+    "type": "identity",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e122",
+    "source": "ast_finsub-eu-sap",
+    "target": "ast_az-entra",
+    "type": "identity",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e123",
+    "source": "ast_eng-jump",
+    "target": "ast_lab-svr-1",
+    "type": "network",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e124",
+    "source": "ast_eng-jump",
+    "target": "ast_lab-svr-2",
+    "type": "network",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e125",
+    "source": "ast_lab-svr-1",
+    "target": "ast_rd-vault",
+    "type": "trust",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e126",
+    "source": "ast_lab-svr-2",
+    "target": "ast_rd-vault",
+    "type": "trust",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e127",
+    "source": "ast_lab-svr-1",
+    "target": "ast_emp-pool-rnd",
+    "type": "network",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e128",
+    "source": "ast_dc-core",
+    "target": "ast_mfg-scada-2",
+    "type": "network",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e129",
+    "source": "ast_mfg-scada-2",
+    "target": "ast_plc3",
+    "type": "network",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e130",
+    "source": "ast_mfg-scada-2",
+    "target": "ast_plc4",
+    "type": "network",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e131",
+    "source": "ast_mfg-scada-2",
+    "target": "ast_hmi-2",
+    "type": "network",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e132",
+    "source": "ast_plc1",
+    "target": "ast_temp-sensor-1",
+    "type": "network",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e133",
+    "source": "ast_plc1",
+    "target": "ast_flow-sensor-1",
+    "type": "network",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e134",
+    "source": "ast_hmi-2",
+    "target": "ast_plc1",
+    "type": "network",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e135",
+    "source": "ast_dc-core",
+    "target": "ast_siem",
+    "type": "network",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e136",
+    "source": "ast_ad-primary",
+    "target": "ast_siem",
+    "type": "data-flow",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e137",
+    "source": "ast_email-gw",
+    "target": "ast_siem",
+    "type": "data-flow",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e138",
+    "source": "ast_firewall",
+    "target": "ast_siem",
+    "type": "data-flow",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e139",
+    "source": "ast_observ",
+    "target": "ast_wl-api",
+    "type": "data-flow",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e140",
+    "source": "ast_observ",
+    "target": "ast_build-svr",
+    "type": "data-flow",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e141",
+    "source": "ast_observ",
+    "target": "ast_eng-jump",
+    "type": "data-flow",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e142",
+    "source": "ast_backup",
+    "target": "ast_dr-site",
+    "type": "data-flow",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e143",
+    "source": "ast_fin-db",
+    "target": "ast_dr-site",
+    "type": "data-flow",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e144",
+    "source": "ast_ad-primary",
+    "target": "ast_ws-cio",
+    "type": "identity",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e145",
+    "source": "ast_ad-primary",
+    "target": "ast_ws-ciso",
+    "type": "identity",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e146",
+    "source": "ast_mfa",
+    "target": "ast_ws-cio",
+    "type": "identity",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e147",
+    "source": "ast_mfa",
+    "target": "ast_ws-ciso",
+    "type": "identity",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e148",
+    "source": "ast_email-gw",
+    "target": "ast_ws-cio",
+    "type": "dns",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e149",
+    "source": "ast_email-gw",
+    "target": "ast_ws-ciso",
+    "type": "dns",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e150",
+    "source": "ast_internet",
+    "target": "ast_zta",
+    "type": "network",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e151",
+    "source": "ast_zta",
+    "target": "ast_firewall",
+    "type": "network",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e152",
+    "source": "ast_zta",
+    "target": "ast_emp-pool-finance",
+    "type": "network",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e153",
+    "source": "ast_zta",
+    "target": "ast_emp-pool-eng",
+    "type": "network",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e154",
+    "source": "ast_zta",
+    "target": "ast_emp-pool-sales",
+    "type": "network",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e155",
+    "source": "ast_wan",
+    "target": "ast_dc-core",
+    "type": "network",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e156",
+    "source": "ast_wan",
+    "target": "ast_mfg-scada",
+    "type": "network",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e157",
+    "source": "ast_wan",
+    "target": "ast_mfg-scada-2",
+    "type": "network",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e158",
+    "source": "ast_emp-pool-eu",
+    "target": "ast_az-entra",
+    "type": "identity",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e159",
+    "source": "ast_emp-pool-eu",
+    "target": "ast_finsub-eu-sap",
+    "type": "data-flow",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e160",
+    "source": "ast_email-gw",
+    "target": "ast_emp-pool-eu",
+    "type": "dns",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e161",
+    "source": "ast_emp-pool-mfg",
+    "target": "ast_mfg-scada",
+    "type": "network",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e162",
+    "source": "ast_emp-pool-mfg",
+    "target": "ast_mfg-scada-2",
+    "type": "network",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e163",
+    "source": "ast_emp-pool-mfg",
+    "target": "ast_hmi-1",
+    "type": "network",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e164",
+    "source": "ast_emp-pool-rnd",
+    "target": "ast_ad-secondary",
+    "type": "identity",
+    "weight": 0.75,
+    "observed": true
+  },
+  {
+    "id": "e165",
+    "source": "ast_emp-pool-rnd",
+    "target": "ast_eng-jump",
+    "type": "network",
+    "weight": 0.75,
+    "observed": true
   }
 ]

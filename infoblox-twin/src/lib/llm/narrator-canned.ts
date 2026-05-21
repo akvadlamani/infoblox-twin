@@ -8,12 +8,12 @@ export type NarratorEvent =
   | { kind: 'ambient'; view: string };
 
 const heroLine =
-  "Good morning. I correlated DNS, flow, cloud, and identity signals across 51 assets overnight. Your highest exposure is FIN-DB at $4.2 million expected loss across 12 reachable paths. Open Breach Replay to watch how Vigorish Viper would get there.";
+  "Good morning. I correlated DNS, flow, cloud, and identity signals across 4,247 assets overnight. Your highest exposure is FIN-DB at $4.2 million expected loss across 12 reachable paths. Open Breach Replay to watch how Vigorish Viper would get there.";
 
 const VIEW_AMBIENT: Record<string, string[]> = {
   overview: [
-    'Ambient: 4 Infoblox-tracked actors observed, 47 scenarios run today, no anomalies in the last 12 minutes.',
-    'DNS, flow, cloud, and identity sources synced 2 minutes ago — 51 assets across 8 segments, 6 crown jewels under continuous watch.',
+    'Ambient: 8 tracked actors observed, 312 simulations run today, no anomalies in the last 12 minutes.',
+    'DNS, flow, cloud, and identity sources synced 2 minutes ago — 4,247 assets across 12 sites, 9 crown jewels under continuous watch.',
     'Infoblox Threat Intel tracking 14 long-aged-domain candidates against your environment — none have resolved yet.',
   ],
   aev: [
@@ -95,7 +95,7 @@ export function narrate(event: NarratorEvent): string {
 
 export const HERO_LINES = [
   'Pulling DNS, flow, cloud, and identity signals …',
-  'Resolving 51 assets across 8 segments …',
+  'Resolving 4,247 assets across 12 sites …',
   'Scoring attack paths against crown jewels …',
   'Computing patch risk and compliance scope …',
 ];
