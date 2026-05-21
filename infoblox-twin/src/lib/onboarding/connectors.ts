@@ -517,13 +517,13 @@ Sensor Update Policies: Read`,
     vendor: 'Infoblox',
     category: 'threat-intel',
     tagline:
-      'Light up DNS-layer protection, threat intel feeds, and agentic SOC triage.',
+      'DNS-layer protection, curated threat intel, and DNS-query correlation tied to assets and users.',
     description:
-      'Twin connects to the Infoblox Cloud Services Portal with a single API key. BloxOne Threat Defense detections, TIDE indicators, and SOC Insights incidents all flow in.',
+      'Twin connects to the Infoblox Cloud Services Portal with a single API key. BloxOne Threat Defense detections, TIDE indicators, and SOC Insights — which correlates DNS query telemetry with assets and users — all flow in.',
     signalsProvided: [
       'BloxOne Threat Defense detections + policy posture',
       'TIDE indicators (curated by Infoblox Threat Intel)',
-      'SOC Insights incidents and timelines',
+      'SOC Insights: DNS query ↔ asset ↔ user correlation',
       'NIOS DDI grid posture (via NIOS connector)',
     ],
     authMethod: 'CSP API key',

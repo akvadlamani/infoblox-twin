@@ -54,7 +54,7 @@
   },
   {
     "id": "m_soc-insights",
-    "name": "Roll out SOC Insights agentic triage",
+    "name": "Turn on SOC Insights DNS + identity correlation",
     "type": "control",
     "setupCost": 65000,
     "annualCost": 18000,

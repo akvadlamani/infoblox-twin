@@ -308,7 +308,7 @@ function seahorseFlow(actors: ThreatActor[]): AgentFlow {
     toolCalls: [
       { name: 'getThreatActor', input: { id: 'savvy-seahorse' }, result: 'Savvy Seahorse · aged-domain AiTM' },
     ],
-    answer: `**Savvy Seahorse** ages its domains past your NRD reputation window before activation — that's why none of its 4 hops against your environment are currently blocked by Threat Defense alone. SOC Insights' anomaly model catches it at hop 2 (impossible-travel + Okta session replay), but I'd want to see MFA hardening on the exec cluster as a structural fix.
+    answer: `**Savvy Seahorse** ages its domains past your NRD reputation window before activation — that's why none of its 4 hops against your environment are currently blocked by Threat Defense alone. SOC Insights correlates the DNS lookup with the user who was signed in and catches it at hop 2 (impossible-travel + Okta session replay), but I'd want to see MFA hardening on the exec cluster as a structural fix.
 
 Top mitigations against Seahorse: **tighten AD MFA for execs** (−24%) and **segment R&D from corporate AD** (−31%).`,
     suggestions: ['Open the MFA mitigation', 'How does this compare to Vigorish Viper?'],

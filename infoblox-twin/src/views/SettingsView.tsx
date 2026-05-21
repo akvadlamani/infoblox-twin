@@ -84,7 +84,7 @@ const INITIAL: SourceState[] = [
     name: 'Infoblox CSP (TD + TIDE + SOC Insights)',
     vendor: 'Infoblox',
     description:
-      'BloxOne Threat Defense detections, TIDE indicators, and SOC Insights incidents through a single CSP API key.',
+      'BloxOne Threat Defense detections, TIDE indicators, and SOC Insights — which correlates DNS queries with the asset that resolved them and the user who was signed in — through a single CSP API key.',
     category: 'threat-intel',
     icon: IconShield,
     enabled: false,

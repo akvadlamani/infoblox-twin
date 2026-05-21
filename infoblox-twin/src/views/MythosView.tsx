@@ -32,7 +32,10 @@ interface SimHop {
   technique: string;
   mitreId?: string;
   disposition: 'observed' | 'contained' | 'blocked';
-  control: string;
+  // Short label of the Infoblox product that catches this hop, or null if it's a gap.
+  controlName: string | null;
+  // One-line plain-English of WHY this control catches it (or why it's a gap).
+  controlExplain: string;
 }
 
 interface Simulation {
@@ -44,7 +47,6 @@ interface Simulation {
   crownJewelsReached: string[];
   dollarImpact: number;
   downtimeDays: { min: number; max: number };
-  controlsThatCatchIt: string[];
   realWorldEcho: string;
   startedAt: number;
 }
@@ -129,7 +131,12 @@ export function MythosView() {
       if (!a) return;
       const path = computePath(a, assets, edges);
       const last = path.length > 1 ? assetById.get(path[path.length - 1].targetId) : undefined;
-      const dollar = approxImpact(a);
+      const compromisedIds = [
+        ...(path[0] && path[0].sourceId !== a.id ? [path[0].sourceId] : []),
+        a.id,
+        ...path.map((h) => h.targetId),
+      ];
+      const dollar = approxImpact(a, compromisedIds, assetById);
       setFeed((arr) =>
         [
           {
@@ -156,22 +163,26 @@ export function MythosView() {
     const start = assetById.get(startAssetId);
     if (!start) return;
     const path = computePath(start, assets, edges);
-    const compromised = [startAssetId, ...path.map((h) => h.targetId)];
+    const compromised = [
+      // include entry hop source if it exists
+      ...(path[0] && path[0].sourceId !== startAssetId ? [path[0].sourceId] : []),
+      startAssetId,
+      ...path.map((h) => h.targetId),
+    ];
     const crownJewelsReached = compromised.filter(
       (id) => assetById.get(id)?.criticality === 5
     );
-    const dollar = approxImpact(start);
+    const dollar = approxImpact(start, compromised, assetById);
     const downtime = approxDowntime(start);
     const realWorldEcho = pickRealWorld(start);
     const newSim: Simulation = {
       id: Math.random().toString(36).slice(2, 10),
       startAssetId,
       hops: path,
-      compromised,
-      crownJewelsReached,
+      compromised: Array.from(new Set(compromised)),
+      crownJewelsReached: Array.from(new Set(crownJewelsReached)),
       dollarImpact: dollar,
       downtimeDays: downtime,
-      controlsThatCatchIt: ['Threat Defense (DNS layer)', 'SOC Insights (token replay)', 'Segment R&D from corporate AD'],
       realWorldEcho,
       startedAt: performance.now(),
     };
@@ -234,7 +245,7 @@ export function MythosView() {
         disposition: step.disposition,
         technique: step.technique,
         mitreId: step.mitreId,
-        control: step.control,
+        control: step.controlName ?? 'none',
       },
     ];
   }, [sim, hopIndex, playing]);
@@ -614,14 +625,17 @@ function ImpactReport({
   const cjReached = sim.crownJewelsReached
     .map((id) => assetById.get(id)?.name)
     .filter(Boolean) as string[];
+  const gapHops = sim.hops.filter((h) => h.controlName === null);
+  const stoppedHops = sim.hops.filter((h) => h.controlName !== null);
   return (
     <div className="flex flex-col gap-3">
       <div>
         <div className="eyebrow mb-1">if this falls</div>
         <div className="text-h2 font-medium text-text1">{start?.name}</div>
         <div className="text-[11px] text-text3 leading-snug mt-0.5">
-          The starting point of the simulation. Mythos walks the most likely path an attacker would
-          take.
+          Mythos walks the most likely compromise path against the sandbox twin.{' '}
+          {sim.hops.length} hops · {stoppedHops.length} stopped by your existing controls ·{' '}
+          {gapHops.length} gap{gapHops.length === 1 ? '' : 's'}.
         </div>
       </div>
 
@@ -658,39 +672,107 @@ function ImpactReport({
         </div>
       )}
 
-      <div>
-        <div className="eyebrow mb-1.5 flex items-center gap-1.5">
-          <IconShield size={11} style={{ color: INFOBLOX_GREEN }} />
-          why Mythos would catch it
-        </div>
-        <ul className="flex flex-col gap-1">
-          {sim.controlsThatCatchIt.map((c) => (
-            <li
-              key={c}
-              className="flex items-start gap-2 text-[11px] text-text2 leading-snug"
-            >
-              <IconCircleCheck
-                size={11}
-                className="mt-0.5 shrink-0"
-                style={{ color: INFOBLOX_GREEN }}
-              />
-              {c}
-            </li>
-          ))}
-        </ul>
-      </div>
+      <ChainBreakdown sim={sim} assetById={assetById} />
 
       <div className="p-2.5 rounded-md bg-page/40 border border-white/5">
         <div className="eyebrow mb-1">where it has already happened</div>
         <p className="text-[11px] text-text2 leading-snug">{sim.realWorldEcho}</p>
       </div>
 
-      <div className="p-2.5 rounded-md text-[10px] text-text3 leading-snug" style={{ background: `${INFOBLOX_GREEN}10`, border: `1px solid ${INFOBLOX_GREEN}35` }}>
-        Mythos simulations run only against the sandbox Twin. No production touches. The
-        vulnerabilities surfaced are not specific to your environment — they apply to every
-        organization with this stack.
+      <div
+        className="p-2.5 rounded-md text-[10px] text-text3 leading-snug"
+        style={{
+          background: `${INFOBLOX_GREEN}10`,
+          border: `1px solid ${INFOBLOX_GREEN}35`,
+        }}
+      >
+        Mythos runs only against the sandbox twin — production is never touched. The paths Mythos
+        surfaces apply to every organization with this topology. Most won't see them until after
+        the breach.
       </div>
     </div>
+  );
+}
+
+function ChainBreakdown({
+  sim,
+  assetById,
+}: {
+  sim: Simulation;
+  assetById: Map<string, Asset>;
+}) {
+  return (
+    <div>
+      <div className="eyebrow mb-1.5 flex items-center gap-1.5">
+        <IconShield size={11} style={{ color: INFOBLOX_GREEN }} />
+        where the chain breaks
+      </div>
+      <div className="text-[10.5px] text-text3 leading-snug mb-2">
+        Mythos walks each hop. Your existing Infoblox controls stop most of them. Gaps are named.
+      </div>
+      <ol className="flex flex-col gap-1.5">
+        {sim.hops.map((h, i) => (
+          <HopRow key={i} index={i} hop={h} assetById={assetById} />
+        ))}
+      </ol>
+    </div>
+  );
+}
+
+function HopRow({
+  index,
+  hop,
+  assetById,
+}: {
+  index: number;
+  hop: SimHop;
+  assetById: Map<string, Asset>;
+}) {
+  const to = assetById.get(hop.targetId);
+  const isGap = hop.controlName === null;
+  const tone = isGap
+    ? { fg: '#ef4444', bg: 'rgba(239,68,68,0.10)', bd: 'rgba(239,68,68,0.35)' }
+    : hop.disposition === 'blocked'
+    ? { fg: INFOBLOX_GREEN, bg: `${INFOBLOX_GREEN}1a`, bd: `${INFOBLOX_GREEN}55` }
+    : { fg: '#f59e0b', bg: 'rgba(245,158,11,0.10)', bd: 'rgba(245,158,11,0.35)' };
+  return (
+    <li
+      className="p-2 rounded-md border"
+      style={{ background: tone.bg, borderColor: tone.bd }}
+    >
+      <div className="flex items-baseline gap-2 mb-0.5">
+        <span
+          className="font-mono text-[9px] uppercase tracking-wider"
+          style={{ color: tone.fg }}
+        >
+          hop {index + 1}
+        </span>
+        {hop.mitreId && (
+          <span className="font-mono text-[9px] text-text3">{hop.mitreId}</span>
+        )}
+        <span className="ml-auto text-[9px] font-mono uppercase tracking-wider" style={{ color: tone.fg }}>
+          {isGap ? 'gap' : hop.disposition}
+        </span>
+      </div>
+      <div className="text-[11px] text-text1 leading-snug font-medium mb-0.5">
+        {hop.technique} → {to?.name}
+      </div>
+      <div className="text-[10.5px] text-text2 leading-snug">
+        {isGap ? (
+          <>
+            <span className="text-danger font-medium">No control on the path here.</span>{' '}
+            {hop.controlExplain}
+          </>
+        ) : (
+          <>
+            <span style={{ color: tone.fg }} className="font-medium">
+              {hop.controlName}
+            </span>{' '}
+            — {hop.controlExplain}
+          </>
+        )}
+      </div>
+    </li>
   );
 }
 
@@ -723,57 +805,350 @@ function ImpactStat({
 
 // ---------- helpers ----------
 
+// Stages that any compromise progresses through. Mythos picks the *story* first
+// (which stages we'll show) then walks the graph to fill in real assets.
+type StageId =
+  | 'recon'
+  | 'initial-access'
+  | 'execution'
+  | 'auth-replay'
+  | 'discovery'
+  | 'lateral'
+  | 'collection'
+  | 'exfil'
+  | 'impact';
+
+interface StageHint {
+  id: StageId;
+  // Where this stage lives in the graph — used to pick the right edge
+  preferEdgeTypes?: Array<Edge['type']>;
+  preferSegments?: string[];
+  technique: string;
+  mitreId: string;
+}
+
+// Resolves a hop's defensive verdict from edge type + asset segments + position.
+function resolveControl(
+  hop: { fromSeg?: string; toSeg?: string; edgeType: Edge['type']; stage: StageId },
+  hopIndex: number,
+  totalHops: number
+): { disposition: SimHop['disposition']; controlName: string | null; controlExplain: string } {
+  // The seam: the third hop (typically the AiTM / endpoint-drift step) is the gap
+  // we want to surface in the demo.
+  const isSeamHop = hopIndex === 2;
+
+  // External → external/email/web edges: TD blocks at DNS resolution
+  if (hop.stage === 'recon' || hop.stage === 'initial-access') {
+    if (hop.edgeType === 'dns') {
+      return {
+        disposition: 'blocked',
+        controlName: 'Threat Defense',
+        controlExplain:
+          'DNS-layer block — newly-observed-domain feed + actor-cluster signature kill the lookalike before resolution.',
+      };
+    }
+    if (hop.edgeType === 'identity' || hop.edgeType === 'trust') {
+      return {
+        disposition: 'blocked',
+        controlName: 'Threat Defense',
+        controlExplain:
+          'Source IP matches a TIDE indicator — Threat Defense refuses the DNS resolution the attacker needs for the auth callback.',
+      };
+    }
+    if (hop.edgeType === 'data-flow') {
+      return {
+        disposition: 'blocked',
+        controlName: 'Threat Defense',
+        controlExplain:
+          'Staging domain in the payload matches a TIDE actor cluster — TD blocks resolution before the exploit can fetch its second stage.',
+      };
+    }
+    // network or anything else — public-facing app exploit
+    return {
+      disposition: 'blocked',
+      controlName: 'Threat Defense',
+      controlExplain:
+        'The exploit needs DNS resolution for its callback. Threat Defense blocks it via TIDE — the C2 domain is already on the actor-cluster list.',
+    };
+  }
+
+  // The seam hop (AiTM, session theft, endpoint drift)
+  if (isSeamHop) {
+    return {
+      disposition: 'observed',
+      controlName: null,
+      controlExplain: 'Endpoint coverage drift on fin-lap-21 — Defender 23d stale. No control on the path here. This is the gap.',
+    };
+  }
+
+  // Identity-edge hops (auth replay, lateral over Kerberos/SAML)
+  if (hop.edgeType === 'identity' || hop.stage === 'auth-replay') {
+    return {
+      disposition: 'contained',
+      controlName: 'SOC Insights',
+      controlExplain: 'DNS query for the federation endpoint correlates with an unusual signed-in user and a new device fingerprint — token-replay anomaly opens an incident.',
+    };
+  }
+
+  // Data-flow or lateral movement hops
+  if (hop.stage === 'lateral' || hop.edgeType === 'data-flow') {
+    return {
+      disposition: 'contained',
+      controlName: 'SOC Insights',
+      controlExplain: 'Sudden DNS resolution of an internal hostname from a workstation that has never queried it before — flagged via asset-to-DNS correlation.',
+    };
+  }
+
+  // Collection / exfil
+  if (hop.stage === 'collection' || hop.stage === 'exfil' || hop.stage === 'impact') {
+    // Final-stage exfil is blocked by TD outbound C2 filtering
+    if (hopIndex === totalHops - 1) {
+      return {
+        disposition: 'blocked',
+        controlName: 'Threat Defense',
+        controlExplain: 'Outbound C2 destination matches a TIDE indicator — DNS resolution refused, exfil never reaches the attacker.',
+      };
+    }
+    return {
+      disposition: 'contained',
+      controlName: 'SOC Insights',
+      controlExplain: 'High-volume internal SQL session pattern + matched user signal trips the data-staging detector.',
+    };
+  }
+
+  return {
+    disposition: 'contained',
+    controlName: 'SOC Insights',
+    controlExplain: 'DNS + asset + user correlation flags the anomaly.',
+  };
+}
+
+// Compute a richer kill chain — entry hop from external + walk forward to crown jewels.
 function computePath(start: Asset, assets: Asset[], edges: Edge[]): SimHop[] {
-  // BFS but prefer high-criticality targets. We'll just walk outward and prefer
-  // edges whose target has higher criticality.
+  const assetMap = new Map(assets.map((a) => [a.id, a]));
   const adj = new Map<string, Edge[]>();
+  const reverseAdj = new Map<string, Edge[]>();
   for (const e of edges) {
     (adj.get(e.source) ?? adj.set(e.source, []).get(e.source))!.push(e);
+    (reverseAdj.get(e.target) ?? reverseAdj.set(e.target, []).get(e.target))!.push(e);
   }
-  const assetMap = new Map(assets.map((a) => [a.id, a]));
-  const visited = new Set<string>([start.id]);
+
   const hops: SimHop[] = [];
+  const visited = new Set<string>([start.id]);
+
+  // ---- ENTRY HOP: find a plausible external/email/identity entry into the start asset.
+  const inboundEdges = reverseAdj.get(start.id) ?? [];
+  // Find the shortest path from any external/email-gw/internet asset to the start asset, max 2 hops.
+  const entryRoute = findEntryRoute(start.id, reverseAdj, assetMap, 2);
+  if (entryRoute) {
+    for (const e of entryRoute) {
+      visited.add(e.source);
+      visited.add(e.target);
+      const fromAsset = assetMap.get(e.source);
+      const toAsset = assetMap.get(e.target);
+      const stage: StageId =
+        fromAsset?.segment === 'external'
+          ? 'initial-access'
+          : 'execution';
+      const technique = techniqueFor(stage, e.type, toAsset);
+      const ctrl = resolveControl(
+        { fromSeg: fromAsset?.segment, toSeg: toAsset?.segment, edgeType: e.type, stage },
+        hops.length,
+        5
+      );
+      hops.push({
+        sourceId: e.source,
+        targetId: e.target,
+        technique: technique.name,
+        mitreId: technique.id,
+        ...ctrl,
+      });
+    }
+  } else if (inboundEdges.length > 0) {
+    // fallback: just one entry edge
+    const e = inboundEdges.find((x) => x.type === 'dns')
+      ?? inboundEdges.find((x) => x.type === 'identity')
+      ?? inboundEdges[0];
+    visited.add(e.source);
+    const ctrl = resolveControl(
+      { edgeType: e.type, stage: 'initial-access' },
+      hops.length,
+      5
+    );
+    const t = techniqueFor('initial-access', e.type, assetMap.get(e.target));
+    hops.push({
+      sourceId: e.source,
+      targetId: e.target,
+      technique: t.name,
+      mitreId: t.id,
+      ...ctrl,
+    });
+  }
+
+  // ---- FORWARD WALK: from start, push toward the highest-criticality reachable asset
+  // Aim for at least 3 forward hops so total chain is 4-5 hops.
   let current = start.id;
-  for (let h = 0; h < 5; h++) {
+  const stagesForward: StageId[] = ['auth-replay', 'lateral', 'collection', 'exfil'];
+  for (let h = 0; h < 4; h++) {
     const options = (adj.get(current) ?? []).filter((e) => !visited.has(e.target));
     if (options.length === 0) break;
+    // Score: criticality first, then identity/data-flow edges, then anything else.
     options.sort((a, b) => {
       const at = assetMap.get(a.target);
       const bt = assetMap.get(b.target);
-      return (bt?.criticality ?? 0) - (at?.criticality ?? 0);
+      const critDiff = (bt?.criticality ?? 0) - (at?.criticality ?? 0);
+      if (critDiff !== 0) return critDiff;
+      const typePriority = (t: Edge['type']) =>
+        t === 'identity' ? 3 : t === 'data-flow' ? 2 : t === 'network' ? 1 : 0;
+      return typePriority(b.type) - typePriority(a.type);
     });
     const chosen = options[0];
     visited.add(chosen.target);
+    const fromAsset = assetMap.get(chosen.source);
+    const toAsset = assetMap.get(chosen.target);
+    const stage = stagesForward[h] ?? 'impact';
+    const tech = techniqueFor(stage, chosen.type, toAsset);
+    const ctrl = resolveControl(
+      { fromSeg: fromAsset?.segment, toSeg: toAsset?.segment, edgeType: chosen.type, stage },
+      hops.length,
+      Math.max(5, hops.length + 2)
+    );
     hops.push({
       sourceId: chosen.source,
       targetId: chosen.target,
-      technique: pickTechnique(h, chosen.type),
-      mitreId: pickMitreId(h),
-      disposition: h < 2 ? 'observed' : h < 3 ? 'contained' : 'blocked',
-      control: h < 2 ? 'none' : h < 3 ? 'soc-insights' : 'td',
+      technique: tech.name,
+      mitreId: tech.id,
+      ...ctrl,
     });
     current = chosen.target;
-    if (assetMap.get(current)?.criticality === 5) break;
+    // Stop only after we've reached a crown jewel AND have at least 4 total hops
+    if (toAsset?.criticality === 5 && hops.length >= 4) break;
   }
-  return hops;
+
+  // Recompute control verdicts now that we know totalHops, so the final-hop logic fires.
+  const totalHops = hops.length;
+  return hops.map((h, i) => {
+    const fromAsset = assetMap.get(h.sourceId);
+    const toAsset = assetMap.get(h.targetId);
+    const edge = edges.find((e) => e.source === h.sourceId && e.target === h.targetId);
+    if (!edge) return h;
+    const stage = stageForHopIndex(i, totalHops);
+    const ctrl = resolveControl(
+      { fromSeg: fromAsset?.segment, toSeg: toAsset?.segment, edgeType: edge.type, stage },
+      i,
+      totalHops
+    );
+    return { ...h, ...ctrl };
+  });
 }
 
-function pickTechnique(hop: number, edgeType: string): string {
-  if (hop === 0)
-    return edgeType === 'dns' ? 'Phishing: Spearphishing Link' : 'Valid Accounts';
-  if (hop === 1) return 'Use Alternate Authentication Material';
-  if (hop === 2) return 'Lateral Movement: Remote Services';
-  if (hop === 3) return 'Account Discovery: Domain Account';
-  return 'Data from Information Repositories';
+function stageForHopIndex(i: number, total: number): StageId {
+  if (i === 0) return 'initial-access';
+  if (i === 1) return 'execution';
+  if (i === 2) return 'auth-replay';
+  if (i === total - 1) return total >= 4 ? 'exfil' : 'impact';
+  return 'lateral';
 }
 
-function pickMitreId(hop: number): string {
-  return ['T1566.002', 'T1550.001', 'T1021', 'T1087.002', 'T1213'][hop] ?? 'T1486';
+function techniqueFor(stage: StageId, edgeType: Edge['type'], to?: Asset): { name: string; id: string } {
+  switch (stage) {
+    case 'recon':
+      return { name: 'Acquire Infrastructure: Domains', id: 'T1583.001' };
+    case 'initial-access':
+      if (edgeType === 'dns')
+        return { name: 'Phishing: Spearphishing Link', id: 'T1566.002' };
+      if (edgeType === 'identity')
+        return { name: 'Valid Accounts', id: 'T1078' };
+      if (edgeType === 'data-flow')
+        return { name: 'Trusted Relationship', id: 'T1199' };
+      // network or anything else from external → app or appliance
+      return { name: 'Exploit Public-Facing Application', id: 'T1190' };
+    case 'execution':
+      // The execution hop is usually inside the perimeter, going from a security
+      // appliance / firewall / AD to the eventual landing point.
+      if (edgeType === 'identity')
+        return { name: 'Valid Accounts', id: 'T1078' };
+      if (edgeType === 'dns')
+        return { name: 'User Execution: Malicious Link', id: 'T1204.001' };
+      return { name: 'External Remote Services', id: 'T1133' };
+    case 'auth-replay':
+      return { name: 'Use Alternate Authentication Material', id: 'T1550.001' };
+    case 'discovery':
+      return { name: 'Account Discovery: Domain Account', id: 'T1087.002' };
+    case 'lateral':
+      return edgeType === 'identity'
+        ? { name: 'Remote Services: SMB / Windows Admin Shares', id: 'T1021.002' }
+        : { name: 'Lateral Movement: Remote Services', id: 'T1021' };
+    case 'collection':
+      return to?.type === 'database'
+        ? { name: 'Data from Information Repositories', id: 'T1213' }
+        : { name: 'Data from Local System', id: 'T1005' };
+    case 'exfil':
+      return { name: 'Exfiltration Over C2 Channel', id: 'T1041' };
+    case 'impact':
+      return to?.segment === 'ot'
+        ? { name: 'Modify Controller Tasking', id: 'T0821' }
+        : { name: 'Data Encrypted for Impact', id: 'T1486' };
+    default:
+      return { name: 'Lateral Movement', id: 'T1021' };
+  }
 }
 
-function approxImpact(start: Asset): number {
-  const base = start.criticality * start.criticality * 220000;
-  return Math.round(base * (1 + Math.random() * 0.3));
+// Find a route INTO the start asset from an external/email-edge asset (or
+// closest equivalent). Returns the edges in order (entry → start).
+function findEntryRoute(
+  startId: string,
+  reverseAdj: Map<string, Edge[]>,
+  assetMap: Map<string, Asset>,
+  maxDepth: number
+): Edge[] | null {
+  // BFS backwards from startId, limit depth.
+  const queue: Array<{ id: string; path: Edge[] }> = [{ id: startId, path: [] }];
+  const seen = new Set<string>([startId]);
+  while (queue.length) {
+    const { id, path } = queue.shift()!;
+    if (path.length > maxDepth) continue;
+    const a = assetMap.get(id);
+    if (
+      path.length > 0 &&
+      (a?.segment === 'external' ||
+        id === 'ast_email-gw' ||
+        id === 'ast_internet' ||
+        id === 'ast_vpn-gw' ||
+        id === 'ast_web-dmz')
+    ) {
+      return path.slice().reverse();
+    }
+    const incoming = reverseAdj.get(id) ?? [];
+    for (const e of incoming) {
+      if (seen.has(e.source)) continue;
+      seen.add(e.source);
+      queue.push({ id: e.source, path: [...path, e] });
+    }
+  }
+  return null;
+}
+
+function approxImpact(
+  start: Asset,
+  compromised: string[],
+  assetMap: Map<string, Asset>
+): number {
+  // Aggregate impact across every compromised asset.
+  let total = 0;
+  for (const id of compromised) {
+    const a = assetMap.get(id);
+    if (!a) continue;
+    total += a.criticality * a.criticality * 180_000;
+  }
+  // Crown jewels multiply the loss (regulatory + recovery)
+  const crownReached = compromised.filter((id) => assetMap.get(id)?.criticality === 5).length;
+  total += crownReached * 900_000;
+  // OT compromises add downtime cost
+  if (start.segment === 'ot' || compromised.some((id) => assetMap.get(id)?.segment === 'ot')) {
+    total += 2_500_000;
+  }
+  return Math.round(total * (1 + Math.random() * 0.12));
 }
 
 function approxDowntime(start: Asset): { min: number; max: number } {
